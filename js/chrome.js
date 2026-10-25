@@ -1,12 +1,12 @@
 // Chrome: topbar chips + nav active + error banner.
 import { get, set } from "./store.js";
 import { loadCatalog } from "./api.js";
-import { toast } from "./ui.js";
+import { toast, esc } from "./ui.js";
 
 export function renderTopbar(){
   const s = get();
   const chip = document.getElementById("keychip");
-  chip.textContent = s.settings.apiKey ? "mr_ key ✓" : "no key";
+  chip.textContent = s.settings.apiKey ? "Key added" : "No key";
   chip.className = "chip " + (s.settings.apiKey ? "ok" : "warn");
   const rc = document.getElementById("routechip");
   const prof = s.settings.routingProfile || "auto";
@@ -23,7 +23,7 @@ export function syncBanner(){
   const err = window.__catalogError;
   if(err){
     b.hidden = false;
-    b.innerHTML = `⚠ Couldn't load live pricing catalog (${err}). Cost estimates fall back to last cache until retry succeeds. <button class="btn sm ghost" id="banner-retry">Retry</button>`;
+    b.innerHTML = `Live pricing unavailable (${esc(err)}). ${get().catalog?'Using cached prices; estimates may be out of date.':'Retry pricing before running a flow.'} <button class="btn sm ghost" id="banner-retry">Retry</button>`;
     b.querySelector("#banner-retry").addEventListener("click", retryCatalog);
   }else{
     b.hidden = true;

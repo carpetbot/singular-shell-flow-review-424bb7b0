@@ -1,13 +1,14 @@
 // Model catalog: live pricing.json, searchable, feed honesty surfaced.
 import { get } from "../store.js";
 import { esc, fmtUsd } from "../ui.js";
+import { retryCatalog } from '../chrome.js';
 
 const FREE_IDS = new Set(["nano-gpt-help", "qwen/qwen3.5-omni-flash", "qwen/qwen3.5-omni-plus"]);
 
 export function view(){
   const s = get();
   const cat = s.catalog;
-  if(!cat) return `<h2>Model catalog</h2><div class="skel" style="height:300px"></div>`;
+  if(!cat) return `<h2>Model catalog</h2><p class="note">Pricing could not be loaded. Retry to see the available models.</p><button class="btn ghost" id="model-retry">Retry pricing</button>`;
   return `
     <h2>Model catalog <span class="chip">${cat.models.length} models</span> <span class="chip" title="pricing.json as_of">as of ${esc(cat.as_of?.slice(0,16).replace("T"," "))}</span></h2>
     <div class="searchbar">
@@ -24,6 +25,13 @@ let kindFilter = "all";
 
 export function bind(root){
   const s = get();
+  if(!s.catalog){
+    root.querySelector('#model-retry').onclick=async()=>{
+      await retryCatalog();
+      if(location.hash==='#/models'){root.innerHTML=view();bind(root);}
+    };
+    return;
+  }
   const q = root.querySelector("#q");
   const tbl = root.querySelector("#tbl");
   function draw(){
@@ -39,7 +47,7 @@ export function bind(root){
         const knownFree = FREE_IDS.has(m.id);
         return `<tr class="${m.routable ? "" : "off"}"><td>${esc(m.id)}${free && !knownFree ? ' <span title="0-price: may be unknown, not free">?</span>' : ""}</td>
         <td>${esc(m.kind)}</td><td>${fmtUsd(m.promptPerMillionUsd)}</td><td>${fmtUsd(m.completionPerMillionUsd)}</td>
-        <td>${m.pricePerImageUsd != null ? fmtUsd(m.pricePerImageUsd) : "—"}</td><td>${m.maxContextTokens ?? "—"}</td>
+        <td>${m.pricePerImageUsd != null ? fmtUsd(m.pricePerImageUsd) : "—"}</td><td>${esc(m.maxContextTokens ?? "—")}</td>
         <td>${m.routable ? "✓" : "✗"}</td></tr>`;
       }).join("")}</tbody>`;
   }

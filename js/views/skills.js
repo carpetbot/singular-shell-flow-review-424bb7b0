@@ -86,13 +86,11 @@ function budgetPreflight(manifest, catalog, modelId, renderedChars){
 }
 
 export function view(){
-  const s = get();
-  return `
-    <h2>Community skills <span class="chip" title="catalog as_of">pricing ${esc(s.catalog?.as_of?.slice(0,10) || "…")}</span></h2>
-    <div class="note" style="margin-bottom:12px">A skill is data: manifest + prompts, rendered here as a panel UI, run on <b>your own key</b>. Nothing core-team deployed. Gallery index is hardcoded for the skeleton (see js/views/skills.js SKILL_INDEX).</div>
-    <div class="skill-grid" id="grid">
-      ${SKILL_INDEX.map(id => `<div class="skel" style="height:120px"></div>`).join("")}
-    </div>`;
+  return `<div class="page-heading"><div class="eyebrow">WORKSPACE</div><h2>Flows</h2><p>Start with an outcome. Let the steps take care of the rest.</p></div>
+    <section class="gallery-section" aria-labelledby="gallery-title"><div class="section-heading"><h3 id="gallery-title">Community templates</h3><span class="note">Use with your own Singular key</span></div>
+    <div class="skill-grid" id="grid" role="region" aria-label="Flow templates" tabindex="0"><p class="note">Loading templates…</p></div></section>
+    <div class="gallery-foot"><span>01 / Choose a flow</span><span>02 / Add your context</span><span>03 / Review the result</span></div>
+    <p class="privacy-note">A draft, not an autopilot. Nothing is researched on the web or sent on your behalf.</p>`;
 }
 
 export async function bind(root){
@@ -104,17 +102,14 @@ export async function bind(root){
       cards.push({ id, manifest });
     }catch(e){ console.warn("skill load failed", id, e); }
   }
-  grid.innerHTML = cards.map((c, i) => `
-    <div class="card skill-card" data-i="${i}">
-      <div class="skill-id">${esc(c.manifest.id)}@${esc(c.manifest.version)}</div>
-      <div class="skill-desc">${esc(c.manifest.description || "")}</div>
-      <div class="tagrow">
-        <span class="tag ui">ui:${esc(c.manifest.ui?.kind || "headless")}</span>
-        <span class="tag cost">${c.manifest.runtime?.steps ? `estimate ceiling ${fmtUsd(c.manifest.runtime.max_cost_per_run_usd)}` : `≤${fmtUsd(c.manifest.runtime?.max_cost_per_call_usd)}`}</span>
-        <span class="tag">${c.manifest.runtime?.steps ? `${c.manifest.runtime.steps.length} steps · exact models` : esc(c.manifest.runtime?.model_policy?.prefer || "auto")}</span>
-        <span class="tag">by ${esc(c.manifest.author?.name || "?")}</span>
-      </div>
-    </div>`).join("");
+  grid.innerHTML = cards.length ? cards.map((c, i) => `
+    <button type="button" class="skill-card" data-i="${i}">
+      <span class="template-top"><span class="tag">${c.manifest.runtime?.steps ? `${c.manifest.runtime.steps.length} AI steps` : '1 AI step'} · your key</span><span class="template-arrow" aria-hidden="true">↗</span></span>
+      <span class="template-title">${esc(c.manifest.name || c.id)}</span>
+      <span class="skill-desc">${c.manifest.runtime?.steps ? 'Turn your prospect notes into an email and two follow-ups.' : 'Turn a video idea into a timed, shoot-ready shot list.'}</span>
+      <span class="template-bottom">${esc(c.manifest.author?.name || 'Community')}<span>Open flow →</span></span>
+      <span class="skill-id pro-only">${esc(c.manifest.id)}@${esc(c.manifest.version)}</span>
+    </button>`).join('') : '<p role="alert">Templates could not be loaded. Reload to try again.</p>';
   grid.querySelectorAll(".skill-card").forEach(el =>
     el.onclick = () => openRunner(cards[Number(el.dataset.i)]));
 }
@@ -127,16 +122,20 @@ function openRunner({ id, manifest }){
     f.hint ||= manifest.inputs?.[f.key]?.description;
     f.default ??= manifest.inputs?.[f.key]?.default;
   });
-  if(manifest.runtime?.steps) return openFlowRunner({id,manifest},fields,fields.map(f=>renderField(f,f.default)).join(''),collectValues);
+  if(manifest.runtime?.steps){
+    const fieldHtml=f=>renderField(f,f.default);
+    return openFlowRunner({id,manifest},fields,fields.filter(f=>f.required).map(fieldHtml).join('')+`<details class="more-details"><summary>More details <span class="note">· optional</span></summary><div class="optional-fields">${fields.filter(f=>!f.required).map(fieldHtml).join('')}</div></details>`,collectValues);
+  }
   openModal(`
     <h3 style="font-family:var(--disp);margin-bottom:4px">${esc(manifest.name || id)}</h3>
-    <div class="kv" style="margin-bottom:14px">${esc(manifest.id)}@${esc(manifest.version)} · model: ${esc(manifest.runtime?.model_policy?.prefer || "auto")} · ceiling ≤${fmtUsd(manifest.runtime?.max_cost_per_call_usd)}</div>
-    <div class="panel-ui" id="panel">
+    <div class="kv pro-only" style="margin-bottom:14px">${esc(manifest.id)}@${esc(manifest.version)} · model: ${esc(manifest.runtime?.model_policy?.prefer || "auto")} · ceiling ≤${fmtUsd(manifest.runtime?.max_cost_per_call_usd)}</div>
+    ${!get().settings.apiKey?'<div class="key-note"><strong>Add your Singular key to run</strong><p>Get your key at <a href="https://singular.impossibuild.ai/" target="_blank" rel="noopener noreferrer">Singular → Settings ↗</a>, then add it in <a href="#/settings" id="shell-settings">shell Settings</a>.</p></div>':''}
+    <div class="panel-ui" id="panel" style="margin-top:20px">
       ${fields.map(f => renderField(f)).join("")}
     </div>
     <div style="display:flex;gap:10px;margin-top:16px">
-      <button class="btn" id="run" style="flex:1">Run skill ▸</button>
-      <button class="btn ghost" id="preview">Preview prompt</button>
+      <button class="btn" id="run" style="flex:1" ${get().settings.apiKey?'':'disabled'}>Run flow →</button>
+      <button class="btn ghost pro-only" id="preview">Preview prompt</button>
     </div>
     <div id="skout" style="margin-top:14px"></div>`, (modal, close) => {
     modal.querySelectorAll('input[type=range]').forEach(r => {

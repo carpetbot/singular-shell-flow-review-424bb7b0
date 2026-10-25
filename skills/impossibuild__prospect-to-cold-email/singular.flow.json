@@ -50,6 +50,8 @@
       {
         "id": "extract",
         "label": "Pull the facts",
+        "plain_label": "Reading your notes",
+        "why": "Fast and cheap at pulling facts out of messy text.",
         "model": "google/gemini-3.8-flash",
         "fallback": [
           "deepseek/deepseek-v4.1-flash-1017"
@@ -62,6 +64,8 @@
       {
         "id": "angle",
         "label": "Pick the angle",
+        "plain_label": "Finding the angle",
+        "why": "Strong at reasoning; scores how good a fit they are.",
         "model": "moonshotai/kimi-k3",
         "fallback": [
           "anthropic/claude-sonnet-5.5"
@@ -79,6 +83,8 @@
       {
         "id": "write",
         "label": "Write the email",
+        "plain_label": "Writing the email",
+        "why": "Writes email that sounds human.",
         "model": "anthropic/claude-sonnet-5.5",
         "fallback": [
           "anthropic/claude-opus-5.5"
@@ -91,6 +97,8 @@
       {
         "id": "check",
         "label": "Fact and tone check",
+        "plain_label": "Fact-checking",
+        "why": "Cheap second pair of eyes; checks every claim against your notes.",
         "model": "deepseek/deepseek-v4.1-flash-1017",
         "fallback": [
           "google/gemini-3.8-flash"

@@ -1,0 +1,342 @@
+✔ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (21.726723ms)
+✔ flow defaults omitted or zero max_output_tokens to 2048 for estimates and requests (1.181337ms)
+✔ per-call estimate refuses unaffordable HTTP fallback and JSON repair without another request (0.892206ms)
+✔ ordered flow renders system and user with prior raw outputs without prototype traversal (1.45997ms)
+✔ loader falls back only on 404 and retains legacy prompts for runner (0.818808ms)
+✔ JSON fence parsing and same-model repair account for both attempts; second invalid JSON fails without fallback (1.353493ms)
+✔ HTTP fallback uses actual model; auth aborts without fallback (0.73583ms)
+✔ budget preflight blocks low caps, unknown pricing, auto, missing prompts before any call (0.846776ms)
+✔ actual estimates stop next call after cap exceeded or usage cost becomes unknown, including repair (1.492718ms)
+✔ stop_if ends cleanly and skips downstream; timeout prevents hanging (0.500656ms)
+✔ stop_if accepts finite numeric strings without coercing blank or nonnumeric JSON values (2.310356ms)
+✔ flow timeout prevents hanging (19.557582ms)
+✔ chatOnce sends response_format and abort signal; legacy request remains plain; incomplete pricing is unknown (1.564377ms)
+✔ gallery ships four-step manifest and loads all eight prompt files without fetching inline values (4.73709ms)
+✔ each fallback gets its own same-model JSON repair allowance after HTTP failure (0.912265ms)
+✔ manifest form attributes escape HTML, including field identifiers and numeric bounds (0.498416ms)
+✔ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (0.796358ms)
+✔ JSON failure does not invoke fallback; missing prompt HTTP errors do not silently become prompt text (0.807797ms)
+✔ flow result includes nested runtime output, repairs and unknown estimates as escaped plain text (1.81219ms)
+✔ HTTP error usage receipts are retained for billed attempts before fallback (0.703781ms)
+✔ cost formatting uses normal decimals and preserves unknown values (19.476275ms)
+✔ audit pass is qualified and only a completed pass; fix issues escaped, failed/skipped/unknown are not checked (3.410696ms)
+✔ Pro breakdown reveals templates, prior references, actual receipts, attempts, escaped summaries, unknown and skipped costs (2.072623ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.500924
+test_01_mode_default_persistence_and_guarded_routes (test_lite_pro.LitePro.test_01_mode_default_persistence_and_guarded_routes) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_02_gallery_and_fictional_sample_preserve_inputs (test_lite_pro.LitePro.test_02_gallery_and_fictional_sample_preserve_inputs) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls (test_lite_pro.LitePro.test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_04_mobile_accessible_dialog_and_lite_settings (test_lite_pro.LitePro.test_04_mobile_accessible_dialog_and_lite_settings) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_05_untrusted_status_and_catalog_are_plain_text (test_lite_pro.LitePro.test_05_untrusted_status_and_catalog_are_plain_text) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_06_missing_catalog_models_has_recovery_not_skeleton (test_lite_pro.LitePro.test_06_missing_catalog_models_has_recovery_not_skeleton) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_07_fallback_actual_receipt_and_unknown_usage_failure (test_lite_pro.LitePro.test_07_fallback_actual_receipt_and_unknown_usage_failure) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_08_check_failure_leaves_draft_and_not_checked (test_lite_pro.LitePro.test_08_check_failure_leaves_draft_and_not_checked) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+test_09_exact_seven_review_screenshots (test_lite_pro.LitePro.test_09_exact_seven_review_screenshots) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 29.987s
+
+OK
+Seven offline review screenshots: /home/orangepi/projects/singular-shell-ui/reports/review

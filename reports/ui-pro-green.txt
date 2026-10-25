@@ -1,0 +1,31 @@
+✔ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (20.74366ms)
+✔ flow defaults omitted or zero max_output_tokens to 2048 for estimates and requests (1.296625ms)
+✔ per-call estimate refuses unaffordable HTTP fallback and JSON repair without another request (0.958383ms)
+✔ ordered flow renders system and user with prior raw outputs without prototype traversal (1.591426ms)
+✔ loader falls back only on 404 and retains legacy prompts for runner (0.854376ms)
+✔ JSON fence parsing and same-model repair account for both attempts; second invalid JSON fails without fallback (1.075471ms)
+✔ HTTP fallback uses actual model; auth aborts without fallback (0.937674ms)
+✔ budget preflight blocks low caps, unknown pricing, auto, missing prompts before any call (0.825628ms)
+✔ actual estimates stop next call after cap exceeded or usage cost becomes unknown, including repair (0.668901ms)
+✔ stop_if ends cleanly and skips downstream; timeout prevents hanging (1.644305ms)
+✔ stop_if accepts finite numeric strings without coercing blank or nonnumeric JSON values (2.366995ms)
+✔ flow timeout prevents hanging (20.685161ms)
+✔ chatOnce sends response_format and abort signal; legacy request remains plain; incomplete pricing is unknown (1.712123ms)
+✔ gallery ships four-step manifest and loads all eight prompt files without fetching inline values (4.896355ms)
+✔ each fallback gets its own same-model JSON repair allowance after HTTP failure (0.894845ms)
+✔ manifest form attributes escape HTML, including field identifiers and numeric bounds (0.486136ms)
+✔ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (0.709491ms)
+✔ JSON failure does not invoke fallback; missing prompt HTTP errors do not silently become prompt text (0.806217ms)
+✔ flow result includes nested runtime output, repairs and unknown estimates as escaped plain text (22.392924ms)
+✔ HTTP error usage receipts are retained for billed attempts before fallback (0.636513ms)
+✔ cost formatting uses normal decimals and preserves unknown values (19.960632ms)
+✔ audit pass is qualified and only a completed pass; fix issues escaped, failed/skipped/unknown are not checked (3.332138ms)
+✔ Pro breakdown reveals templates, prior references, actual receipts, attempts, escaped summaries, unknown and skipped costs (1.941917ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 231.30558

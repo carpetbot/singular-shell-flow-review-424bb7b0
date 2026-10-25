@@ -10,13 +10,13 @@ export function view(){
       <h3>API key</h3>
       <label>Singular mr_ key</label>
       <input type="password" id="apikey" placeholder="mr_…" value="${esc(s.apiKey)}">
-      <div class="note" style="margin-top:8px">Stored only in this browser's localStorage; sent as Bearer on each request through the local proxy. Claim keys at singular.impossibuild.ai → Settings.</div>
+      <div class="note" style="margin-top:8px">Stored only in this browser. Sent to the gateway through this shell’s proxy when you run. Get a key from <a href="https://singular.impossibuild.ai/" target="_blank" rel="noopener noreferrer">Singular → Settings ↗</a>.</div>
       <div style="margin-top:10px;display:flex;gap:8px">
         <button class="btn sm" id="savekey">Save</button>
-        <button class="btn sm ghost" id="testkey">Test with 1-token call</button>
+        <button class="btn sm ghost pro-only" id="testkey">Test with 1-token call (uses your key)</button>
       </div>
     </div>
-    <div class="card">
+    <div class="card pro-only">
       <h3>Routing defaults</h3>
       <div class="panel-ui">
         <div class="row">
@@ -33,8 +33,9 @@ export function view(){
       </div>
     </div>
     <div class="card">
-      <h3>Honest limits of this skeleton</h3>
-      <div class="note">
+      <h3>Before you run</h3>
+      <p class="note">Lite and Pro are two views of the same flow, not paid plans. Both use the same prompts, models and limits. Estimates are not guaranteed charges; always review generated text before using it.</p>
+      <div class="note pro-only" style="margin-top:12px">
         · <b>auto</b> cost receipts: impossible client-side — the gateway doesn't disclose the resolved upstream.<br>
         · <b>streaming</b>: no final usage chunk (stream_options ignored upstream) — token totals only when non-streamed.<br>
         · <b>tool-bearing skills</b>: refuse to run (P3 sandbox gate).<br>

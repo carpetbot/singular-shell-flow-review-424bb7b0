@@ -3,6 +3,7 @@ import { hydrate, get, subscribe, touch } from "./store.js";
 import { loadCatalog } from "./api.js";
 import { syncBanner, renderTopbar, renderNav } from "./chrome.js";
 
+import { bindMode } from './presentation.js';
 import * as chat from "./views/chat.js";
 import * as skills from "./views/skills.js";
 import * as models from "./views/models.js";
@@ -15,7 +16,7 @@ export const VIEWS = [
   { id: "settings", ...settings },
 ];
 
-let currentView = "chat";
+let currentView = "skills";
 const viewRoot = document.getElementById("view");
 
 export function renderView(){
@@ -26,15 +27,19 @@ export function renderView(){
 }
 
 function route(){
-  const hash = location.hash.replace(/^#\//, "") || "chat";
-  currentView = VIEWS.some(v => v.id === hash) ? hash : "chat";
-  viewRoot.innerHTML = '<div class="skel" style="height:200px"></div>';
-  setTimeout(renderView, 90);
+  const hash = location.hash.replace(/^#\//, "") || "skills";
+  currentView = VIEWS.some(v => v.id === hash) ? hash : "skills";
+  if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) currentView='skills';
+  renderView();
 }
 window.addEventListener("hashchange", route);
 
 async function boot(){
   await hydrate();
+  bindMode();
+  window.addEventListener('singular:mode',()=>{
+    if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) route();
+  });
   subscribe(() => { renderTopbar(); syncBanner(); });
   try{
     const cat = await loadCatalog();
@@ -46,5 +51,6 @@ async function boot(){
   }
   route();
   renderTopbar();
+  syncBanner();
 }
 boot();

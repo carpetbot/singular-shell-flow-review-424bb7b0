@@ -1,0 +1,52 @@
+✖ cost formatting uses normal decimals and preserves unknown values (2.072343ms)
+✖ audit pass is qualified and only a completed pass; fix issues escaped, failed/skipped/unknown are not checked (1.442521ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.785386
+
+✖ failing tests:
+
+test at tests/presentation.test.mjs:7:1
+✖ cost formatting uses normal decimals and preserves unknown values (2.072343ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '$7.00e-3' !== '0.7¢'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell-ui/tests/presentation.test.mjs:8:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '$7.00e-3',
+    expected: '0.7¢',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/presentation.test.mjs:12:1
+✖ audit pass is qualified and only a completed pass; fix issues escaped, failed/skipped/unknown are not checked (1.442521ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /AI check passed — review before sending/. Input:
+  
+  '<div class="card"><h3>Flow done</h3><p></p><p>Total estimated cost: $7.00e-3. Usage receipts are not billed charges.</p></div><div class="card"><strong>Subject</strong> <button class="btn ghost" data-copy="Hello">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Hello</pre></div><div class="card"><strong>Email body</strong> <button class="btn ghost" data-copy="&lt;script&gt;unsafe&lt;/script&gt;">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">&lt;script&gt;unsafe&lt;/script&gt;</pre></div><div class="card"><strong>Follow-up 1 · after 3 days</strong> <button class="btn ghost" data-copy="First">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">First</pre></div><div class="card"><strong>Follow-up 2 · after 7 days</strong> <button class="btn ghost" data-copy="Second">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Second</pre></div><div class="card"><strong>check.issues</strong> <button class="btn ghost" data-copy="[]">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">[]</pre></div><details><summary>Raw all-step outputs and attempts</summary><h4>write</h4><pre style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;email&quot;:&quot;raw&quot;}</pre><div>0 → 0 tok · estimated $0 · 0 attempt(s)</div><h4>check</h4><pre style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;verdict&quot;:&quot;pass&quot;}</pre><div>0 → 0 tok · estimated $0 · 0 attempt(s)</div></details>'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell-ui/tests/presentation.test.mjs:14:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<div class="card"><h3>Flow done</h3><p></p><p>Total estimated cost: $7.00e-3. Usage receipts are not billed charges.</p></div><div class="card"><strong>Subject</strong> <button class="btn ghost" data-copy="Hello">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Hello</pre></div><div class="card"><strong>Email body</strong> <button class="btn ghost" data-copy="&lt;script&gt;unsafe&lt;/script&gt;">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">&lt;script&gt;unsafe&lt;/script&gt;</pre></div><div class="card"><strong>Follow-up 1 · after 3 days</strong> <button class="btn ghost" data-copy="First">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">First</pre></div><div class="card"><strong>Follow-up 2 · after 7 days</strong> <button class="btn ghost" data-copy="Second">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Second</pre></div><div class="card"><strong>check.issues</strong> <button class="btn ghost" data-copy="[]">Copy</button><pre style="white-space:pre-wrap;overflow-wrap:anywhere">[]</pre></div><details><summary>Raw all-step outputs and attempts</summary><h4>write</h4><pre style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;email&quot;:&quot;raw&quot;}</pre><div>0 → 0 tok · estimated $0 · 0 attempt(s)</div><h4>check</h4><pre style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;verdict&quot;:&quot;pass&quot;}</pre><div>0 → 0 tok · estimated $0 · 0 attempt(s)</div></details>',
+    expected: /AI check passed — review before sending/,
+    operator: 'match',
+    diff: 'simple'
+  }

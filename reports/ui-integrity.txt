@@ -1,0 +1,22 @@
+{
+  "baseline": "9f5beb17e33a82d67b41ab3085bece985ef1d75c",
+  "locked_files_verified": 14,
+  "sha256": {
+    "js/flow.js": "c375f7158c3dfe7c24528aaae456399e3293c2de5352b68e54290f81b8328615",
+    "js/api.js": "a1d25bd8b0b23d2a0c2715f0de0f045b0273993aed831789271c546375f7a20c",
+    "proxy.py": "75571e303b75736a0734810a0641ef06614c543cf0a27d61861033549135b59e",
+    "js/store.js": "44b80c553832d82f329bcbe2fcc6f7fd786a44e4e7f2c0cc7ba8f1ba7e9d6fe3",
+    "skills/claw__motion-trimmer/singular.skill.json": "34f9be9f576703556c84c4a8e489f3664ade7dbd7bb8aff8b98208c538317fbb",
+    "skills/claw__motion-trimmer/prompts/user.md": "0166619a137b3a4e413485edc996f0cdbdcc485ee01338ca8a1f8a20f2d040f3",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md": "84c829532db343b18baaf617be96713f83178ca46eb6b0fa742c32f3ecc8e889",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md": "db7cfb71fbb9d2b21290b2902f40e67ab5dabc089a5930d8f75d2dec6ff361a1",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md": "6e1d1f6b35656b9227b86b2ba8b89557f98add06964b96051fe4b74cfca1d8cd",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md": "8b424362f031e41cb7a82623af4597e9e6eecade20fd8690d82c32e036ec3ea1",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md": "980fd44daec70f8bc6b88384dcd0ad2ad5dfad1e6a1179ab935509f1d84c2107",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md": "dbe1f4a4838d5a9926bcfd20fc3f022db23bad696ce5d31ab94e5b059e56cc74",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md": "24d97205ecac97739c6e52f84a08156462d2b7945b57d2b3fd16cf86d2a45fd3",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md": "10cd3b3a74c8793e2646e53d76dd0572dbada494205fdaf8e1cf0a61ede826bc"
+  },
+  "manifest": "Only steps[].plain_label and why added; all other bytes unchanged",
+  "original_reviewed_zip_sha256": "563fff6a88d1fd70e35d3c541cd21129fee68e50acfe7e6d6532177ef661f6a2"
+}

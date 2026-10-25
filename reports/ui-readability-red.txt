@@ -1,0 +1,75 @@
+✖ cost formatting uses normal decimals and preserves unknown values (23.375517ms)
+✔ audit pass is qualified and only a completed pass; fix issues escaped, failed/skipped/unknown are not checked (4.200694ms)
+✔ Pro breakdown reveals templates, prior references, actual receipts, attempts, escaped summaries, unknown and skipped costs (2.090642ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.78202
+
+✖ failing tests:
+
+test at tests/presentation.test.mjs:7:1
+✖ cost formatting uses normal decimals and preserves unknown values (23.375517ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '0.000001¢'
+  - '<0.01¢'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell-ui/tests/presentation.test.mjs:9:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '0.000001¢',
+    expected: '<0.01¢',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls (test_lite_pro.LitePro.test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+FAIL
+
+======================================================================
+FAIL: test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls (test_lite_pro.LitePro.test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/projects/singular-shell-ui/tests/test_lite_pro.py", line 110, in test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls
+    self.assertGreater(self.page.locator('.modal').bounding_box()['width'],1000)
+AssertionError: 760 not greater than 1000
+
+----------------------------------------------------------------------
+Ran 1 test in 2.598s
+
+FAILED (failures=1)

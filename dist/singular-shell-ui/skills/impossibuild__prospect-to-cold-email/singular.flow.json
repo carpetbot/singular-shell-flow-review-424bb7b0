@@ -1,0 +1,170 @@
+{
+  "spec_version": "0.2-draft",
+  "id": "impossibuild/prospect-to-cold-email",
+  "version": "0.1.0",
+  "name": "Prospect → Cold Email",
+  "description": "Paste what you know about one prospect. Four models pull the facts, pick the strongest angle, write a short email plus 2 follow-ups, and check that every claim traces back to your notes.",
+  "inputs": {
+    "prospect_name": {
+      "type": "string",
+      "required": true,
+      "description": "person you are writing to"
+    },
+    "prospect_role": {
+      "type": "string",
+      "required": false,
+      "description": "e.g. Head of Growth"
+    },
+    "company": {
+      "type": "string",
+      "required": true
+    },
+    "research_notes": {
+      "type": "string",
+      "required": true,
+      "description": "paste their About page, a recent post, a funding note, job ads. Raw text is fine."
+    },
+    "your_offer": {
+      "type": "string",
+      "required": true,
+      "description": "what you sell, one or two lines"
+    },
+    "your_proof": {
+      "type": "string",
+      "required": false,
+      "description": "one result or customer you can name"
+    },
+    "sender_name": {
+      "type": "string",
+      "required": true
+    },
+    "ask": {
+      "type": "string",
+      "required": false,
+      "description": "reply, intro, or short call. Default: reply.",
+      "default": "reply"
+    }
+  },
+  "runtime": {
+    "steps": [
+      {
+        "id": "extract",
+        "label": "Pull the facts",
+        "plain_label": "Reading your notes",
+        "why": "Fast and cheap at pulling facts out of messy text.",
+        "model": "google/gemini-3.8-flash",
+        "fallback": [
+          "deepseek/deepseek-v4.1-flash-1017"
+        ],
+        "system": "prompts/1-extract.system.md",
+        "user_template": "prompts/1-extract.user.md",
+        "response_format": "json",
+        "max_output_tokens": 800
+      },
+      {
+        "id": "angle",
+        "label": "Pick the angle",
+        "plain_label": "Finding the angle",
+        "why": "Strong at reasoning; scores how good a fit they are.",
+        "model": "moonshotai/kimi-k3",
+        "fallback": [
+          "anthropic/claude-sonnet-5.5"
+        ],
+        "system": "prompts/2-angle.system.md",
+        "user_template": "prompts/2-angle.user.md",
+        "response_format": "json",
+        "max_output_tokens": 600,
+        "stop_if": {
+          "field": "fit_score",
+          "lt": 3,
+          "message": "Weak fit. Find a stronger signal before writing."
+        }
+      },
+      {
+        "id": "write",
+        "label": "Write the email",
+        "plain_label": "Writing the email",
+        "why": "Writes email that sounds human.",
+        "model": "anthropic/claude-sonnet-5.5",
+        "fallback": [
+          "anthropic/claude-opus-5.5"
+        ],
+        "system": "prompts/3-write.system.md",
+        "user_template": "prompts/3-write.user.md",
+        "response_format": "json",
+        "max_output_tokens": 1000
+      },
+      {
+        "id": "check",
+        "label": "Fact and tone check",
+        "plain_label": "Fact-checking",
+        "why": "Cheap second pair of eyes; checks every claim against your notes.",
+        "model": "deepseek/deepseek-v4.1-flash-1017",
+        "fallback": [
+          "google/gemini-3.8-flash"
+        ],
+        "system": "prompts/4-check.system.md",
+        "user_template": "prompts/4-check.user.md",
+        "response_format": "json",
+        "max_output_tokens": 600
+      }
+    ],
+    "output": {
+      "show": [
+        "write.email",
+        "write.follow_ups",
+        "check.verdict",
+        "check.issues",
+        "angle.reason"
+      ]
+    },
+    "max_cost_per_run_usd": 0.1,
+    "timeout_s": 180
+  },
+  "author": {
+    "name": "Impossibuild",
+    "affiliate": "TBD"
+  },
+  "ui": {
+    "kind": "panel",
+    "fields": [
+      {
+        "name": "prospect_name",
+        "widget": "text"
+      },
+      {
+        "name": "prospect_role",
+        "widget": "text"
+      },
+      {
+        "name": "company",
+        "widget": "text"
+      },
+      {
+        "name": "research_notes",
+        "widget": "textarea"
+      },
+      {
+        "name": "your_offer",
+        "widget": "textarea"
+      },
+      {
+        "name": "your_proof",
+        "widget": "text"
+      },
+      {
+        "name": "sender_name",
+        "widget": "text"
+      },
+      {
+        "name": "ask",
+        "widget": "select",
+        "options": [
+          "reply",
+          "intro",
+          "short call"
+        ]
+      }
+    ]
+  }
+}
