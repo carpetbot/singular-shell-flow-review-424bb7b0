@@ -1,0 +1,28 @@
+✖ stop_if accepts finite numeric strings without coercing blank or nonnumeric JSON values (5.152789ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 118.304535
+
+✖ failing tests:
+
+test at tests/flow.test.mjs:114:1
+✖ stop_if accepts finite numeric strings without coercing blank or nonnumeric JSON values (5.152789ms)
+  AssertionError [ERR_ASSERTION]: score "2"
+  
+  'done' !== 'stopped'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell/tests/flow.test.mjs:128:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'done',
+    expected: 'stopped',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,8 +1,20 @@
 # Test report — Singular multi-step flows
 
-Executed locally on 2026-10-25 (+08:00). No deployment, paid requests, contacts, real credentials, commits or remote writes. The source directory is not a Git repository.
+Initial local execution was on 2026-10-25 (+08:00). The review build was subsequently published to a public GitHub repository for independent inspection; that was code transfer, not live deployment. No paid requests or real credentials were used.
 
-## Final executed results
+## Fit-score revision after Sofa's independent review
+
+Sofa reproduced `{"fit_score":"2"}` bypassing the numeric stop condition. The new regression failed with `done` rather than `stopped` before the fix (`reports/fit-score-red.txt`). The comparison now accepts finite numbers and nonblank numeric strings, without mutating the parsed JSON; blank strings, null, booleans, objects, arrays, nonnumeric strings and nonfinite values are not coerced to a zero score. Their prior behavior is unchanged; this is not general semantic schema validation.
+
+Current revision results:
+- **20 Node tests passed**, including numeric-string threshold/boundary cases and nonnumeric-coercion guards.
+- **2 Python proxy tests passed**.
+- **1 real Chromium smoke passed**, including a second run with string score `"2"`: exactly two offline calls, weak-fit message, and both writing/checking steps skipped. Motion Trimmer preview/run still passed.
+- Logs: `reports/fit-score-green-node.txt`, `reports/fit-score-green-python.txt`. Browser evidence: `reports/fit-score-string-stop.png`.
+- The only production JavaScript change from the independently reviewed build is the `stop_if` numeric conversion in `js/flow.js`. Flow prompts, model IDs, cost controls, API requests, proxy, and UI modules are unchanged. The production archive also contains this updated report.
+- Token-usage coverage and inherited routing.maxPrice semantics remain live-test risks. Skipped-cost and gallery-model-list cosmetics are deferred. Nothing has been deployed or spent.
+
+## Original prepublication executed results (historical)
 
 | Check | Actual result |
 |---|---|

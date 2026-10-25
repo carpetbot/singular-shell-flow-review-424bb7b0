@@ -111,6 +111,28 @@ test('stop_if ends cleanly and skips downstream; timeout prevents hanging',async
  const result=await skills.runFlow(manifest([step('first',{stop_if:{field:'fit_score',lt:3,message:'Weak fit'}}),step('second')]),{},e=>statuses.push(e.status),{catalog,chat:async()=>{calls++;return reply('{"fit_score":2}');}});
  assert.equal(result.status,'stopped');assert.equal(result.message,'Weak fit');assert.equal(calls,1);assert.equal(statuses.at(-1),'skipped');
 });
+test('stop_if accepts finite numeric strings without coercing blank or nonnumeric JSON values',async()=>{
+ const cases=[
+  ['2','stopped',1],[' 2 ','stopped',1],['2.5','stopped',1],
+  ['3','done',2],['4','done',2],[2,'stopped',1],[4,'done',2],
+  ['', 'done',2],['   ','done',2],['not a score','done',2],
+  ['NaN','done',2],['Infinity','done',2],[null,'done',2],
+  [false,'done',2],[[], 'done',2],[{},'done',2],[undefined,'done',2]
+ ];
+ for(const [score,status,expectedCalls] of cases){
+  let calls=0;
+  const m=manifest([step('first',{stop_if:{field:'fit_score',lt:3,message:'Weak fit'}}),step('second')]);
+  const result=await skills.runFlow(m,{},()=>{},{catalog,chat:async()=>{
+   calls++;return reply(calls===1?JSON.stringify({fit_score:score}):'{"ok":true}');
+  }});
+  assert.equal(result.status,status,`score ${JSON.stringify(score)}`);
+  assert.equal(calls,expectedCalls,`score ${JSON.stringify(score)}`);
+  if(status==='stopped'){
+   assert.equal(result.message,'Weak fit');assert.equal(result.steps.second.status,'skipped');
+   assert.equal(result.steps.first.json.fit_score,score,'Keep original parsed JSON unchanged');
+  }
+ }
+});
 test('flow timeout prevents hanging',async()=>{
  const timed=await Promise.race([skills.runFlow(manifest([step('first')],{timeout_s:.02}),{},()=>{},{catalog,chat:async()=>new Promise(()=>{})}),new Promise(resolve=>setTimeout(()=>resolve({status:'hung'}),100))]);
  assert.equal(timed.status,'failed');assert.match(timed.error,/timeout/i);assert.equal(timed.estCost,null);

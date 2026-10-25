@@ -108,7 +108,9 @@ export async function runFlow(manifest, vals, onStep=()=>{}, deps={}){
       }
       emit(s,'done');
       const stop=s.stop_if;const value=stop && readPath(ctx.steps[s.id].json,stop.field);
-      if(stop && typeof value==='number' && value<stop.lt){ctx.status='stopped';ctx.message=stop.message;}
+      const numericValue=typeof value==='number' ? value
+        : typeof value==='string' && value.trim()!=='' ? Number(value) : NaN;
+      if(stop && Number.isFinite(numericValue) && numericValue<stop.lt){ctx.status='stopped';ctx.message=stop.message;}
     }catch(error){ctx.status='failed';ctx.error=error.message;ctx.steps[s.id].error=error.message;emit(s,'failed');}
   }
   if(ctx.status==='running') ctx.status='done';

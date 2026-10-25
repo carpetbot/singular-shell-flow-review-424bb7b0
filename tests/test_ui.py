@@ -69,6 +69,17 @@ class BrowserSmoke(unittest.TestCase):
                 page.screenshot(path=str(report/'flow-ui.png'),full_page=True)
                 page.locator('.modal').evaluate('(el)=>el.scrollTop=0')
                 page.screenshot(path=str(report/'flow-ui-top.png'),full_page=True)
+                # Re-run with numeric text: stop after angle, never draft/check.
+                first_run_calls=list(calls)
+                calls.clear()
+                outputs[1]={'fit_score':'2','reason':'Weak signal'}
+                page.locator('#run').click()
+                page.wait_for_function("document.querySelector('#skout').textContent.includes('Weak fit. Find a stronger signal before writing.')")
+                self.assertEqual(len(calls),2)
+                self.assertEqual(page.locator('#flow-steps li[data-status=done]').count(),2)
+                self.assertEqual(page.locator('#flow-steps li[data-status=skipped]').count(),2)
+                page.screenshot(path=str(report/'fit-score-string-stop.png'),full_page=True)
+                calls[:]=first_run_calls
                 page.keyboard.press('Escape')
                 page.locator('.skill-card').filter(has_text='motion-trimmer').click()
                 page.locator('#fld-topic').fill('Legacy topic')

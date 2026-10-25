@@ -1,0 +1,28 @@
+✔ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (28.480096ms)
+✔ flow defaults omitted or zero max_output_tokens to 2048 for estimates and requests (1.609376ms)
+✔ per-call estimate refuses unaffordable HTTP fallback and JSON repair without another request (1.173977ms)
+✔ ordered flow renders system and user with prior raw outputs without prototype traversal (1.927497ms)
+✔ loader falls back only on 404 and retains legacy prompts for runner (1.157978ms)
+✔ JSON fence parsing and same-model repair account for both attempts; second invalid JSON fails without fallback (1.82657ms)
+✔ HTTP fallback uses actual model; auth aborts without fallback (1.049721ms)
+✔ budget preflight blocks low caps, unknown pricing, auto, missing prompts before any call (0.990752ms)
+✔ actual estimates stop next call after cap exceeded or usage cost becomes unknown, including repair (0.891615ms)
+✔ stop_if ends cleanly and skips downstream; timeout prevents hanging (2.082172ms)
+✔ stop_if accepts finite numeric strings without coercing blank or nonnumeric JSON values (3.378917ms)
+✔ flow timeout prevents hanging (21.613645ms)
+✔ chatOnce sends response_format and abort signal; legacy request remains plain; incomplete pricing is unknown (2.054323ms)
+✔ gallery ships four-step manifest and loads all eight prompt files without fetching inline values (6.502211ms)
+✔ each fallback gets its own same-model JSON repair allowance after HTTP failure (1.08549ms)
+✔ manifest form attributes escape HTML, including field identifiers and numeric bounds (0.614454ms)
+✔ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (0.915955ms)
+✔ JSON failure does not invoke fallback; missing prompt HTTP errors do not silently become prompt text (0.989003ms)
+✔ flow result includes nested runtime output, repairs and unknown estimates as escaped plain text (1.416531ms)
+✔ HTTP error usage receipts are retained for billed attempts before fallback (0.932234ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 269.017098
