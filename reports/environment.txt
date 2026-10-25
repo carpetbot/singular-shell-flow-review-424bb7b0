@@ -1,0 +1,6 @@
+$ date --iso-8601=seconds; node --version; python3 --version; chromium --version
+2026-10-25T00:52:34+08:00
+v24.18.0
+Python 3.12.3
+Chromium 128.0.6613.84 built on Debian GNU/Linux 12 (bookworm)
+Exit code: 0

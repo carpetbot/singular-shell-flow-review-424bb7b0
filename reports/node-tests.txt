@@ -1,0 +1,27 @@
+✔ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (23.276311ms)
+✔ flow defaults omitted or zero max_output_tokens to 2048 for estimates and requests (1.236186ms)
+✔ per-call estimate refuses unaffordable HTTP fallback and JSON repair without another request (1.072671ms)
+✔ ordered flow renders system and user with prior raw outputs without prototype traversal (1.653445ms)
+✔ loader falls back only on 404 and retains legacy prompts for runner (0.984153ms)
+✔ JSON fence parsing and same-model repair account for both attempts; second invalid JSON fails without fallback (1.117009ms)
+✔ HTTP fallback uses actual model; auth aborts without fallback (0.911545ms)
+✔ budget preflight blocks low caps, unknown pricing, auto, missing prompts before any call (0.796068ms)
+✔ actual estimates stop next call after cap exceeded or usage cost becomes unknown, including repair (0.664472ms)
+✔ stop_if ends cleanly and skips downstream; timeout prevents hanging (0.574855ms)
+✔ flow timeout prevents hanging (20.643013ms)
+✔ chatOnce sends response_format and abort signal; legacy request remains plain; incomplete pricing is unknown (1.601336ms)
+✔ gallery ships four-step manifest and loads all eight prompt files without fetching inline values (4.560955ms)
+✔ each fallback gets its own same-model JSON repair allowance after HTTP failure (0.958924ms)
+✔ manifest form attributes escape HTML, including field identifiers and numeric bounds (0.554275ms)
+✔ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (0.806178ms)
+✔ JSON failure does not invoke fallback; missing prompt HTTP errors do not silently become prompt text (0.898655ms)
+✔ flow result includes nested runtime output, repairs and unknown estimates as escaped plain text (1.312993ms)
+✔ HTTP error usage receipts are retained for billed attempts before fallback (0.798968ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 252.927559

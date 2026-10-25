@@ -1,0 +1,91 @@
+{
+  "catalogAsOf": "2026-10-24T16:56:21.780Z",
+  "input": {
+    "prospect_name": "Sample",
+    "company": "Sample",
+    "sender_name": "Sample",
+    "research_notes": "The team is hiring.",
+    "your_offer": "Help with hiring."
+  },
+  "normalRouteEstimateUsd": 0.020897823799080003,
+  "defaultCapUsd": 0.1,
+  "defaultResult": "done",
+  "offlineDefaultCalls": 4,
+  "tinyCapUsd": 0.001,
+  "tinyResult": "failed",
+  "offlineTinyCalls": 0,
+  "tinyError": "Budget preflight: estimated 0.020897823799080003 exceeds 0.001",
+  "pricing": [
+    {
+      "id": "anthropic/claude-opus-5.5",
+      "name": "Claude Opus 5.5",
+      "promptPerMillionUsd": 3.8000016,
+      "completionPerMillionUsd": 19.000008,
+      "maxContextTokens": 1000000,
+      "kind": "chat",
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "routable": true,
+      "supportsTools": true
+    },
+    {
+      "id": "anthropic/claude-sonnet-5.5",
+      "name": "Claude Sonnet 5.5",
+      "promptPerMillionUsd": 1.9000008,
+      "completionPerMillionUsd": 9.500004,
+      "maxContextTokens": 1000000,
+      "kind": "chat",
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "routable": true,
+      "supportsTools": true
+    },
+    {
+      "id": "deepseek/deepseek-v4.1-flash-1017",
+      "name": "DeepSeek V4.1 Flash 1017",
+      "promptPerMillionUsd": 0.09500004,
+      "completionPerMillionUsd": 0.5700002399999999,
+      "maxContextTokens": 1048576,
+      "kind": "chat",
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "routable": true,
+      "supportsTools": true
+    },
+    {
+      "id": "google/gemini-3.8-flash",
+      "name": "Gemini 3.8 Flash",
+      "promptPerMillionUsd": 0.7125003,
+      "completionPerMillionUsd": 3.5625014999999998,
+      "maxContextTokens": 1048576,
+      "kind": "chat",
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "routable": true,
+      "supportsTools": true
+    },
+    {
+      "id": "moonshotai/kimi-k3",
+      "name": "Kimi K3",
+      "promptPerMillionUsd": 1.1400004799999999,
+      "completionPerMillionUsd": 5.2250022,
+      "maxContextTokens": 1048576,
+      "kind": "chat",
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "routable": true,
+      "supportsTools": true
+    }
+  ],
+  "disclosure": "Public pricing snapshot; all chat outputs and usage offline fixtures. No key, network calls, paid requests, or billing guarantee."
+}

@@ -1,0 +1,49 @@
+✖ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (23.659679ms)
+✖ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (1.385942ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.497384
+
+✖ failing tests:
+
+test at tests/flow.test.mjs:6:1
+✖ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (23.659679ms)
+  AssertionError [ERR_ASSERTION]: Budget preflight: estimated 3.1479878254680003 exceeds 0.1
+  
+  'failed' !== 'done'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell/tests/flow.test.mjs:16:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'failed',
+    expected: 'done',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/flow.test.mjs:135:1
+✖ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (1.385942ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.001922
+  - 0.000654
+        ^
+  
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell/tests/flow.test.mjs:138:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.001922,
+    expected: 0.000654,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

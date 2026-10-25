@@ -1,0 +1,49 @@
+test_blocks_python_encoded_queries_symlinks_directories_tests (test_proxy.StaticSecurity.test_blocks_python_encoded_queries_symlinks_directories_tests) ... [shell] code 404, message Not Found
+[shell] "GET /proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /proxy.py?download=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /%70roxy%2epy?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /%2570roxy%252epy HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/ HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /tests/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /../proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/%2e%2e/proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /proxy.py?download=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /%70roxy%2epy?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /%2570roxy%252epy HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/ HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /tests/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /../proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/%2e%2e/proxy.py HTTP/1.1" 404 -
+ok
+test_static_shell_still_serves (test_proxy.StaticSecurity.test_static_shell_still_serves) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /index.html?x=1 HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "HEAD / HTTP/1.1" 200 -
+[shell] "HEAD /index.html?x=1 HTTP/1.1" 200 -
+[shell] "HEAD /js/app.js HTTP/1.1" 200 -
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.578s
+
+OK

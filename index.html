@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Singular — community shell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="brand"><span class="mark">◆</span> Singular <span class="sub">community shell</span></div>
+  <div class="top-right">
+    <span id="keychip" class="chip warn" title="API key status">no key</span>
+    <span id="routechip" class="chip" title="Active routing">auto</span>
+  </div>
+</header>
+<div id="syncbanner" hidden></div>
+<main id="layout">
+  <nav id="rail">
+    <a href="#/chat" data-nav="chat">💬 Chat</a>
+    <a href="#/skills" data-nav="skills">🧩 Skills</a>
+    <a href="#/models" data-nav="models">📊 Models</a>
+    <a href="#/settings" data-nav="settings">⚙️ Settings</a>
+    <div class="rail-foot">skeleton v0 · proxy same-origin<br>gateway: api.impossi.build</div>
+  </nav>
+  <section id="view"></section>
+</main>
+<nav id="tabbar">
+  <a href="#/chat" data-nav="chat">💬</a>
+  <a href="#/skills" data-nav="skills">🧩</a>
+  <a href="#/models" data-nav="models">📊</a>
+  <a href="#/settings" data-nav="settings">⚙️</a>
+</nav>
+<div id="toasts"></div>
+<div id="modal-root"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

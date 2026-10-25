@@ -1,0 +1,20 @@
+✖ flow defaults omitted or zero max_output_tokens to 2048 for estimates and requests (2.091653ms)
+✔ per-call estimate refuses unaffordable HTTP fallback and JSON repair without another request (2.437203ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.99095
+
+✖ failing tests:
+
+test at tests/flow.test.mjs:27:1
+✖ flow defaults omitted or zero max_output_tokens to 2048 for estimates and requests (2.091653ms)
+  Error: Finite max_output_tokens required
+      at flowPreflight (file:///home/orangepi/projects/singular-shell/js/flow.js:42:109)
+      at TestContext.<anonymous> (file:///home/orangepi/projects/singular-shell/tests/flow.test.mjs:31:16)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)

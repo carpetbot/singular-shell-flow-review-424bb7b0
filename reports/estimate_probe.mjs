@@ -1,0 +1,22 @@
+// Offline acceptance probe using the recorded public catalog; no HTTP calls.
+import {readFile,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {flowPreflight,runFlow} from '../js/flow.js';
+const root=new URL('../skills/impossibuild__prospect-to-cold-email/',import.meta.url);
+const manifest=JSON.parse(await readFile(new URL('singular.flow.json',root),'utf8'));
+manifest.prompts={};
+for(const step of manifest.runtime.steps)for(const path of [step.system,step.user_template])manifest.prompts[path]=await readFile(new URL(path,root),'utf8');
+const catalog=JSON.parse(await readFile(new URL('catalog-live.json',import.meta.url),'utf8'));
+const input={prospect_name:'Sample',company:'Sample',sender_name:'Sample',research_notes:'The team is hiring.',your_offer:'Help with hiring.'};
+let calls=0;
+const output=['{"signals":[]}','{"fit_score":4}','{"email":{"subject":"Hiring","body":"Can I help?"}}','{"verdict":"pass","issues":[]}'];
+const chat=async(_,opts)=>({content:output[calls++],receipt:{requested:opts.model,prompt_tokens:10,completion_tokens:5,estCost:.0001,caveat:'Offline fixture, not real model usage'}});
+const estimate=flowPreflight(manifest,input,catalog);
+const normal=await runFlow(manifest,input,()=>{},{catalog,chat});
+assert.equal(normal.status,'done');assert.equal(calls,4);
+const normalCalls=calls;calls=0;manifest.runtime.max_cost_per_run_usd=.001;
+const tiny=await runFlow(manifest,input,()=>{},{catalog,chat});
+assert.equal(tiny.status,'failed');assert.equal(calls,0);
+const report={catalogAsOf:catalog.as_of,input,normalRouteEstimateUsd:estimate,defaultCapUsd:.1,defaultResult:normal.status,offlineDefaultCalls:normalCalls,tinyCapUsd:.001,tinyResult:tiny.status,offlineTinyCalls:calls,tinyError:tiny.error,pricing:catalog.models.filter(m=>new Set(manifest.runtime.steps.flatMap(s=>[s.model,...(s.fallback||[])])).has(m.id)),disclosure:'Public pricing snapshot; all chat outputs and usage offline fixtures. No key, network calls, paid requests, or billing guarantee.'};
+await writeFile(new URL('preflight-acceptance.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));

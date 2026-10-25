@@ -1,0 +1,25 @@
+✔ supplied exact flow with public catalog snapshot completes four offline calls at default cap, blocks .001 before calls (28.061119ms)
+✔ ordered flow renders system and user with prior raw outputs without prototype traversal (2.120882ms)
+✔ loader falls back only on 404 and retains legacy prompts for runner (1.322494ms)
+✔ JSON fence parsing and same-model repair account for both attempts; second invalid JSON fails without fallback (1.756242ms)
+✔ HTTP fallback uses actual model; auth aborts without fallback (1.182177ms)
+✔ budget preflight blocks low caps, unknown pricing, auto, missing prompts before any call (1.050141ms)
+✔ actual estimates stop next call after cap exceeded or usage cost becomes unknown, including repair (0.73489ms)
+✔ stop_if ends cleanly and skips downstream; timeout prevents hanging (0.573674ms)
+✔ flow timeout prevents hanging (21.003193ms)
+✔ chatOnce sends response_format and abort signal; legacy request remains plain; incomplete pricing is unknown (1.967705ms)
+✔ gallery ships four-step manifest and loads all eight prompt files without fetching inline values (7.65639ms)
+✔ each fallback gets its own same-model JSON repair allowance after HTTP failure (1.033531ms)
+✔ manifest form attributes escape HTML, including field identifiers and numeric bounds (0.556614ms)
+✔ preflight estimates normal route and validates fallback prices and repeated downstream context/output limits (0.74673ms)
+✔ JSON failure does not invoke fallback; missing prompt HTTP errors do not silently become prompt text (0.956234ms)
+✔ flow result includes nested runtime output, repairs and unknown estimates as escaped plain text (1.350023ms)
+✔ HTTP error usage receipts are retained for billed attempts before fallback (0.802948ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 258.724851
