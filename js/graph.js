@@ -14,10 +14,22 @@ export function score_cost_and_rank(judge,rubric,blinded,map,costs,reversed=null
  const weights=Object.fromEntries(rubric.criteria.map(c=>[c.name,c.weight??1]));
  const scored=j=>Object.fromEntries(j.scores.map(s=>{const qfail=[];const criteria=Object.fromEntries(s.criteria.map(c=>{let score=Math.trunc(Number(c.score));if(!quoteFound(c.quote,blinded['answer_'+s.answer])){qfail.push(c.name);score=Math.min(score,2);}return [c.name,score];}));let num=0,den=0;for(const [name,score] of Object.entries(criteria)){const w=weights[name]??1;num+=score*w;den+=w;}return [map[String(s.answer)],{avg:den?round2(num/den):null,must_haves_failed:s.must_haves_failed||[],quote_failures:qfail,criteria}];}));
  const a=scored(judge),disagreements=[];
- if(reversed){const b=scored(reversed);for(const slot of Object.keys(a)){if(!b[slot])continue;for(const [name,sa] of Object.entries(a[slot].criteria)){const sb=b[slot].criteria[name];if(sb!==undefined && Math.abs(sa-sb)>=2)disagreements.push({slot,criterion:name,scores:[sa,sb]});}a[slot].avg=round2((a[slot].avg+b[slot].avg)/2);}}
+ if(reversed){
+  const b=scored(reversed);
+  for(const slot of Object.keys(a)){
+   if(!b[slot])continue;
+   for(const [name,sa] of Object.entries(a[slot].criteria)){const sb=b[slot].criteria[name];if(sb!==undefined && Math.abs(sa-sb)>=2)disagreements.push({slot,criterion:name,scores:[sa,sb]});}
+   a[slot].avg=round2((a[slot].avg+b[slot].avg)/2);
+   const failures=[...new Set(a[slot].must_haves_failed)].sort(),reverseFailures=[...new Set(b[slot].must_haves_failed)].sort();
+   if(JSON.stringify(failures)!==JSON.stringify(reverseFailures))disagreements.push({slot,criterion:'must_haves',scores:[failures,reverseFailures]});
+   a[slot].must_haves_failed=[...new Set([...failures,...reverseFailures])].sort();
+   a[slot].quote_failures=[...new Set([...a[slot].quote_failures,...b[slot].quote_failures])].sort();
+  }
+ }
+ const ineligible=r=>!!r.must_haves_failed.length;
  const rows=Object.entries(a).map(([slot,v])=>({slot,...v,cost_usd:costs[slot]??null}));
- rows.sort((a,b)=>Number(!!a.must_haves_failed.length)-Number(!!b.must_haves_failed.length)||(b.avg??0)-(a.avg??0));rows.forEach((r,i)=>r.rank=i+1);
- const passing=rows.filter(r=>!r.must_haves_failed.length && r.avg!==null),best=passing[0];
+ rows.sort((a,b)=>Number(ineligible(a))-Number(ineligible(b))||(b.avg??0)-(a.avg??0));rows.forEach((r,i)=>r.rank=i+1);
+ const passing=rows.filter(r=>!ineligible(r) && r.avg!==null),best=passing[0];
  const near=best?passing.filter(r=>r.avg>=best.avg-.5 && r.cost_usd!==null):[];near.sort((a,b)=>a.cost_usd-b.cost_usd);
  return {ranking:rows,best_overall:best?.slot??null,best_value:near[0]?.slot??null,disagreements};
 }
@@ -96,7 +108,7 @@ export async function runGraph(manifest,vals,onNode=()=>{},deps={}){
 }
 const utf8=text=>new TextEncoder().encode(text).length;
 const knownCost=v=>typeof v==='number' && Number.isFinite(v) && v>=0;
-export function routableModels(catalog){return (catalog?.models||[]).filter(m=>m.kind==='chat' && m.routable===true && typeof m.id==='string' && /^[^\s/]+\/\S+$/.test(m.id) && !/(^|\/)(auto|router)$/i.test(m.id));}
+export function routableModels(catalog){return (catalog?.models||[]).filter(m=>m.kind==='chat' && m.routable===true && typeof m.id==='string' && /^[^\s/]+\/\S+$/.test(m.id) && !/(^|\/)(auto|router)$/i.test(m.id) && !/-latest$/i.test(m.id));}
 function price(catalog,id){
  const p=routableModels(catalog).find(m=>m.id===id);
  if(!p)throw new Error('Exact routable chat model required: '+id);

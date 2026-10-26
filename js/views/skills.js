@@ -56,7 +56,7 @@ export function renderField(f, value){
       return `<div>${lab}<input type="range" id="${id}" min="${esc(f.min)}" max="${esc(f.max)}" step="${esc(f.step||1)}" value="${esc(v)}" data-suffix="${esc(f.suffix||"")}"><span class="range-out" id="${id}-out">${esc(v)}${esc(f.suffix||"")}</span></div>`;
     }
     case "model":
-      return `<div>${lab}<select id="${id}" required><option value="">Choose exact model…</option>${routableModels(get().catalog).map(m=>`<option value="${esc(m.id)}"${m.id===value?' selected':''}>${esc(m.id)} · $${esc(m.promptPerMillionUsd??'unknown')} input / $${esc(m.completionPerMillionUsd??'unknown')} output per 1M tokens</option>`).join('')}</select></div>`;
+      return `<div>${lab}<input type="search" data-model-filter="${id}" aria-controls="${id}" aria-label="Filter ${esc(f.label)} models" placeholder="Type to filter models…"><select id="${id}" required><option value="">Choose exact model…</option>${routableModels(get().catalog).map(m=>`<option value="${esc(m.id)}"${m.id===value?' selected':''}>${esc(m.id)} · $${esc(typeof m.promptPerMillionUsd==='number'?Number(m.promptPerMillionUsd.toPrecision(3)):'unknown')} input / $${esc(typeof m.completionPerMillionUsd==='number'?Number(m.completionPerMillionUsd.toPrecision(3)):'unknown')} output per 1M tokens</option>`).join('')}</select></div>`;
     case "select":
       return `<div>${lab}<select id="${id}">${(f.options||[]).map(o=>`<option value="${esc(o.value??o)}">${esc(o.label??o)}</option>`).join("")}</select></div>`;
     default:

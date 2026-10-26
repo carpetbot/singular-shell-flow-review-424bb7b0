@@ -1,0 +1,212 @@
+▶ careful must-have eligibility conservatively reconciles both pass orders
+  ✖ failure only in pass 2 (7.932652ms)
+  ✖ failure only in pass 1 (0.953414ms)
+✖ careful must-have eligibility conservatively reconciles both pass orders (10.199241ms)
+✖ reference 11: test_careful_mode_must_have_from_second_pass_counts (6.21207ms)
+✖ careful unions distinct must-have failures and flags both lists even when both fail (0.918705ms)
+▶ invented quote from either careful pass is retained and disqualifies even a near-best answer
+  ✖ invented quote in pass 1 (0.884785ms)
+  ✖ invented quote in pass 2 (0.493236ms)
+✖ invented quote from either careful pass is retained and disqualifies even a near-best answer (1.940427ms)
+✖ all quote-invalid answers leave overall and value unavailable (0.578884ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 0
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.767517
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:30:40
+✖ failure only in pass 2 (7.932652ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     criterion: 'must_haves_failed',
+  -     criterion: 'must_haves',
+        scores: [
+  +       true,
+  +       false
+  -       [],
+  -       [
+  -         'under 10 words'
+  -       ]
+        ],
+        slot: 'slot_3'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at TestContext.test (node:internal/test_runner/test:382:20)
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:30:40)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { slot: 'slot_3', criterion: 'must_haves_failed', scores: [Array] } ],
+    expected: [ { slot: 'slot_3', criterion: 'must_haves', scores: [Array] } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/graph.test.mjs:30:40
+✖ failure only in pass 1 (0.953414ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     criterion: 'must_haves_failed',
+  -     criterion: 'must_haves',
+        scores: [
+  +       false,
+  +       true
+  -       [
+  -         'under 10 words'
+  -       ],
+  -       []
+        ],
+        slot: 'slot_3'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at TestContext.test (node:internal/test_runner/test:382:20)
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:30:40)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { slot: 'slot_3', criterion: 'must_haves_failed', scores: [Array] } ],
+    expected: [ { slot: 'slot_3', criterion: 'must_haves', scores: [Array] } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/graph.test.mjs:61:1
+✖ reference 11: test_careful_mode_must_have_from_second_pass_counts (6.21207ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(out.disagreements.some(d=>JSON.stringify(d)===JSON.stringify({slot:'slot_3',criterion:'must_haves',scores:[[],['under 10 words']]})))
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:67:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/graph.test.mjs:70:1
+✖ careful unions distinct must-have failures and flags both lists even when both fail (0.918705ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'z',
+      'a',
+  -   'z'
+    ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:75:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'z', 'a' ],
+    expected: [ 'a', 'z' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/graph.test.mjs:80:40
+✖ invented quote in pass 1 (0.884785ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'slot_2' !== 'slot_3'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:85:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at TestContext.test (node:internal/test_runner/test:382:20)
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:80:40)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'slot_2',
+    expected: 'slot_3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/graph.test.mjs:80:40
+✖ invented quote in pass 2 (0.493236ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'short'
+  - ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:84:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at TestContext.test (node:internal/test_runner/test:382:20)
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:80:40)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'short' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/graph.test.mjs:90:1
+✖ all quote-invalid answers leave overall and value unavailable (0.578884ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'slot_3' !== null
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:94:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'slot_3',
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

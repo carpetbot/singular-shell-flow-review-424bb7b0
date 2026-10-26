@@ -77,6 +77,6 @@
     }
   ],
   "judge_calls": 0,
-  "result": "Run stopped\n\nFewer than 2 models answered. Nothing to compare.\n\nTotal estimated cost: <0.01\u00a2. Estimates are not billed charges or a guaranteed cap.\n\nslot_1: Explicit offline HTTP500 fixture \u00b7 (no answer if contestant)\n\nslot_2: Explicit offline HTTP500 fixture \u00b7 (no answer if contestant)",
+  "result": "Run stopped\n\nFewer than 2 models answered. Nothing to compare.\n\nTotal estimated cost: <0.01\u00a2. Estimates are not billed charges or a guaranteed cap.\n\nllmtech/decider-0.8b-fp8: no answer (gateway error 500)\n\nperplexity/pplx-decider-v1.2: no answer (gateway error 500)",
   "fixture": "Offline Chromium"
 }

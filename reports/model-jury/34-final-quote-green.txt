@@ -1,0 +1,13 @@
+✔ reference 12: test_careful_mode_invented_quote_in_second_pass_caps_not_disqualifies (6.005646ms)
+▶ invented quotes in either pass retain eligibility for overall and value
+  ✔ invented quote in pass 1 (0.952324ms)
+  ✔ invented quote in pass 2 (0.513456ms)
+✔ invented quotes in either pass retain eligibility for overall and value (2.20705ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.49548

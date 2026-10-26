@@ -14,7 +14,7 @@
       },
       {
         "role": "user",
-        "content": "Task:\nRecommend a shipping date.\n\nRubric:\n{\"criteria\": [{\"name\": \"clear\", \"weight\": 3}, {\"name\": \"short\", \"weight\": 1}], \"must_haves\": []}\n\nAnswer 1:\nWe could consider many options.\n\nAnswer 2:\nShip Friday; fix payments first.\n\nAnswer 3:\nShip on Friday. The risk is the payment bug.\n"
+        "content": "Task:\nRecommend a shipping date.\n\nRubric:\n{\"criteria\": [{\"name\": \"clear\", \"weight\": 3}, {\"name\": \"short\", \"weight\": 1}], \"must_haves\": []}\n\nAnswer 1:\nShip on Friday. The risk is the payment bug.\n\nAnswer 2:\nWe could consider many options.\n\nAnswer 3:\nShip Friday; fix payments first.\n"
       }
     ],
     "stream": false,

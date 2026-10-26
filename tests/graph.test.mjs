@@ -26,6 +26,98 @@ test('reference 9: must-have failures rank last',()=>{const [b,m]=blinded(),j=ju
 
 test('reference 10: careful mode flags disagreement',()=>{const [b,m]=blinded(),j1=judge(m),j2=judge(m);j2.scores.find(s=>m[s.answer]==='slot_2').criteria[0].score=5;const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2);assert.deepEqual(out.disagreements,[{slot:'slot_2',criterion:'clear',scores:[2,5]}]);});
 
+test('careful must-have eligibility conservatively reconciles both pass orders',async t=>{
+ for(const failedPass of [2,1])await t.test(`failure only in pass ${failedPass}`,()=>{
+  const [b,m]=blinded(),passes=[judge(m),judge(m)];
+  passes[failedPass-1].scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['under 10 words'];
+  const out=graph.score_cost_and_rank(passes[0],R,b,m,costs,passes[1]);
+  assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').must_haves_failed,['under 10 words']);
+  assert.equal(out.ranking.at(-1).slot,'slot_3');
+  assert.equal(out.best_overall,'slot_1');
+  assert.equal(out.best_value,'slot_1');
+  assert.deepEqual(out.disagreements,[{slot:'slot_3',criterion:'must_haves',scores:failedPass===2?[[],['under 10 words']]:[['under 10 words'],[]]}]);
+ });
+});
+
+test('model picker prices use three significant digits without changing catalog values',async()=>{
+ const {get}=await import('../js/store.js'),store=get(),previous=store.catalog;
+ const {renderField}=await import('../js/views/skills.js');
+ try{store.catalog={models:[{...fixtureCatalog.models[0],promptPerMillionUsd:0.123456789,completionPerMillionUsd:1.23456789}]};
+  const html=renderField({type:'model',key:'judge',label:'Judge'});
+  assert.match(html,/\$0\.123 input \/ \$1\.23 output/);
+  assert.equal(store.catalog.models[0].promptPerMillionUsd,0.123456789);
+ }finally{store.catalog=previous;}
+});
+
+test('same winner and best value states equality instead of zero percent savings',async()=>{
+ const {renderGraphResult}=await import('../js/graph-ui.js');
+ const m=await fixtureManifest(),ctx=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:fakeGateway()});
+ assert.equal(ctx.steps.tally.json.best_overall,ctx.steps.tally.json.best_value);
+ const html=renderGraphResult(m,ctx);
+ assert.match(html,/The winner is also the best value\./);
+ assert.doesNotMatch(html,/0\.0% cheaper/);
+});
+
+test('reference 11: test_careful_mode_must_have_from_second_pass_counts',()=>{
+ const [b,m]=blinded(),j1=judge(m),j2=judge(m);
+ j2.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['under 10 words'];
+ const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2);
+ assert.notEqual(out.best_overall,'slot_3');assert.notEqual(out.best_value,'slot_3');
+ assert.equal(out.ranking.at(-1).slot,'slot_3');
+ assert.ok(out.disagreements.some(d=>JSON.stringify(d)===JSON.stringify({slot:'slot_3',criterion:'must_haves',scores:[[],['under 10 words']]})));
+});
+
+test('careful unions distinct must-have failures and flags both lists even when both fail',()=>{
+ const [b,m]=blinded(),j1=judge(m),j2=judge(m);
+ j1.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['z','z'];
+ j2.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['a'];
+ const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2);
+ assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').must_haves_failed,['a','z']);
+ assert.deepEqual(out.disagreements,[{slot:'slot_3',criterion:'must_haves',scores:[['z'],['a']]}]);
+});
+
+test('reference 12: test_careful_mode_invented_quote_in_second_pass_caps_not_disqualifies',()=>{
+ const [b,m]=blinded(),j1=judge(m),j2=judge(m,'slot_3');
+ const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2),row=out.ranking.find(r=>r.slot==='slot_3');
+ assert.deepEqual(row.quote_failures,['clear','short']);assert.equal(row.avg,3.5);
+ assert.deepEqual(row.must_haves_failed,[]);assert.equal(out.best_overall,'slot_1');
+ assert.ok(out.disagreements.some(d=>JSON.stringify(d)===JSON.stringify({slot:'slot_3',criterion:'clear',scores:[5,2]})));
+});
+
+test('invented quotes in either pass retain eligibility for overall and value',async t=>{
+ for(const failedPass of [1,2])await t.test(`invented quote in pass ${failedPass}`,()=>{
+  const [b,m]=blinded(),passes=[judge(m),judge(m)];
+  passes[failedPass-1].scores.find(s=>m[s.answer]==='slot_3').criteria[1].quote='invented words';
+  const out=graph.score_cost_and_rank(passes[0],R,b,m,costs,passes[1]);
+  assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').quote_failures,['short']);
+  assert.equal(out.best_overall,'slot_1');assert.equal(out.best_value,'slot_3');
+  const only={...R,criteria:[{name:'short',weight:1}]},single=passes.map(j=>({scores:j.scores.filter(s=>m[s.answer]==='slot_3').map(s=>({...s,criteria:s.criteria.filter(c=>c.name==='short')}))}));
+  const eligible=graph.score_cost_and_rank(single[0],only,b,m,costs,single[1]);
+  assert.equal(eligible.best_overall,'slot_3');assert.equal(eligible.best_value,'slot_3');
+ });
+});
+
+test('Lite contestant gateway failure names exact model with plain no-answer reason',async()=>{
+ const {renderGraphResult}=await import('../js/graph-ui.js'),m=await fixtureManifest(),base=fakeGateway();
+ const ctx=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{
+  if(opts.model===vals.contestant_3)throw Object.assign(Error('upstream HTTP500 fixture'),{status:500});
+  return base(messages,opts);
+ }});
+ const html=renderGraphResult(m,ctx),failure=html.match(/<p class="next-action">([\s\S]*?)<\/p>/)?.[1];
+ assert.equal(failure,'c/three: no answer (gateway error 500)');
+ assert.match(html,/upstream HTTP500 fixture/,'raw detail retained in Pro');
+});
+
+test('mutable -latest IDs are hidden and refused before any graph calls without normalization',async()=>{
+ const alias='a/one-latest',cat={models:[...fixtureCatalog.models,{...fixtureCatalog.models[0],id:alias}]};
+ assert.ok(!graph.routableModels(cat).some(m=>m.id===alias));
+ const {get}=await import('../js/store.js'),store=get(),previous=store.catalog;
+ try{store.catalog=cat;const {renderField}=await import('../js/views/skills.js');assert.ok(!renderField({type:'model',key:'judge',label:'Judge'}).includes(alias));}finally{store.catalog=previous;}
+ let calls=0;const out=await graph.runGraph(await fixtureManifest(),{...vals,contestant_1:alias},()=>{},{catalog:cat,chat:async()=>calls++});
+ assert.equal(out.status,'failed');assert.equal(calls,0);assert.match(out.error,/Exact routable chat model required/);
+ assert.equal(cat.models.at(-1).id,alias);
+});
+
 const fixtureCatalog={models:['a/one','b/two','c/three','d/judge','e/rubric'].map(id=>({id,kind:'chat',routable:true,promptPerMillionUsd:1,completionPerMillionUsd:2}))};
 const vals={task:'Choose a shipping date',context:'',criteria:'',contestant_1:'a/one',contestant_2:'b/two',contestant_3:'c/three',judge:'d/judge',rubric_writer:'e/rubric',careful_mode:false};
 async function fixtureManifest(){const root=new URL('../skills/impossibuild__model-jury/',import.meta.url);const m=JSON.parse(await readFile(new URL('singular.flow.json',root),'utf8'));m.runtime.graph.find(n=>n.id==='rubric').model_from_input='rubric_writer';m.prompts={};for(const n of m.runtime.graph)for(const path of [n.system,n.user_template].filter(Boolean))m.prompts[path]=await readFile(new URL(path,root),'utf8');return m;}

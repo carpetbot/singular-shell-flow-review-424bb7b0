@@ -1,0 +1,43 @@
+test_07_search_models_preserves_exact_selection_and_excludes_latest (test_model_jury.ModelJury.test_07_search_models_preserves_exact_selection_and_excludes_latest) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 3.295s
+
+OK

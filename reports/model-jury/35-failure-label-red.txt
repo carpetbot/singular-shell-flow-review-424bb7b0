@@ -1,0 +1,30 @@
+✖ Lite contestant gateway failure names exact model with plain no-answer reason (41.564289ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.288553
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:100:1
+✖ Lite contestant gateway failure names exact model with plain no-answer reason (41.564289ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'slot_3: upstream HTTP500 fixture · (no answer if contestant)'
+  - 'c/three: no answer (gateway error 500)'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:107:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'slot_3: upstream HTTP500 fixture · (no answer if contestant)',
+    expected: 'c/three: no answer (gateway error 500)',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

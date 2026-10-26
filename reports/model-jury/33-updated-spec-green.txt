@@ -1,0 +1,19 @@
+▶ careful must-have eligibility conservatively reconciles both pass orders
+  ✔ failure only in pass 2 (5.901028ms)
+  ✔ failure only in pass 1 (0.587374ms)
+✔ careful must-have eligibility conservatively reconciles both pass orders (7.884344ms)
+✔ reference 11: test_careful_mode_must_have_from_second_pass_counts (0.819757ms)
+✔ careful unions distinct must-have failures and flags both lists even when both fail (0.619403ms)
+▶ invented quote from either careful pass is retained and disqualifies even a near-best answer
+  ✔ invented quote in pass 1 (0.639362ms)
+  ✔ invented quote in pass 2 (0.386939ms)
+✔ invented quote from either careful pass is retained and disqualifies even a near-best answer (1.581316ms)
+✔ all quote-invalid answers leave overall and value unavailable (0.490256ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.606635

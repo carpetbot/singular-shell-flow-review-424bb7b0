@@ -1,0 +1,2 @@
+PASS 15 protected base hashes; 23 frozen source/manifest/prompt files equal HEAD; 7 prompts equal final pinned spec
+ZIP SHA256 0cc887ad22de89d5788dc1ff89af80b65368d6906efceb33b02e04e72a907249

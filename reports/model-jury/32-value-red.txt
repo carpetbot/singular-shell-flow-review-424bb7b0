@@ -1,0 +1,163 @@
+✖ same winner and best value states equality instead of zero percent savings (51.41504ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 171.862855
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:52:1
+✖ same winner and best value states equality instead of zero percent savings (51.41504ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /The winner is also the best value\./. Input:
+  
+  '<h3>Comparison complete</h3><p role="status">One judge’s opinion, not independent factual verification. Review the evidence.</p><p>Total estimated cost: 0.015¢. Estimates are not billed charges or a guaranteed cap.</p><article class="card jury-answer"><h4>Winner</h4><p>a/one · Score 4.75 / 5 · &lt;0.01¢</p><pre>Ship on Friday. The risk is the payment bug.</pre><button class="btn ghost sm" data-copy="Ship on Friday. The risk is the payment bug.">Copy answer</button></article><p><strong>Judge’s stated reason:</strong> Offline fixture comparison</p><p class="note">This reason may differ from the code-verified ranking after quote checks, must-have failures or careful-pass averaging.</p><article class="card jury-answer"><h4>Best value</h4><p>a/one · Score 4.75 / 5 · &lt;0.01¢</p><pre>Ship on Friday. The risk is the payment bug.</pre><button class="btn ghost sm" data-copy="Ship on Friday. The risk is the payment bug.">Copy answer</button></article><p>0.0% cheaper than the winner; within 0.5 points.</p><details><summary>Other answers</summary><article class="card jury-answer"><h4>Answer 2</h4><p>b/two · Score 4.75 / 5 · &lt;0.01¢</p><pre>We could consider many options regarding the timeline going forward.</pre><button class="btn ghost sm" data-copy="We could consider many options regarding the timeline going forward.">Copy answer</button></article><article class="card jury-answer"><h4>Answer 3</h4><p>c/three · Score 4.75 / 5 · &lt;0.01¢</p><pre>Ship Friday; fix payments first.</pre><button class="btn ghost sm" data-copy="Ship Friday; fix payments first.">Copy answer</button></article></details><section class="pro-only"><h4>Rubric</h4><pre>{\n' +
+    '  &quot;criteria&quot;: [\n' +
+    '    {\n' +
+    '      &quot;name&quot;: &quot;clear&quot;,\n' +
+    '      &quot;weight&quot;: 3\n' +
+    '    },\n' +
+    '    {\n' +
+    '      &quot;name&quot;: &quot;short&quot;,\n' +
+    '      &quot;weight&quot;: 1\n' +
+    '    }\n' +
+    '  ],\n' +
+    '  &quot;must_haves&quot;: []\n' +
+    '}</pre><h4>Score table · verified quotes and weighted scores</h4><table><thead><tr><th>Rank / slot</th><th>Score</th><th>Cost</th><th>Evidence</th></tr></thead><tbody><tr><td>1 · slot_1</td><td>4.75</td><td>&lt;0.01¢</td><td><pre>{\n' +
+    '  &quot;criteria&quot;: {\n' +
+    '    &quot;clear&quot;: 5,\n' +
+    '    &quot;short&quot;: 4\n' +
+    '  },\n' +
+    '  &quot;quote_failures&quot;: [],\n' +
+    '  &quot;must_haves_failed&quot;: [],\n' +
+    '  &quot;judges&quot;: [\n' +
+    '    {\n' +
+    '      &quot;answer&quot;: &quot;1&quot;,\n' +
+    '      &quot;must_haves_failed&quot;: [],\n' +
+    '      &quot;criteria&quot;: [\n' +
+    '        {\n' +
+    '          &quot;name&quot;: &quot;clear&quot;,\n' +
+    '          &quot;score&quot;: 5,\n' +
+    '          &quot;quote&quot;: &quot;Ship on Friday. The risk is the payment bug.&quot;\n' +
+    '        },\n' +
+    '        {\n' +
+    '          &quot;name&quot;: &quot;short&quot;,\n' +
+    '          &quot;score&quot;: 4,\n' +
+    '          &quot;quote&quot;: &quot;Ship on Friday. The risk is the payment bug.&quot;\n' +
+    '        }\n' +
+    '      ]\n' +
+    '    }\n' +
+    '  ]\n' +
+    '}</pre></td></tr><tr><td>2 · slot_2</td><td>4.75</td><td>&lt;0.01¢</td><td><pre>{\n' +
+    '  &quot;criteria&quot;: {\n' +
+    '    &quot;clear&quot;: 5,\n' +
+    '    &quot;short&quot;: 4\n' +
+    '  },\n' +
+    '  &quot;quote_failures&quot;: [],\n' +
+    '  &quot;must_haves_failed&quot;: [],\n' +
+    '  &quot;judges&quot;: [\n' +
+    '    {\n' +
+    '      &quot;answer&quot;: &quot;2&quot;,\n' +
+    '      &quot;must_haves_failed&quot;: [],\n' +
+    '      &quot;criteria&quot;: [\n' +
+    '        {\n' +
+    '          &quot;name&quot;: &quot;clear&quot;,\n' +
+    '          &quot;score&quot;: 5,\n' +
+    '          &quot;quote&quot;: &quot;We could consider many options regarding the timeline going forward.&quot;\n' +
+    '        },\n' +
+    '        {\n' +
+    '          &quot;name&quot;: &quot;short&quot;,\n' +
+    '          &quot;score&quot;: 4,\n' +
+    '          &quot;quote&quot;: &quot;We could consider many options regarding the timeline going forward.&quot;\n' +
+    '        }\n' +
+    '      ]\n' +
+    '    }\n' +
+    '  ]\n' +
+    '}</pre></td></tr><tr><td>3 · slot_3</td><td>4.75</td><td>&lt;0.01¢</td><td><pre>{\n' +
+    '  &quot;criteria&quot;: {\n' +
+    '    &quot;clear&quot;: 5,\n' +
+    '    &quot;short&quot;: 4\n' +
+    '  },\n' +
+    '  &quot;quote_failures&quot;: [],\n' +
+    '  &quot;must_haves_failed&quot;: [],\n' +
+    '  &quot;judges&quot;: [\n' +
+    '    {\n' +
+    '      &quot;answer&quot;: &quot;3&quot;,\n' +
+    '      &quot;must_haves_failed&quot;: [],\n' +
+    '      &quot;criteria&quot;: [\n' +
+    '        {\n' +
+    '          &quot;name&quot;: &quot;clear&quot;,\n' +
+    '          &quot;score&quot;: 5,\n' +
+    '          &quot;quote&quot;: &quot;Ship Friday; fix payments first.&quot;\n' +
+    '        },\n' +
+    '        {\n' +
+    '          &quot;name&quot;: &quot;short&quot;,\n' +
+    '          &quot;score&quot;: 4,\n' +
+    '          &quot;quote&quot;: &quot;Ship Friday; fix payments first.&quot;\n' +
+    '        }\n' +
+    '      ]\n' +
+    '    }\n' +
+    '  ]\n' +
+    '}</pre></td></tr></tbody></table><h4>Slot map · revealed after judging</h4><pre>{\n' +
+    '  &quot;1&quot;: {\n' +
+    '    &quot;slot&quot;: &quot;slot_1&quot;,\n' +
+    '    &quot;model&quot;: &quot;a/one&quot;\n' +
+    '  },\n' +
+    '  &quot;2&quot;: {\n' +
+    '    &quot;slot&quot;: &quot;slot_2&quot;,\n' +
+    '    &quot;model&quot;: &quot;b/two&quot;\n' +
+    '  },\n' +
+    '  &quot;3&quot;: {\n' +
+    '    &quot;slot&quot;: &quot;slot_3&quot;,\n' +
+    '    &quot;model&quot;: &quot;c/three&quot;\n' +
+    '  }\n' +
+    '}</pre><h4>Disagreement flags</h4><pre>[]</pre></section><section class="pro-only"><h4>Per-node receipts · costs and tokens</h4><details><summary>guard · done · —</summary><pre>[]</pre></details><details><summary>rubric · done · &lt;0.01¢</summary><pre>[\n' +
+    '  {\n' +
+    '    &quot;requested&quot;: &quot;e/rubric&quot;,\n' +
+    '    &quot;prompt_tokens&quot;: 10,\n' +
+    '    &quot;completion_tokens&quot;: 10,\n' +
+    '    &quot;estCost&quot;: 0.00003\n' +
+    '  }\n' +
+    ']</pre></details><details><summary>slot_1 · done · &lt;0.01¢</summary><pre>[\n' +
+    '  {\n' +
+    '    &quot;requested&quot;: &quot;a/one&quot;,\n' +
+    '    &quot;prompt_tokens&quot;: 10,\n' +
+    '    &quot;completion_tokens&quot;: 10,\n' +
+    '    &quot;estCost&quot;: 0.00003\n' +
+    '  }\n' +
+    ']</pre></details><details><summary>slot_2 · done · &lt;0.01¢</summary><pre>[\n' +
+    '  {\n' +
+    '    &quot;requested&quot;: &quot;b/two&quot;,\n' +
+    '    &quot;prompt_tokens&quot;: 10,\n' +
+    '    &quot;completion_tokens&quot;: 10,\n' +
+    '    &quot;estCost&quot;: 0.00003\n' +
+    '  }\n' +
+    ']</pre></details><details><summary>slot_3 · done · &lt;0.01¢</summary><pre>[\n' +
+    '  {\n' +
+    '    &quot;requested&quot;: &quot;c/three&quot;,\n' +
+    '    &quot;prompt_tokens&quot;: 10,\n' +
+    '    &quot;completion_tokens&quot;: 10,\n' +
+    '    &quot;estCost&quot;: 0.00003\n' +
+    '  }\n' +
+    ']</pre></details><details><summary>min_answers · done · —</summary><pre>[]</pre></details><details><summary>blind · done · —</summary><pre>[]</pre></details><details><summary>judge · done · &lt;0.01¢</summary><pre>[\n' +
+    '  {\n' +
+    '    &quot;requested&quot;: &quot;d/judge&quot;,\n' +
+    '    &quot;prompt_tokens&quot;: 10,\n' +
+    '    &quot;completion_tokens&quot;: 10,\n' +
+    '    &quot;estCost&quot;: 0.00003\n' +
+    '  }\n' +
+    ']</pre></details><details><summary>judge_reversed · skipped · —</summary><pre>[]</pre></details><details><summary>tally · done · —</summary><pre>[]</pre></details></section>'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:57:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<h3>Comparison complete</h3><p role="status">One judge’s opinion, not independent factual verification. Review the evidence.</p><p>Total estimated cost: 0.015¢. Estimates are not billed charges or a guaranteed cap.</p><article class="card jury-answer"><h4>Winner</h4><p>a/one · Score 4.75 / 5 · &lt;0.01¢</p><pre>Ship on Friday. The risk is the payment bug.</pre><button class="btn ghost sm" data-copy="Ship on Friday. The risk is the payment bug.">Copy answer</button></article><p><strong>Judge’s stated reason:</strong> Offline fixture comparison</p><p class="note">This reason may differ from the code-verified ranking after quote checks, must-have failures or careful-pass averaging.</p><article class="card jury-answer"><h4>Best value</h4><p>a/one · Score 4.75 / 5 · &lt;0.01¢</p><pre>Ship on Friday. The risk is the payment bug.</pre><button class="btn ghost sm" data-copy="Ship on Friday. The risk is the payment bug.">Copy answer</button></article><p>0.0% cheaper than the winner; within 0.5 points.</p><details><summary>Other answers</summary><article class="card jury-answer"><h4>Answer 2</h4><p>b/two · Score 4.75 / 5 · &lt;0.01¢</p><pre>We could consider many options regarding the timeline going forward.</pre><button class="btn ghost sm" data-copy="We could consider many options regarding the timeline going forward.">Copy answer</button></article><article class="card jury-answer"><h4>Answer 3</h4><p>c/three · Score 4.75 / 5 · &lt;0.01¢</p><pre>Ship Friday; fix payments first.</pre><button class="btn ghost sm" data-copy="Ship Friday; fix payments first.">Copy answer</button></article></details><section class="pro-only"><h4>Rubric</h4><pre>{\n  &quot;criteria&quot;: [\n    {\n      &quot;name&quot;: &quot;clear&quot;,\n      &quot;weight&quot;: 3\n    },\n    {\n      &quot;name&quot;: &quot;short&quot;,\n      &quot;weight&quot;: 1\n    }\n  ],\n  &quot;must_haves&quot;: []\n}</pre><h4>Score table · verified quotes and weighted scores</h4><table><thead><tr><th>Rank / slot</th><th>Score</th><th>Cost</th><th>Evidence</th></tr></thead><tbody><tr><td>1 · slot_1</td><td>4.75</td><td>&lt;0.01¢</td><td><pre>{\n  &quot;criteria&quot;: {\n    &quot;clear&quot;: 5,\n    &quot;short&quot;: 4\n  },\n  &quot;quote_failures&quot;: [],\n  &quot;must_haves_failed&quot;: [],\n  &quot;judges&quot;: [\n    {\n      &quot;answer&quot;: &quot;1&quot;,\n      &quot;must_haves_failed&quot;: [],\n      &quot;criteria&quot;: [\n        {\n          &quot;name&quot;: &quot;clear&quot;,\n          &quot;score&quot;: 5,\n          &quot;quote&quot;: &quot;Ship on Friday. The risk is the payment bug.&quot;\n        },\n        {\n          &quot;name&quot;: &quot;short&quot;,\n          &quot;score&quot;: 4,\n          &quot;quote&quot;: &quot;Ship on Friday. The risk is the payment bug.&quot;\n        }\n      ]\n    }\n  ]\n}</pre></td></tr><tr><td>2 · slot_2</td><td>4.75</td><td>&lt;0.01¢</td><td><pre>{\n  &quot;criteria&quot;: {\n    &quot;clear&quot;: 5,\n    &quot;short&quot;: 4\n  },\n  &quot;quote_failures&quot;: [],\n  &quot;must_haves_failed&quot;: [],\n  &quot;judges&quot;: [\n    {\n      &quot;answer&quot;: &quot;2&quot;,\n      &quot;must_haves_failed&quot;: [],\n      &quot;criteria&quot;: [\n        {\n          &quot;name&quot;: &quot;clear&quot;,\n          &quot;score&quot;: 5,\n          &quot;quote&quot;: &quot;We could consider many options regarding the timeline going forward.&quot;\n        },\n        {\n          &quot;name&quot;: &quot;short&quot;,\n          &quot;score&quot;: 4,\n          &quot;quote&quot;: &quot;We could consider many options regarding the timeline going forward.&quot;\n        }\n      ]\n    }\n  ]\n}</pre></td></tr><tr><td>3 · slot_3</td><td>4.75</td><td>&lt;0.01¢</td><td><pre>{\n  &quot;criteria&quot;: {\n    &quot;clear&quot;: 5,\n    &quot;short&quot;: 4\n  },\n  &quot;quote_failures&quot;: [],\n  &quot;must_haves_failed&quot;: [],\n  &quot;judges&quot;: [\n    {\n      &quot;answer&quot;: &quot;3&quot;,\n      &quot;must_haves_failed&quot;: [],\n      &quot;criteria&quot;: [\n        {\n          &quot;name&quot;: &quot;clear&quot;,\n          &quot;score&quot;: 5,\n          &quot;quote&quot;: &quot;Ship Friday; fix payments first.&quot;\n        },\n        {\n          &quot;name&quot;: &quot;short&quot;,\n          &quot;score&quot;: 4,\n          &quot;quote&quot;: &quot;Ship Friday; fix payments first.&quot;\n        }\n      ]\n    }\n  ]\n}</pre></td></tr></tbody></table><h4>Slot map · revealed after judging</h4><pre>{\n  &quot;1&quot;: {\n    &quot;slot&quot;: &quot;slot_1&quot;,\n    &quot;model&quot;: &quot;a/one&quot;\n  },\n  &quot;2&quot;: {\n    &quot;slot&quot;: &quot;slot_2&quot;,\n    &quot;model&quot;: &quot;b/two&quot;\n  },\n  &quot;3&quot;: {\n    &quot;slot&quot;: &quot;slot_3&quot;,\n    &quot;model&quot;: &quot;c/three&quot;\n  }\n}</pre><h4>Disagreement flags</h4><pre>[]</pre></section><section class="pro-only"><h4>Per-node receipts · costs and tokens</h4><details><summary>guard · done · —</summary><pre>[]</pre></details><details><summary>rubric · done · &lt;0.01¢</summary><pre>[\n  {\n    &quot;requested&quot;: &quot;e/rubric&quot;,\n    &quot;prompt_tokens&quot;: 10,\n    &quot;completion_tokens&quot;: 10,\n    &quot;estCost&quot;: 0.00003\n  }\n]</pre></details><details><summary>slot_1 · done · &lt;0.01¢</summary><pre>[\n  {\n    &quot;requested&quot;: &quot;a/one&quot;,\n    &quot;prompt_tokens&quot;: 10,\n    &quot;completion_tokens&quot;: 10,\n    &quot;estCost&quot;: 0.00003\n  }\n]</pre></details><details><summary>slot_2 · done · &lt;0.01¢</summary><pre>[\n  {\n    &quot;requested&quot;: &quot;b/two&quot;,\n    &quot;prompt_tokens&quot;: 10,\n    &quot;completion_tokens&quot;: 10,\n    &quot;estCost&quot;: 0.00003\n  }\n]</pre></details><details><summary>slot_3 · done · &lt;0.01¢</summary><pre>[\n  {\n    &quot;requested&quot;: &quot;c/three&quot;,\n    &quot;prompt_tokens&quot;: 10,\n    &quot;completion_tokens&quot;: 10,\n    &quot;estCost&quot;: 0.00003\n  }\n]</pre></details><details><summary>min_answers · done · —</summary><pre>[]</pre></details><details><summary>blind · done · —</summary><pre>[]</pre></details><details><summary>judge · done · &lt;0.01¢</summary><pre>[\n  {\n    &quot;requested&quot;: &quot;d/judge&quot;,\n    &quot;prompt_tokens&quot;: 10,\n    &quot;completion_tokens&quot;: 10,\n    &quot;estCost&quot;: 0.00003\n  }\n]</pre></details><details><summary>judge_reversed · skipped · —</summary><pre>[]</pre></details><details><summary>tally · done · —</summary><pre>[]</pre></details></section>',
+    expected: /The winner is also the best value\./,
+    operator: 'match',
+    diff: 'simple'
+  }

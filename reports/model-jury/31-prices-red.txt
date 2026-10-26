@@ -1,0 +1,28 @@
+✖ model picker prices use three significant digits without changing catalog values (12.088779ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.952623
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:42:1
+✖ model picker prices use three significant digits without changing catalog values (12.088779ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /\$0\.123 input \/ \$1\.23 output/. Input:
+  
+  '<div><label for="fld-judge">Judge</label><select id="fld-judge" required><option value="">Choose exact model…</option><option value="a/one">a/one · $0.123456789 input / $1.23456789 output per 1M tokens</option></select></div>'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:47:10)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<div><label for="fld-judge">Judge</label><select id="fld-judge" required><option value="">Choose exact model…</option><option value="a/one">a/one · $0.123456789 input / $1.23456789 output per 1M tokens</option></select></div>',
+    expected: /\$0\.123 input \/ \$1\.23 output/,
+    operator: 'match',
+    diff: 'simple'
+  }

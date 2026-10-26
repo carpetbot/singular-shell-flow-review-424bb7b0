@@ -1,7 +1,7 @@
 {
   "archive": "/home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/dist/model-jury-review.zip",
-  "sha256": "8bc1b9bbdbe8f12fccf8f24796fd67d979dcf7e9cc7f40650fdc14c6a400336d",
-  "bytes": 53309,
+  "sha256": "0cc887ad22de89d5788dc1ff89af80b65368d6906efceb33b02e04e72a907249",
+  "bytes": 54213,
   "runtime_files": 37,
   "crc": "PASS",
   "all_bytes_equal": true,

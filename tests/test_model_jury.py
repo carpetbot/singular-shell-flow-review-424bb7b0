@@ -48,6 +48,12 @@ class ModelJury(unittest.TestCase):
     self.judges+=1;pairs=re.findall(r'Answer ([123]):\n([\s\S]*?)(?=\n\nAnswer [123]:|$)',b['messages'][1]['content'])
     out={'scores':[{'answer':label,'must_haves_failed':[],'criteria':[{'name':'clear','score':3 if self.judges==2 else 5,'quote':answer.strip()},{'name':'short','score':4,'quote':answer.strip()}]} for label,answer in pairs if answer.strip()!='(no answer)'],'reason':'Explicit offline fixture: supported shipping recommendation.'}
    else:out=self.answers[self.models.index(model)]
+   if model==self.models[3] and isinstance(out,dict):
+    for score in out['scores']:
+     if score['criteria'][0]['quote']==self.answers[0]:
+      if getattr(self,'must_have_pass',None)==self.judges:score['must_haves_failed']=['under 10 words']
+      if getattr(self,'quote_failure_pass',None)==self.judges:
+       for criterion in score['criteria']:criterion['quote']='invented words'
    r.fulfill(json={'model':model,'choices':[{'message':{'content':out if isinstance(out,str) else json.dumps(out)}}],'usage':{'prompt_tokens':20,'completion_tokens':20,'total_tokens':40}})
   elif u.hostname=='127.0.0.1':r.continue_()
   else:self.blocked.append(r.request.url);r.abort()
@@ -112,5 +118,63 @@ class ModelJury(unittest.TestCase):
   self.assertLessEqual(self.page.locator('.modal').evaluate('e=>e.scrollWidth'),self.page.locator('.modal').evaluate('e=>e.clientWidth')+1)
   self.page.locator('.modal').evaluate('e=>e.scrollTop=e.scrollHeight')
   self.page.screenshot(path=str(REPORT/'mobile-result.offline.png'))
+
+ def test_07_search_models_preserves_exact_selection_and_excludes_latest(self):
+  alias={**self.catalog['models'][0],'id':'fixture/mutable-latest','kind':'chat','routable':True}
+  self.catalog['models'].append(alias)
+  self.open()
+  picker=self.page.locator('#fld-contestant_1')
+  self.assertNotIn(alias['id'],picker.locator('option').evaluate_all('(options)=>options.map(o=>o.value)'))
+  search=self.page.get_by_role('searchbox',name='Filter contestant 1 models',exact=True)
+  self.assertEqual(search.count(),1,'model picker needs a type-to-filter searchbox')
+  search.fill(self.models[1].upper())
+  visible=picker.locator('option:not([hidden])').evaluate_all('(options)=>options.map(o=>o.value)')
+  self.assertIn(self.models[1],visible)
+  self.assertLess(len(visible),picker.locator('option').count())
+  self.assertEqual(picker.input_value(),self.models[0])
+  picker.select_option(self.models[1])
+  search.fill('no-such-model-filter')
+  self.assertEqual(picker.input_value(),self.models[1])
+  search.fill('')
+  self.assertEqual(picker.locator('option[hidden]').count(),0)
+  self.assertEqual(self.calls,[]);self.assertEqual(self.errors,[])
+
+ def test_08_careful_second_pass_must_have_cannot_win(self):
+  self.must_have_pass=2;self.open();self.page.locator('#fld-careful_mode').check();self.run_jury()
+  self.assertEqual(len(self.calls),6)
+  cards=self.page.locator('#skout > article.jury-answer')
+  self.assertEqual(cards.count(),2)
+  for card in cards.all():self.assertNotIn(self.models[0],card.inner_text())
+  self.page.get_by_role('button',name='Pro',exact=True).click()
+  row=self.page.locator('#skout tbody tr').last
+  self.assertIn('slot_1',row.inner_text());self.assertIn('under 10 words',row.inner_text())
+  flags=self.page.locator('#skout h4').filter(has_text='Disagreement flags').locator('+ pre').inner_text()
+  self.assertIn('"must_haves"',flags);self.assertIn('under 10 words',flags)
+  self.assertEqual(self.errors,[])
+
+ def test_09_careful_second_pass_quote_error_is_retained_not_disqualified(self):
+  self.quote_failure_pass=2;self.open();self.page.locator('#fld-careful_mode').check();self.run_jury()
+  self.assertEqual(len(self.calls),6)
+  self.page.get_by_role('button',name='Pro',exact=True).click()
+  row=self.page.locator('#skout tbody tr').filter(has_text='slot_1')
+  evidence=json.loads(row.locator('td').nth(3).inner_text())
+  self.assertEqual(evidence['quote_failures'],['clear','short'])
+  self.assertEqual(evidence['must_haves_failed'],[])
+  self.assertEqual(row.locator('td').nth(1).inner_text(),'3.38')
+  self.assertEqual(self.errors,[])
+
+ def test_10_lite_gateway_failure_and_same_winner_value_copy(self):
+  self.failures=1;self.open();self.run_jury()
+  text=self.page.locator('#skout').inner_text()
+  self.assertIn(self.models[0]+': no answer (gateway error 500)',text)
+  self.assertNotIn('slot_1:',text);self.assertNotIn('HTTP500 fixture',text)
+  self.assertNotRegex(text,r'(?<![\d.])0\.0% cheaper')
+  # Force equal result IDs through the real renderer to cover the exact copy.
+  html=self.page.evaluate("""async()=>{const {renderGraphResult}=await import('/js/graph-ui.js');
+   const manifest={runtime:{graph:[{id:'slot_1',model_from_input:'contestant_1'}]}};
+   const ctx={status:'done',contestant_1:'fixture/exact',estCost:0,steps:{tally:{status:'done',attempts:[],json:{best_overall:'slot_1',best_value:'slot_1',ranking:[{slot:'slot_1',avg:5,cost_usd:0}],disagreements:[]}},slot_1:{output:'answer',attempts:[]},rubric:{json:{},attempts:[]},judge:{json:{reason:'fixture',scores:[]},attempts:[]},blind:{private_map:{'1':'slot_1'},attempts:[]}}};
+   return renderGraphResult(manifest,ctx);} """)
+  self.assertIn('The winner is also the best value.',html);self.assertNotIn('0.0% cheaper',html)
+  self.assertEqual(self.errors,[])
 
 if __name__=='__main__':unittest.main()
