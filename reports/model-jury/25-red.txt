@@ -1,0 +1,54 @@
+✔ reference 1: guard rejects same family judge (1.85214ms)
+✔ reference 2: guard rejects unpinned model (0.621413ms)
+✔ reference 3: minimum two answers (0.324541ms)
+✔ reference 4: blind hides slots and keeps map (1.437921ms)
+✔ reference 5: quotes must exist (0.541706ms)
+✔ reference 6: tally rank and best value (2.18996ms)
+✔ reference 7: invented quotes cap score (0.530296ms)
+✔ reference 8: unknown cost never wins value (0.393619ms)
+✔ reference 9: must-have failures rank last (0.536706ms)
+✔ reference 10: careful mode flags disagreement (0.703081ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (24.091168ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (32.576956ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (9.690025ms)
+✔ call budget rechecks and unknown usage never become zero (14.19103ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (46.010877ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (13.730233ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (27.292741ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (9.884908ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (35.479346ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (19.632932ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (39.255872ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.37655ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (6.098803ms)
+✖ real API graph receipts use exact catalog price rather than legacy colon normalization (10.741305ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 23
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 426.668856
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:60:1
+✖ real API graph receipts use exact catalog price rather than legacy colon normalization (10.741305ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.00003
+  - 0.00014
+         ^
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:60:874)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.00003,
+    expected: 0.00014,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

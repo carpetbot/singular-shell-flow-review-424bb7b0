@@ -1,0 +1,11 @@
+✔ reference 1: guard rejects same family judge (1.399372ms)
+✔ reference 2: guard rejects unpinned model (0.600373ms)
+✔ reference 3: minimum two answers (0.289562ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.713611

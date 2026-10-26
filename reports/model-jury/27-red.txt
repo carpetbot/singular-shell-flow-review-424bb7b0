@@ -1,0 +1,57 @@
+✔ reference 1: guard rejects same family judge (2.117092ms)
+✔ reference 2: guard rejects unpinned model (0.693391ms)
+✔ reference 3: minimum two answers (0.321521ms)
+✔ reference 4: blind hides slots and keeps map (1.541587ms)
+✔ reference 5: quotes must exist (0.540385ms)
+✔ reference 6: tally rank and best value (1.280355ms)
+✔ reference 7: invented quotes cap score (0.547085ms)
+✔ reference 8: unknown cost never wins value (0.416438ms)
+✔ reference 9: must-have failures rank last (0.562864ms)
+✔ reference 10: careful mode flags disagreement (0.70021ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (20.648183ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (31.139855ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (11.888213ms)
+✔ call budget rechecks and unknown usage never become zero (12.532616ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (45.922249ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (12.01724ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (27.231092ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (8.086668ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (39.253442ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (16.317711ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (39.841386ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.35107ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (6.671367ms)
+✔ real API graph receipts use exact catalog price rather than legacy colon normalization (9.794661ms)
+✔ invalid rubric stops before contestants and retains the rubric receipt (16.022191ms)
+✖ weighted averages preserve Python reference ties-to-even rounding (1.887879ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 25
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 432.605123
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:64:1
+✖ weighted averages preserve Python reference ties-to-even rounding (1.887879ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1.13 !== 1.12
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:64:397)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1.13,
+    expected: 1.12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

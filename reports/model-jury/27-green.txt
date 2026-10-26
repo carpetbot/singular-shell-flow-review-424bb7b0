@@ -1,0 +1,34 @@
+✔ reference 1: guard rejects same family judge (1.681874ms)
+✔ reference 2: guard rejects unpinned model (0.594854ms)
+✔ reference 3: minimum two answers (0.264003ms)
+✔ reference 4: blind hides slots and keeps map (1.343203ms)
+✔ reference 5: quotes must exist (0.494006ms)
+✔ reference 6: tally rank and best value (1.214287ms)
+✔ reference 7: invented quotes cap score (1.694553ms)
+✔ reference 8: unknown cost never wins value (0.407139ms)
+✔ reference 9: must-have failures rank last (0.527036ms)
+✔ reference 10: careful mode flags disagreement (0.649442ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (19.826047ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (26.757146ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (10.166542ms)
+✔ call budget rechecks and unknown usage never become zero (12.678242ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (46.585322ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (13.538158ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (26.761066ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (12.113087ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (46.566173ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (23.042418ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (44.875039ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.37989ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (5.861229ms)
+✔ real API graph receipts use exact catalog price rather than legacy colon normalization (9.847979ms)
+✔ invalid rubric stops before contestants and retains the rubric receipt (16.539516ms)
+✔ weighted averages preserve Python reference ties-to-even rounding (0.526336ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 442.626558

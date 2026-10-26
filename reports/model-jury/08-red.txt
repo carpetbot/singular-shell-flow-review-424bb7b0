@@ -1,0 +1,39 @@
+✔ reference 1: guard rejects same family judge (1.45306ms)
+✔ reference 2: guard rejects unpinned model (0.581294ms)
+✔ reference 3: minimum two answers (1.319914ms)
+✔ reference 4: blind hides slots and keeps map (1.412341ms)
+✔ reference 5: quotes must exist (0.430488ms)
+✔ reference 6: tally rank and best value (0.950614ms)
+✔ reference 7: invented quotes cap score (0.447768ms)
+✖ reference 8: unknown cost never wins value (1.402711ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 122.680003
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:23:1
+✖ reference 8: unknown cost never wins value (1.402711ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'slot_3' !== 'slot_1'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:23:200)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'slot_3',
+    expected: 'slot_1',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

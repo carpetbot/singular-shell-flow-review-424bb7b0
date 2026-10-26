@@ -1,0 +1,45 @@
+✔ reference 1: guard rejects same family judge (1.644565ms)
+✔ reference 2: guard rejects unpinned model (0.588864ms)
+✔ reference 3: minimum two answers (0.263522ms)
+✔ reference 4: blind hides slots and keeps map (1.272495ms)
+✔ reference 5: quotes must exist (0.445518ms)
+✔ reference 6: tally rank and best value (1.001142ms)
+✔ reference 7: invented quotes cap score (0.481666ms)
+✔ reference 8: unknown cost never wins value (0.444788ms)
+✔ reference 9: must-have failures rank last (1.555067ms)
+✔ reference 10: careful mode flags disagreement (0.623073ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (19.421826ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (26.878232ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (8.117547ms)
+✔ call budget rechecks and unknown usage never become zero (8.131776ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (42.141913ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (23.786537ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (26.822303ms)
+✖ failed answers cannot be ranked even if judge scores their anonymous placeholder (11.968742ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 17
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 288.50611
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:48:1
+✖ failed answers cannot be ranked even if judge scores their anonymous placeholder (11.968742ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== 2
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:48:729)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

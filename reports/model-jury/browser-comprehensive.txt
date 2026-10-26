@@ -1,0 +1,242 @@
+test_01_blinded_browser_and_lite_pro (test_model_jury.ModelJury.test_01_blinded_browser_and_lite_pro) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+ok
+test_02_same_maker_zero_calls (test_model_jury.ModelJury.test_02_same_maker_zero_calls) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+ok
+test_03_one_http500_ranks_two (test_model_jury.ModelJury.test_03_one_http500_ranks_two) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+ok
+test_04_two_http500_stop_before_judge (test_model_jury.ModelJury.test_04_two_http500_stop_before_judge) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+ok
+test_05_careful_exact_extra_call_and_gap_two (test_model_jury.ModelJury.test_05_careful_exact_extra_call_and_gap_two) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+FAIL
+test_06_mobile_no_horizontal_overflow (test_model_jury.ModelJury.test_06_mobile_no_horizontal_overflow) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+ok
+
+======================================================================
+FAIL: test_05_careful_exact_extra_call_and_gap_two (test_model_jury.ModelJury.test_05_careful_exact_extra_call_and_gap_two)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/test_model_jury.py", line 98, in test_05_careful_exact_extra_call_and_gap_two
+    text=self.page.locator('#skout').inner_text();self.assertIn('"scores": [\n    5,\n    3',text)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '"scores": [\n    5,\n    3' not found in 'Comparison complete\n\nOne judge’s opinion, not independent factual verification. Review the evidence.\n\nTotal estimated cost: <0.01¢. Estimates are not billed charges or a guaranteed cap.\n\nWinner\n\nllmtech/decider-0.8b-fp8 · Score 4 / 5 · <0.01¢\n\nShip Friday; fix payments first.\nCopy answer\n\nExplicit offline fixture: supported shipping recommendation.\n\nBest value\n\nllmtech/decider-0.8b-fp8 · Score 4 / 5 · <0.01¢\n\nShip Friday; fix payments first.\nCopy answer\n\n0.0% cheaper than the winner; within 0.5 points.\n\nOther answers\nRubric\n{\n  "criteria": [\n    {\n      "name": "clear",\n      "weight": 3\n    },\n    {\n      "name": "short",\n      "weight": 1\n    }\n  ],\n  "must_haves": []\n}\nScore table · verified quotes and weighted scores\nRANK / SLOT\tSCORE\tCOST\tEVIDENCE\n1 · slot_1\t4\t<0.01¢\t\n{\n  "criteria": {\n    "clear": 5,\n    "short": 4\n  },\n  "quote_failures": [],\n  "must_haves_failed": [],\n  "judges": [\n    {\n      "answer": "1",\n      "must_haves_failed": [],\n      "criteria": [\n        {\n          "name": "clear",\n          "score": 5,\n          "quote": "Ship Friday; fix payments first."\n        },\n        {\n          "name": "short",\n          "score": 4,\n          "quote": "Ship Friday; fix payments first."\n        }\n      ]\n    },\n    {\n      "answer": "1",\n      "must_haves_failed": [],\n      "criteria": [\n        {\n          "name": "clear",\n          "score": 3,\n          "quote": "Ship Friday; fix payments first."\n        },\n        {\n          "name": "short",\n          "score": 4,\n          "quote": "Ship Friday; fix payments first."\n        }\n      ]\n    }\n  ]\n}\n\n2 · slot_3\t4\t<0.01¢\t\n{\n  "criteria": {\n    "clear": 5,\n    "short": 4\n  },\n  "quote_failures": [],\n  "must_haves_failed": [],\n  "judges": [\n    {\n      "answer": "2",\n      "must_haves_failed": [],\n      "criteria": [\n        {\n          "name": "clear",\n          "score": 5,\n          "quote": "We could consider many options."\n        },\n        {\n          "name": "short",\n          "score": 4,\n          "quote": "We could consider many options."\n        }\n      ]\n    },\n    {\n      "answer": "2",\n      "must_haves_failed": [],\n      "criteria": [\n        {\n          "name": "clear",\n          "score": 3,\n          "quote": "We could consider many options."\n        },\n        {\n          "name": "short",\n          "score": 4,\n          "quote": "We could consider many options."\n        }\n      ]\n    }\n  ]\n}\n\n3 · slot_2\t4\t<0.01¢\t\n{\n  "criteria": {\n    "clear": 5,\n    "short": 4\n  },\n  "quote_failures": [],\n  "must_haves_failed": [],\n  "judges": [\n    {\n      "answer": "3",\n      "must_haves_failed": [],\n      "criteria": [\n        {\n          "name": "clear",\n          "score": 5,\n          "quote": "Ship on Friday. The risk is the payment bug."\n        },\n        {\n          "name": "short",\n          "score": 4,\n          "quote": "Ship on Friday. The risk is the payment bug."\n        }\n      ]\n    },\n    {\n      "answer": "3",\n      "must_haves_failed": [],\n      "criteria": [\n        {\n          "name": "clear",\n          "score": 3,\n          "quote": "Ship on Friday. The risk is the payment bug."\n        },\n        {\n          "name": "short",\n          "score": 4,\n          "quote": "Ship on Friday. The risk is the payment bug."\n        }\n      ]\n    }\n  ]\n}\nSlot map · revealed after judging\n{\n  "1": {\n    "slot": "slot_1",\n    "model": "llmtech/decider-0.8b-fp8"\n  },\n  "2": {\n    "slot": "slot_3",\n    "model": "liquid/d1"\n  },\n  "3": {\n    "slot": "slot_2",\n    "model": "perplexity/pplx-decider-v1.2"\n  }\n}\nDisagreement flags\n[\n  {\n    "slot": "slot_1",\n    "criterion": "clear",\n    "scores": [\n      5,\n      3\n    ]\n  },\n  {\n    "slot": "slot_3",\n    "criterion": "clear",\n    "scores": [\n      5,\n      3\n    ]\n  },\n  {\n    "slot": "slot_2",\n    "criterion": "clear",\n    "scores": [\n      5,\n      3\n    ]\n  }\n]\nPer-node receipts · costs and tokens\nguard · done · —\nrubric · done · <0.01¢\nslot_1 · done · <0.01¢\nslot_2 · done · <0.01¢\nslot_3 · done · <0.01¢\nmin_answers · done · —\nblind · done · —\njudge · done · <0.01¢\njudge_reversed · done · <0.01¢\ntally · done · —'
+
+----------------------------------------------------------------------
+Ran 6 tests in 19.058s
+
+FAILED (failures=1)

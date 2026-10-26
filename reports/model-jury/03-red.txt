@@ -1,0 +1,24 @@
+✔ reference 1: guard rejects same family judge (1.732783ms)
+✔ reference 2: guard rejects unpinned model (0.750409ms)
+✖ reference 3: minimum two answers (0.473687ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121.237672
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:13:1
+✖ reference 3: minimum two answers (0.473687ms)
+  TypeError: graph.at_least_2_answers is not a function
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:13:65)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

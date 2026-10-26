@@ -1,0 +1,29 @@
+✔ reference 1: guard rejects same family judge (1.622535ms)
+✔ reference 2: guard rejects unpinned model (0.593163ms)
+✔ reference 3: minimum two answers (0.269123ms)
+✔ reference 4: blind hides slots and keeps map (1.261476ms)
+✔ reference 5: quotes must exist (0.475437ms)
+✔ reference 6: tally rank and best value (1.071031ms)
+✔ reference 7: invented quotes cap score (0.482997ms)
+✔ reference 8: unknown cost never wins value (1.46344ms)
+✔ reference 9: must-have failures rank last (0.508356ms)
+✔ reference 10: careful mode flags disagreement (0.589103ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (18.762445ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (30.424524ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (14.398085ms)
+✔ call budget rechecks and unknown usage never become zero (10.310807ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (44.253575ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (21.540008ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (28.685423ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (9.328844ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (39.508815ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (16.202395ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (43.905714ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 404.131815

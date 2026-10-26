@@ -1,0 +1,57 @@
+✔ reference 1: guard rejects same family judge (1.340113ms)
+✔ reference 2: guard rejects unpinned model (0.464578ms)
+✔ reference 3: minimum two answers (0.220424ms)
+✔ reference 4: blind hides slots and keeps map (1.009952ms)
+✔ reference 5: quotes must exist (0.401199ms)
+✔ reference 6: tally rank and best value (0.915925ms)
+✔ reference 7: invented quotes cap score (0.399959ms)
+✔ reference 8: unknown cost never wins value (0.608663ms)
+✔ reference 9: must-have failures rank last (0.419038ms)
+✔ reference 10: careful mode flags disagreement (0.552545ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (17.352004ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (24.687202ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (7.539233ms)
+✔ call budget rechecks and unknown usage never become zero (7.566902ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (41.746474ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (10.885831ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (26.074664ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (6.606348ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (36.109719ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (28.448459ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (31.541964ms)
+✖ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (1.689824ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 21
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 347.031182
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:56:1
+✖ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (1.689824ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'maker/model:thinking'
+  - ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:56:337)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'maker/model:thinking' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,50 @@
+✔ reference 1: guard rejects same family judge (2.035023ms)
+✔ reference 2: guard rejects unpinned model (0.702431ms)
+✔ reference 3: minimum two answers (0.326191ms)
+✔ reference 4: blind hides slots and keeps map (1.48377ms)
+✔ reference 5: quotes must exist (0.553425ms)
+✔ reference 6: tally rank and best value (1.361713ms)
+✔ reference 7: invented quotes cap score (0.594054ms)
+✔ reference 8: unknown cost never wins value (2.120172ms)
+✔ reference 9: must-have failures rank last (0.638843ms)
+✔ reference 10: careful mode flags disagreement (0.848717ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (24.42915ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (36.42092ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (9.208547ms)
+✔ call budget rechecks and unknown usage never become zero (10.272258ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (43.068887ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (16.443279ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (26.765555ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (8.679942ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (34.98345ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (26.843883ms)
+✖ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (4.140226ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 20
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 378.535438
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:54:1
+✖ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (4.140226ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:54:178)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

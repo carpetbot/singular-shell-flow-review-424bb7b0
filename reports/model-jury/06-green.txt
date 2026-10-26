@@ -1,0 +1,14 @@
+✔ reference 1: guard rejects same family judge (1.323563ms)
+✔ reference 2: guard rejects unpinned model (0.576294ms)
+✔ reference 3: minimum two answers (0.284373ms)
+✔ reference 4: blind hides slots and keeps map (2.397484ms)
+✔ reference 5: quotes must exist (0.438718ms)
+✔ reference 6: tally rank and best value (0.851746ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.484716

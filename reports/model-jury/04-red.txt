@@ -1,0 +1,25 @@
+✔ reference 1: guard rejects same family judge (1.562567ms)
+✔ reference 2: guard rejects unpinned model (0.693751ms)
+✔ reference 3: minimum two answers (0.303912ms)
+✖ reference 4: blind hides slots and keeps map (0.470417ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.921626
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:15:1
+✖ reference 4: blind hides slots and keeps map (0.470417ms)
+  TypeError: graph.shuffle_and_relabel is not a function or its return value is not iterable
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:15:76)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

@@ -1,0 +1,22 @@
+✔ reference 1: guard rejects same family judge (1.514848ms)
+✔ reference 2: guard rejects unpinned model (0.584144ms)
+✔ reference 3: minimum two answers (0.261993ms)
+✔ reference 4: blind hides slots and keeps map (1.255215ms)
+✔ reference 5: quotes must exist (0.450898ms)
+✔ reference 6: tally rank and best value (1.064971ms)
+✔ reference 7: invented quotes cap score (0.464047ms)
+✔ reference 8: unknown cost never wins value (0.37854ms)
+✔ reference 9: must-have failures rank last (0.486257ms)
+✔ reference 10: careful mode flags disagreement (1.721002ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (16.452018ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (26.184512ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (9.656005ms)
+✔ call budget rechecks and unknown usage never become zero (9.655285ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 169.821069

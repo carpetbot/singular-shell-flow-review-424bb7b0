@@ -41,7 +41,7 @@ class BrowserSmoke(unittest.TestCase):
                 page.wait_for_selector('.skill-card',timeout=10000)
                 page.get_by_role('button',name='Pro',exact=True).click()
                 page.evaluate("async()=>{const {get}=await import('/js/store.js');get().settings.apiKey='offline-demo';}")
-                self.assertEqual(page.locator('.skill-card').count(),2)
+                self.assertEqual(page.locator('.skill-card').count(),3)
                 self.assertIn('4 AI steps',page.locator('.skill-card').filter(has_text='prospect-to-cold-email').inner_text())
                 page.locator('.skill-card').filter(has_text='prospect-to-cold-email').click()
                 self.assertEqual(page.locator('#flow-steps li').count(),4)

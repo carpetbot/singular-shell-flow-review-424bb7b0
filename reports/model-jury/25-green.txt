@@ -1,0 +1,32 @@
+✔ reference 1: guard rejects same family judge (1.81916ms)
+✔ reference 2: guard rejects unpinned model (0.613534ms)
+✔ reference 3: minimum two answers (0.297661ms)
+✔ reference 4: blind hides slots and keeps map (1.352143ms)
+✔ reference 5: quotes must exist (0.536355ms)
+✔ reference 6: tally rank and best value (1.233507ms)
+✔ reference 7: invented quotes cap score (1.705073ms)
+✔ reference 8: unknown cost never wins value (0.415318ms)
+✔ reference 9: must-have failures rank last (0.486407ms)
+✔ reference 10: careful mode flags disagreement (0.778129ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (23.551353ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (29.093371ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (10.478862ms)
+✔ call budget rechecks and unknown usage never become zero (10.890581ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (52.232337ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (14.218029ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (27.445856ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (9.267705ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (37.814112ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (15.927673ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (39.391569ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.36027ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (6.241508ms)
+✔ real API graph receipts use exact catalog price rather than legacy colon normalization (9.655675ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 408.661621

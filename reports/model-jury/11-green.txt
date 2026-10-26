@@ -1,0 +1,19 @@
+✔ reference 1: guard rejects same family judge (1.279585ms)
+✔ reference 2: guard rejects unpinned model (0.491486ms)
+✔ reference 3: minimum two answers (0.268252ms)
+✔ reference 4: blind hides slots and keeps map (1.10034ms)
+✔ reference 5: quotes must exist (0.395289ms)
+✔ reference 6: tally rank and best value (0.910145ms)
+✔ reference 7: invented quotes cap score (0.418108ms)
+✔ reference 8: unknown cost never wins value (0.318652ms)
+✔ reference 9: must-have failures rank last (0.471337ms)
+✔ reference 10: careful mode flags disagreement (0.71432ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (15.628121ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 102.498517

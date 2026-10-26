@@ -1,0 +1,46 @@
+✔ reference 1: guard rejects same family judge (1.861809ms)
+✔ reference 2: guard rejects unpinned model (0.668302ms)
+✔ reference 3: minimum two answers (0.309631ms)
+✔ reference 4: blind hides slots and keeps map (1.433961ms)
+✔ reference 5: quotes must exist (0.532295ms)
+✔ reference 6: tally rank and best value (1.346023ms)
+✔ reference 7: invented quotes cap score (0.569294ms)
+✔ reference 8: unknown cost never wins value (0.448727ms)
+✔ reference 9: must-have failures rank last (1.828109ms)
+✔ reference 10: careful mode flags disagreement (0.72734ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (24.01769ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (32.614645ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (9.794171ms)
+✔ call budget rechecks and unknown usage never become zero (11.358079ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (48.380542ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (12.133586ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (29.744903ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (8.815588ms)
+✖ model JSON is validated before scoring and invalid judge output stops with its receipt (11.722438ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 18
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 320.562269
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:50:1
+✖ model JSON is validated before scoring and invalid judge output stops with its receipt (11.722438ms)
+  AssertionError [ERR_ASSERTION]: score
+  
+  'done' !== 'failed'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:50:750)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'done',
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

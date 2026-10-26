@@ -1,0 +1,55 @@
+✔ reference 1: guard rejects same family judge (2.095943ms)
+✔ reference 2: guard rejects unpinned model (0.680292ms)
+✔ reference 3: minimum two answers (0.318432ms)
+✔ reference 4: blind hides slots and keeps map (1.528458ms)
+✔ reference 5: quotes must exist (1.83907ms)
+✔ reference 6: tally rank and best value (2.55678ms)
+✔ reference 7: invented quotes cap score (0.637292ms)
+✔ reference 8: unknown cost never wins value (0.439798ms)
+✔ reference 9: must-have failures rank last (0.597373ms)
+✔ reference 10: careful mode flags disagreement (0.73513ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (22.658078ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (28.256055ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (9.322344ms)
+✔ call budget rechecks and unknown usage never become zero (11.231532ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (41.452363ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (14.007966ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (28.395951ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (10.893501ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (36.78762ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (13.808461ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (38.001307ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.34578ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (5.874039ms)
+✔ real API graph receipts use exact catalog price rather than legacy colon normalization (12.533056ms)
+✔ invalid rubric stops before contestants and retains the rubric receipt (14.685237ms)
+✔ weighted averages preserve Python reference ties-to-even rounding (0.458928ms)
+✖ guard validates every contestant identifier before reporting same-maker verdict (1.054921ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 26
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 430.435883
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:66:1
+✖ guard validates every contestant identifier before reporting same-maker verdict (1.054921ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:66:100)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /exact provider/,
+    operator: 'throws',
+    diff: 'simple'
+  }

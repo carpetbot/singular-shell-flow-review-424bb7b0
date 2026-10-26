@@ -1,0 +1,26 @@
+✔ reference 1: guard rejects same family judge (1.278575ms)
+✔ reference 2: guard rejects unpinned model (0.577984ms)
+✔ reference 3: minimum two answers (0.295262ms)
+✔ reference 4: blind hides slots and keeps map (2.288947ms)
+✖ reference 5: quotes must exist (0.36359ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 117.173634
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:17:1
+✖ reference 5: quotes must exist (0.36359ms)
+  TypeError: graph.quoteFound is not a function
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:17:63)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

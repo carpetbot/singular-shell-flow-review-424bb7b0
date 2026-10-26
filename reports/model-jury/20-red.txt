@@ -1,0 +1,47 @@
+✔ reference 1: guard rejects same family judge (1.980015ms)
+✔ reference 2: guard rejects unpinned model (0.691461ms)
+✔ reference 3: minimum two answers (0.339681ms)
+✔ reference 4: blind hides slots and keeps map (1.496209ms)
+✔ reference 5: quotes must exist (0.517695ms)
+✔ reference 6: tally rank and best value (1.358452ms)
+✔ reference 7: invented quotes cap score (0.589344ms)
+✔ reference 8: unknown cost never wins value (0.459907ms)
+✔ reference 9: must-have failures rank last (0.573554ms)
+✔ reference 10: careful mode flags disagreement (0.72896ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (23.805216ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (32.689043ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (12.248544ms)
+✔ call budget rechecks and unknown usage never become zero (10.639188ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (46.668229ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (17.358424ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (29.768903ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (9.059061ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (41.541539ms)
+✖ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (18.548591ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 387.630559
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:52:1
+✖ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (18.548591ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 7
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:52:355)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 7,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

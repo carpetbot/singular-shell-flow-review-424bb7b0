@@ -1,0 +1,104 @@
+[
+  {
+    "model": "google/gemini-3.8-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You extract facts about a sales prospect from raw notes. You never add anything that is not in the notes.\nReturn JSON only:\n{\n  \"company_does\": \"one sentence, plain words\",\n  \"signals\": [\n    {\"type\": \"funding|hiring|launch|post|news|tech|other\", \"fact\": \"what happened\", \"quote\": \"exact words from the notes\", \"date\": \"if stated, else null\"}\n  ],\n  \"likely_problems\": [\"problem the notes suggest, max 3\"],\n  \"unknowns\": [\"useful things the notes do not say\"]\n}\nRules:\n- Every signal needs an exact quote copied from the notes. No quote, no signal.\n- If the notes are thin, return few signals. Do not pad.\n"
+      },
+      {
+        "role": "user",
+        "content": "Prospect: Example prospect_name,  at Example company\nNotes:\nExample research_notes\n"
+      }
+    ],
+    "stream": false,
+    "routing": {
+      "maxPrice": 0.05
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "max_tokens": 800
+  },
+  {
+    "model": "moonshotai/kimi-k3",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You pick the single best reason for this person to care about the offer.\nA good angle links one specific signal about them to one problem the offer solves. If you remove the signal and the link still makes sense, it is not a real angle.\nReturn JSON only:\n{\n  \"signal_used\": \"copy the fact from the chosen signal\",\n  \"quote\": \"copy its quote\",\n  \"problem\": \"the problem this signal usually creates, in their words not ours\",\n  \"bridge\": \"one sentence: why the offer helps with that problem\",\n  \"fit_score\": 1-5,\n  \"reason\": \"why this angle beats the others, one sentence\"\n}\nfit_score guide: 5 = clear trigger and clear match. 3 = plausible. 1-2 = no real link; say so.\n"
+      },
+      {
+        "role": "user",
+        "content": "Facts about the prospect:\n{\"company_does\": \"Widgets\", \"signals\": []}\nOffer: Example your_offer\nProof: \n"
+      }
+    ],
+    "stream": false,
+    "routing": {
+      "maxPrice": 0.05
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "max_tokens": 600
+  },
+  {
+    "model": "anthropic/claude-sonnet-5.5",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You write cold emails that read like a sharp peer wrote them, not a sales tool.\nRules:\n- Body under 90 words. Short sentences. Contractions.\n- Open with their world (the signal), not with who we are.\n- One proof point at most. One ask. Interest-based ask beats a meeting request.\n- Subject: 2-4 words, lowercase, looks internal. No name, no hype.\n- Never write: \"I hope this finds you well\", \"I came across\", \"leverage\", \"synergy\", \"best-in-class\", \"game-changer\", \"quick question\", em dashes.\n- Only use facts from the angle and facts provided. Do not invent numbers, customers, or events.\n- 2 follow-ups. Each adds something new (a different angle from the facts, or a useful resource). Never \"just checking in\". Follow-up 2 is a polite close.\nReturn JSON only:\n{\n  \"email\": {\"subject\": \"...\", \"body\": \"...\"},\n  \"follow_ups\": [\n    {\"send_after_days\": 3, \"body\": \"...\"},\n    {\"send_after_days\": 7, \"body\": \"...\"}\n  ]\n}\n"
+      },
+      {
+        "role": "user",
+        "content": "To: Example prospect_name,  at Example company\nFrom: Example sender_name\nAsk: reply\nAngle:\n{\"fit_score\": 4, \"reason\": \"Specific signal\"}\nAll facts (for follow-up angles):\n{\"company_does\": \"Widgets\", \"signals\": []}\nOffer: Example your_offer\nProof: \n"
+      }
+    ],
+    "stream": false,
+    "routing": {
+      "maxPrice": 0.05
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "max_tokens": 1000
+  },
+  {
+    "model": "deepseek/deepseek-v4.1-flash-1017",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You audit a cold email before it is sent. You did not write it.\nCheck:\n1. Every claim about the prospect matches a fact or quote in the facts list. Flag anything invented.\n2. Every claim about the sender matches the offer or proof given. Flag invented numbers or customers.\n3. Banned phrases: \"hope this finds you\", \"came across\", \"leverage\", \"synergy\", \"best-in-class\", \"game-changer\", \"quick question\", em dash.\n4. Body under 90 words. One ask.\nReturn JSON only:\n{\n  \"verdict\": \"pass|fix\",\n  \"issues\": [{\"where\": \"email|follow_up_1|follow_up_2\", \"problem\": \"...\", \"fix\": \"...\"}],\n  \"word_count\": number\n}\n"
+      },
+      {
+        "role": "user",
+        "content": "Facts:\n{\"company_does\": \"Widgets\", \"signals\": []}\nOffer: Example your_offer\nProof: \nDraft:\n{\"email\": {\"subject\": \"team plans\", \"body\": \"Offline fixture only\"}, \"follow_ups\": []}\n"
+      }
+    ],
+    "stream": false,
+    "routing": {
+      "maxPrice": 0.05
+    },
+    "response_format": {
+      "type": "json_object"
+    },
+    "max_tokens": 600
+  },
+  {
+    "model": "auto",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a motion-graphics director. Output a numbered shot list. Each shot: duration (s), camera/motion, easing curve, on-screen text, assets needed. Be terse and production-ready."
+      },
+      {
+        "role": "user",
+        "content": "Brief: Legacy topic\nTarget length: 15 seconds\nPlatform: x\n"
+      }
+    ],
+    "stream": false,
+    "routing": {
+      "maxPrice": 0.05
+    },
+    "max_tokens": 2048
+  }
+]

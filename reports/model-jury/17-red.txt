@@ -1,0 +1,35 @@
+✔ reference 1: guard rejects same family judge (1.982635ms)
+✔ reference 2: guard rejects unpinned model (0.701121ms)
+✔ reference 3: minimum two answers (0.33362ms)
+✔ reference 4: blind hides slots and keeps map (1.561117ms)
+✔ reference 5: quotes must exist (0.539826ms)
+✔ reference 6: tally rank and best value (1.293354ms)
+✔ reference 7: invented quotes cap score (0.629303ms)
+✔ reference 8: unknown cost never wins value (0.551835ms)
+✔ reference 9: must-have failures rank last (0.626353ms)
+✔ reference 10: careful mode flags disagreement (0.744799ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (19.273851ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (33.120151ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (8.968853ms)
+✔ call budget rechecks and unknown usage never become zero (8.925445ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (45.152931ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (14.96149ms)
+
+Interrupted while running:
+
+⚠ tests/graph.test.mjs (tests/graph.test.mjs:1:1)
+✖ tests/graph.test.mjs (180066.196262ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 180073.441993
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:1:1
+✖ tests/graph.test.mjs (180066.196262ms)
+  'Promise resolution is still pending but the event loop has already resolved'

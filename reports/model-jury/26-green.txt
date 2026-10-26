@@ -1,0 +1,33 @@
+✔ reference 1: guard rejects same family judge (1.758392ms)
+✔ reference 2: guard rejects unpinned model (0.626733ms)
+✔ reference 3: minimum two answers (0.294042ms)
+✔ reference 4: blind hides slots and keeps map (1.361753ms)
+✔ reference 5: quotes must exist (0.533965ms)
+✔ reference 6: tally rank and best value (1.156448ms)
+✔ reference 7: invented quotes cap score (0.504406ms)
+✔ reference 8: unknown cost never wins value (2.300907ms)
+✔ reference 9: must-have failures rank last (0.549105ms)
+✔ reference 10: careful mode flags disagreement (0.961853ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (23.778677ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (32.694043ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (10.247389ms)
+✔ call budget rechecks and unknown usage never become zero (11.178073ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (43.527375ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (16.933676ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (27.70694ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (9.4561ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (42.23664ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (17.286556ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (38.967401ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.34752ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (6.881631ms)
+✔ real API graph receipts use exact catalog price rather than legacy colon normalization (10.281108ms)
+✔ invalid rubric stops before contestants and retains the rubric receipt (18.154372ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 438.414153

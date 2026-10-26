@@ -1,0 +1,44 @@
+✔ reference 1: guard rejects same family judge (1.527618ms)
+✔ reference 2: guard rejects unpinned model (1.517858ms)
+✔ reference 3: minimum two answers (0.272533ms)
+✔ reference 4: blind hides slots and keeps map (1.345923ms)
+✔ reference 5: quotes must exist (0.476527ms)
+✔ reference 6: tally rank and best value (1.07841ms)
+✔ reference 7: invented quotes cap score (0.481847ms)
+✔ reference 8: unknown cost never wins value (0.388749ms)
+✔ reference 9: must-have failures rank last (0.495357ms)
+✔ reference 10: careful mode flags disagreement (0.677352ms)
+✖ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (1.637135ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 112.776595
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:33:1
+✖ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (1.637135ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:33:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

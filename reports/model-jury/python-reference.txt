@@ -1,0 +1,15 @@
+test_blind_hides_slots_and_keeps_map (test_rules.Rules.test_blind_hides_slots_and_keeps_map) ... ok
+test_careful_mode_flags_disagreement (test_rules.Rules.test_careful_mode_flags_disagreement) ... ok
+test_guard_rejects_same_family_judge (test_rules.Rules.test_guard_rejects_same_family_judge) ... ok
+test_guard_rejects_unpinned_model (test_rules.Rules.test_guard_rejects_unpinned_model) ... ok
+test_invented_quote_caps_score (test_rules.Rules.test_invented_quote_caps_score) ... ok
+test_min_answers (test_rules.Rules.test_min_answers) ... ok
+test_must_have_failure_ranks_last (test_rules.Rules.test_must_have_failure_ranks_last) ... ok
+test_quote_must_exist (test_rules.Rules.test_quote_must_exist) ... ok
+test_tally_rank_and_best_value (test_rules.Rules.test_tally_rank_and_best_value) ... ok
+test_unknown_cost_never_wins_value (test_rules.Rules.test_unknown_cost_never_wins_value) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.002s
+
+OK

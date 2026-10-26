@@ -1,0 +1,36 @@
+✔ reference 1: guard rejects same family judge (1.504439ms)
+✔ reference 2: guard rejects unpinned model (0.526605ms)
+✔ reference 3: minimum two answers (0.298821ms)
+✔ reference 4: blind hides slots and keeps map (1.117089ms)
+✔ reference 5: quotes must exist (0.389869ms)
+✔ reference 6: tally rank and best value (2.053573ms)
+✔ reference 7: invented quotes cap score (0.504126ms)
+✔ reference 8: unknown cost never wins value (0.352921ms)
+✔ reference 9: must-have failures rank last (0.466447ms)
+✔ reference 10: careful mode flags disagreement (0.587824ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (24.123998ms)
+✔ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (30.945771ms)
+✔ contestant HTTP500 continues with receipt; fewer than two stops after answer calls (10.94916ms)
+✔ call budget rechecks and unknown usage never become zero (11.634661ms)
+✔ contestants start concurrently and group budget is reserved atomically before any start (44.868299ms)
+✔ careful mode uses same private labels reversed and preflight includes exactly one extra judge (8.769609ms)
+✔ deadline aborts an outstanding request and retains unknown-cost failure receipt (28.83154ms)
+✔ failed answers cannot be ranked even if judge scores their anonymous placeholder (13.926777ms)
+✔ model JSON is validated before scoring and invalid judge output stops with its receipt (52.261927ms)
+✔ graph loader reads all seven prompt files and model picker lists only exact routable chat IDs (16.010801ms)
+✔ graph result Lite winner and value, folded answers; Pro details reveal map only after judging (32.685664ms)
+✔ exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases (0.313891ms)
+✔ model template contexts cannot access private maps or selected contestant identifiers (7.370688ms)
+✔ real API graph receipts use exact catalog price rather than legacy colon normalization (9.140329ms)
+✔ invalid rubric stops before contestants and retains the rubric receipt (17.893239ms)
+✔ weighted averages preserve Python reference ties-to-even rounding (0.516266ms)
+✔ guard validates every contestant identifier before reporting same-maker verdict (0.251953ms)
+✔ Lite distinguishes the judge stated reason from the code-verified winner (12.423939ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 437.175728

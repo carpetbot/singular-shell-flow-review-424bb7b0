@@ -1,0 +1,52 @@
+✔ reference 1: guard rejects same family judge (1.419371ms)
+✔ reference 2: guard rejects unpinned model (1.376592ms)
+✔ reference 3: minimum two answers (0.295912ms)
+✔ reference 4: blind hides slots and keeps map (1.360302ms)
+✔ reference 5: quotes must exist (0.458387ms)
+✔ reference 6: tally rank and best value (1.154828ms)
+✔ reference 7: invented quotes cap score (0.437878ms)
+✔ reference 8: unknown cost never wins value (0.342551ms)
+✔ reference 9: must-have failures rank last (0.483757ms)
+✖ reference 10: careful mode flags disagreement (2.127512ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121.592382
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:27:1
+✖ reference 10: careful mode flags disagreement (2.127512ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   {
+  -     criterion: 'clear',
+  -     scores: [
+  -       2,
+  -       5
+  -     ],
+  -     slot: 'slot_2'
+  -   }
+  - ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:27:229)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ { slot: 'slot_2', criterion: 'clear', scores: [Array] } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

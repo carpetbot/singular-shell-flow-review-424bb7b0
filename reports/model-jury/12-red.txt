@@ -1,0 +1,39 @@
+✔ reference 1: guard rejects same family judge (1.46332ms)
+✔ reference 2: guard rejects unpinned model (0.585214ms)
+✔ reference 3: minimum two answers (0.279253ms)
+✔ reference 4: blind hides slots and keeps map (1.356423ms)
+✔ reference 5: quotes must exist (0.419128ms)
+✔ reference 6: tally rank and best value (1.021152ms)
+✔ reference 7: invented quotes cap score (0.461797ms)
+✔ reference 8: unknown cost never wins value (0.36481ms)
+✔ reference 9: must-have failures rank last (0.472097ms)
+✔ reference 10: careful mode flags disagreement (0.661902ms)
+✔ graph end-to-end dynamic models, blinded requests, named code nodes and receipts (18.019766ms)
+✖ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (6.432604ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.249116
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:35:1
+✖ preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls (6.432604ms)
+  AssertionError [ERR_ASSERTION]: missing
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:35:860)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

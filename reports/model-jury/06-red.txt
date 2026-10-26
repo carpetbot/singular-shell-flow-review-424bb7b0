@@ -1,0 +1,27 @@
+✔ reference 1: guard rejects same family judge (1.556267ms)
+✔ reference 2: guard rejects unpinned model (0.705701ms)
+✔ reference 3: minimum two answers (0.334031ms)
+✔ reference 4: blind hides slots and keeps map (2.361916ms)
+✔ reference 5: quotes must exist (0.502106ms)
+✖ reference 6: tally rank and best value (0.695281ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.847548
+
+✖ failing tests:
+
+test at tests/graph.test.mjs:19:1
+✖ reference 6: tally rank and best value (0.695281ms)
+  TypeError: graph.score_cost_and_rank is not a function
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/model-jury-build/shell/tests/graph.test.mjs:19:90)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7)

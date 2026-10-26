@@ -1,0 +1,92 @@
+[
+  {
+    "file": "js/flow.js",
+    "base_sha256": "c375f7158c3dfe7c24528aaae456399e3293c2de5352b68e54290f81b8328615",
+    "current_sha256": "c375f7158c3dfe7c24528aaae456399e3293c2de5352b68e54290f81b8328615",
+    "byte_identical": true
+  },
+  {
+    "file": "js/api.js",
+    "base_sha256": "a1d25bd8b0b23d2a0c2715f0de0f045b0273993aed831789271c546375f7a20c",
+    "current_sha256": "a1d25bd8b0b23d2a0c2715f0de0f045b0273993aed831789271c546375f7a20c",
+    "byte_identical": true
+  },
+  {
+    "file": "js/store.js",
+    "base_sha256": "44b80c553832d82f329bcbe2fcc6f7fd786a44e4e7f2c0cc7ba8f1ba7e9d6fe3",
+    "current_sha256": "44b80c553832d82f329bcbe2fcc6f7fd786a44e4e7f2c0cc7ba8f1ba7e9d6fe3",
+    "byte_identical": true
+  },
+  {
+    "file": "proxy.py",
+    "base_sha256": "75571e303b75736a0734810a0641ef06614c543cf0a27d61861033549135b59e",
+    "current_sha256": "75571e303b75736a0734810a0641ef06614c543cf0a27d61861033549135b59e",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/singular.flow.json",
+    "base_sha256": "3d6a46beeb5a146253fa932fc8a5bf082460f2c4ace62e1eb16fadb0c47a2033",
+    "current_sha256": "3d6a46beeb5a146253fa932fc8a5bf082460f2c4ace62e1eb16fadb0c47a2033",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/claw__motion-trimmer/singular.skill.json",
+    "base_sha256": "34f9be9f576703556c84c4a8e489f3664ade7dbd7bb8aff8b98208c538317fbb",
+    "current_sha256": "34f9be9f576703556c84c4a8e489f3664ade7dbd7bb8aff8b98208c538317fbb",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md",
+    "base_sha256": "6e1d1f6b35656b9227b86b2ba8b89557f98add06964b96051fe4b74cfca1d8cd",
+    "current_sha256": "6e1d1f6b35656b9227b86b2ba8b89557f98add06964b96051fe4b74cfca1d8cd",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md",
+    "base_sha256": "84c829532db343b18baaf617be96713f83178ca46eb6b0fa742c32f3ecc8e889",
+    "current_sha256": "84c829532db343b18baaf617be96713f83178ca46eb6b0fa742c32f3ecc8e889",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md",
+    "base_sha256": "dbe1f4a4838d5a9926bcfd20fc3f022db23bad696ce5d31ab94e5b059e56cc74",
+    "current_sha256": "dbe1f4a4838d5a9926bcfd20fc3f022db23bad696ce5d31ab94e5b059e56cc74",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md",
+    "base_sha256": "8b424362f031e41cb7a82623af4597e9e6eecade20fd8690d82c32e036ec3ea1",
+    "current_sha256": "8b424362f031e41cb7a82623af4597e9e6eecade20fd8690d82c32e036ec3ea1",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md",
+    "base_sha256": "10cd3b3a74c8793e2646e53d76dd0572dbada494205fdaf8e1cf0a61ede826bc",
+    "current_sha256": "10cd3b3a74c8793e2646e53d76dd0572dbada494205fdaf8e1cf0a61ede826bc",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md",
+    "base_sha256": "24d97205ecac97739c6e52f84a08156462d2b7945b57d2b3fd16cf86d2a45fd3",
+    "current_sha256": "24d97205ecac97739c6e52f84a08156462d2b7945b57d2b3fd16cf86d2a45fd3",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md",
+    "base_sha256": "980fd44daec70f8bc6b88384dcd0ad2ad5dfad1e6a1179ab935509f1d84c2107",
+    "current_sha256": "980fd44daec70f8bc6b88384dcd0ad2ad5dfad1e6a1179ab935509f1d84c2107",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md",
+    "base_sha256": "db7cfb71fbb9d2b21290b2902f40e67ab5dabc089a5930d8f75d2dec6ff361a1",
+    "current_sha256": "db7cfb71fbb9d2b21290b2902f40e67ab5dabc089a5930d8f75d2dec6ff361a1",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/claw__motion-trimmer/prompts/user.md",
+    "base_sha256": "0166619a137b3a4e413485edc996f0cdbdcc485ee01338ca8a1f8a20f2d040f3",
+    "current_sha256": "0166619a137b3a4e413485edc996f0cdbdcc485ee01338ca8a1f8a20f2d040f3",
+    "byte_identical": true
+  }
+]
