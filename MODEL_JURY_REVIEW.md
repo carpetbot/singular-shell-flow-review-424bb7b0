@@ -1,6 +1,6 @@
 # Model Jury — local implementation review
 
-**Scope:** branch `model-jury-graph`, based on approved `e064eeb`. WIP branch push to `carpetbot/singular-shell-flow-review-424bb7b0` was separately authorized at handoff. No ZIP publication, paid inference or deployment. The supplied archive remains the specification; no later private-repository changes were fetched for this build.
+**Scope:** branch `model-jury-graph`, based on approved `e064eeb`. Branch and runtime review ZIP publication to `carpetbot/singular-shell-flow-review-424bb7b0` were authorized for review. No paid inference or deployment. The supplied archive remains the specification; no later private-repository changes were fetched for this build.
 
 ## Acceptance evidence
 
@@ -14,7 +14,7 @@
 | 6 | Careful mode | `careful.offline.json`: exactly six calls rather than five, two judge calls, same label-to-answer mapping in reverse order, gaps of exactly 2 flagged. Node test proves the preflight includes the extra call and rejects a cap between the normal and careful estimates before any call. |
 | 7 | Legacy regression / protected bytes | Actual Chromium requests captured for both base and current: four Cold Email bodies plus one Motion Trimmer body are identical; `legacy-request-bodies.diff` is 0 bytes. `protected-hashes.json` verifies 15 protected files, including all four locked files and every prior manifest/prompt. Base suite: 23 Node + 12 Python tests pass; current: 51 Node + 18 Python tests pass. Only gallery-count expectations change from two cards to three. |
 | 8 | Static source/test/doc denial | `static-denials.json`: GET and HEAD return 404 on source and copied-runtime servers for Python source, tests, docs, encoded/query and traversal paths. Runtime root, graph JS, manifest and prompt return 200. Existing proxy-security suite also passes. |
-| 9 | Review ZIP and SHA256 | `dist/model-jury-review.zip` and adjacent `.sha256`; exact byte manifest in `reports/model-jury/package.json`. ZIP CRC, source/copied/ZIP byte equality and seven verbatim prompt copies verified. **Public raw URL deliberately deferred:** the controlling user instruction forbids external push/publication. No URL was fabricated. |
+| 9 | Review ZIP and SHA256 | `dist/model-jury-review.zip` and adjacent `.sha256`; exact byte manifest in `reports/model-jury/package.json`. ZIP CRC, source/copied/ZIP byte equality and seven verbatim prompt copies verified. The runtime ZIP is published on the review branch for download, not deployed. |
 
 ## Implementation
 
@@ -52,4 +52,4 @@ The reference Python and original private design are not included in the deploya
 - Cost caps are client-side heuristics, not guaranteed billing caps. Already-started parallel upstream calls may still bill after timeout or another result makes cost unknown.
 - Maker identity uses the provider prefix, exactly as the reference. Fine-tunes/rebrands and self-identifying answer text can defeat true anonymity; no maker genealogy or content rewriting is added.
 - The reference's careful-pass ranking semantics are retained; the report exposes both passes and disagreement flags rather than claiming an independent fact check.
-- Public raw URL and independent approval are intentionally outstanding. Any eventual publication must use the runtime allowlist, not the private archive or incidental design sources.
+- Independent code review and Sofa approval remain release gates. The public ZIP uses the runtime allowlist, not the private archive or incidental design sources.
