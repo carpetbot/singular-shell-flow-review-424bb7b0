@@ -1,0 +1,71 @@
+✖ clear finished deletes only active-account terminal refs after a locked reread (14.506418ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.18146
+
+✖ failing tests:
+
+test at tests/video-cross-tab.test.mjs:127:1
+✖ clear finished deletes only active-account terminal refs after a locked reread (14.506418ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      {
+        id: 'vid_ref',
+        keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc',
+        status: 'creating',
+  ...
+        keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca',
+  -     status: 'completed',
+  -     token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-completed'
+  -   },
+  -   {
+  -     id: 'vid_ref',
+  -     keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca',
+  -     status: 'failed',
+  -     token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-failed'
+  -   },
+  -   {
+  -     id: 'vid_ref',
+  -     keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca',
+  -     status: 'rejected',
+  -     token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-rejected'
+  -   },
+  -   {
+  -     id: 'vid_ref',
+  -     keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca',
+        status: 'creating',
+        token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-creating'
+      },
+      {
+        id: 'vid_ref',
+  ...
+      },
+  -   {
+  -     status: 'completed',
+  -     token: 'legacy-no-account'
+  -   },
+  -   {
+  -     keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca',
+  -     status: 'completed',
+  -     token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-late'
+  -   }
+    ]
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:139:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-creating', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'creating', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-uncertain', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'uncertain', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-queued', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'queued', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-processing', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'processing', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-unknown', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'unknown', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-alien', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'alien', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-creating', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'creating', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-uncertain', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'uncertain', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-queued', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'queued', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-processing', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'processing', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-unknown', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'unknown', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-alien', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'alien', id: 'vid_ref' } ],
+    expected: [ { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-creating', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'creating', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-uncertain', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'uncertain', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-queued', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'queued', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-processing', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'processing', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-unknown', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'unknown', id: 'vid_ref' }, { token: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc-alien', keyHash: 'a6bfc118da29f0768e4e0f87c1d3fce115a1d46815c70bb3a3da5cb948ed05bc', status: 'alien', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-completed', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'completed', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-failed', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'failed', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-rejected', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'rejected', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-creating', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'creating', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-uncertain', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'uncertain', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-queued', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'queued', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-processing', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'processing', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-unknown', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'unknown', id: 'vid_ref' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-alien', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca', status: 'alien', id: 'vid_ref' }, { token: 'legacy-no-account', status: 'completed' }, { token: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca-late', status: 'completed', keyHash: '580843d03d2216ff1a275d0991bad66e4d1af871171d929e9de604b7959f9bca' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

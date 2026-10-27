@@ -1,0 +1,31 @@
+✔ approved five second default mode validates exact defaults and sends only documented fields (56.621092ms)
+✔ default generation refuses missing, stale, mismatched, unroutable or nonexact catalog before POST (94.719179ms)
+✖ default audio label is backed by catalog and history capacity recovers after clearing 20 finished refs (5.456282ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 291.024769
+
+✖ failing tests:
+
+test at tests/video-defaults.test.mjs:27:1
+✖ default audio label is backed by catalog and history capacity recovers after clearing 20 finished refs (5.456282ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-defaults.test.mjs:29:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,20 +1,15 @@
-# Motion Trimmer → Video: final offline review handoff
+# Motion Trimmer → Video · replacement review handoff
 
-Base: `378d6f4`; spec: `shuenrui/singular-flows@960213c`, section v0.0.2.
+Base deployment `378d6f4`; source branch `motion-trimmer-video`. This local revision implements Sofa's six fixes plus the subsequently approved **five-second omitted-field default mode**. Earlier disabled-generation handoff text is superseded.
 
-Final runtime ZIP: `dist/motion-trimmer-video-review.zip`
-SHA256: `89032c442e2726c60084378462cc4da9616d77ce3b4f614c50386cf0f976fa59`
+- Runtime ZIP: `dist/motion-trimmer-video-review.zip`
+- SHA256: `d853ea8367aed9f7cf0b0e3bbfe59c12462c91a49776cdbd9c97824a3bf42da9`
+- Runtime: 40 files, CRC checked and byte-identical to source and extracted copy. No tests, catalog snapshots, private design, reports, nested builds or credentials.
+- Current verification: **94 Node / 45 Python+Chromium tests pass** in source; **94 Node tests pass** in a relocated source copy from an unrelated CWD with original source/fixture reads denied. The targeted Python clear-selection Chromium regression passes once in that relocated copy and once against the extracted runtime. Full relocated/package Python suites were not rerun for these two corrections (the prior build's 45/45 evidence remains historical). No failures/skips in current gates. Twenty-nine protected legacy UI/engine/prompt files match deployment base exactly; proxy bytes are unchanged by this revision.
+- Current evidence and precise commands: `reports/motion-clear-final/EVIDENCE.md`. Both clear-history blockers have failing-first tests: stale updates cannot recreate removed records or retain a cleared UI selection, and clear removes only the active account's terminal records. All other-account records and own unresolved references survive. Initial intent still persists before POST; uncertain retry retains the identical token/body. All prior cross-tab, pending-history, sanitized-error, incomplete-stream and terminal-persistence regressions remain green.
 
-The runtime ZIP and source branch are published for Sofa's review only. Nothing is deployed. No paid model calls occurred. Earlier reports describe historical local-only checkpoints; this document records the final handoff state.
+Five-second generation is ON with the user's key, valid plan, explicit approval and validated fresh exact defaults. Wan 720p displays $0.53; MiniMax 768p displays $0.21. Production POST sends only `model`, `prompt`, `resolution`; all three unconfirmed custom field mappings remain null. There is no 10/15-second UI. Framing is model default / ratio not guaranteed; Wan audio default on, MiniMax unspecified.
 
-Parent verification: 83 Node tests and 42 Python/browser tests passed. ZIP CRC and SHA checked. The original implementation and both correction rounds contain isolated red/green evidence. Runtime has 40 files. Criteria 1–11 pass offline, not live; criterion 12 is blocked.
+**Criterion 12 remains UNVERIFIED:** no paid render, live quality, duration/resolution or settled billing test occurred. The final independent re-review passed with no security or logic concerns; its verdict is recorded in `reports/motion-clear-final/independent-review.json`. The source branch and replacement ZIP are published for Sofa's review, not deployed; deployment is allowed only after Sofa reviews it. The user will then test with a securely entered capped key. Source publication and deployment are separate actions.
 
-Four independent-review blockers were fixed: cross-tab content-derived idempotency with locked recovery refresh, flow-wide pending/history guard, bounded sanitized upstream error handling, and detectable incomplete media transfer with download-only retry. A subsequent delayed-poll persistence race was fixed with monotonic terminal-state reconciliation. Independent final re-review passed with no remaining security or logic issues; evidence is in `reports/motion-poll-final/independent-review.json`.
-
-Existing Cold Email, Model Jury and planning-only Motion Trimmer request bodies remain unchanged against the base. Evidence: `reports/motion-video/legacy-compare.txt` and `protected-hashes.json`. Narrow proxy media handling is intentionally changed and separately tested.
-
-Acceptance index: `reports/motion-video/EVIDENCE.md`.
-First correction evidence: `reports/motion-video-blockers/EVIDENCE.md`.
-Final polling correction evidence: `reports/motion-poll-final/`.
-
-RELEASE GATE: duration/aspectRatio/audio production field map remains null, and real Generate is disabled. June's adapter-field confirmation and a separately approved capped live render are still required to verify duration/resolution, content and actual settled cost. Offline synthetic MP4 fixtures are not real video-model results. No deploy authorization is implied by this publication.
+Preserve/exclude pre-existing report/screenshot churn and generated source/package test copies when staging. Current evidence is isolated in `reports/motion-clear-final/`; its relocated/extracted verification workspaces are outside the checkout in scratch. Do not publish the entire historical `reports/motion-video-usability/` tree: its nested source/runtime copies are not evidence deliverables. Select only evidence indexes, logs, JSON manifests, reproduction scripts and review screenshots.

@@ -1,0 +1,667 @@
+test_01_mode_default_persistence_and_guarded_routes (test_lite_pro.LitePro.test_01_mode_default_persistence_and_guarded_routes) ... ERROR
+test_02_gallery_and_fictional_sample_preserve_inputs (test_lite_pro.LitePro.test_02_gallery_and_fictional_sample_preserve_inputs) ... ERROR
+test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls (test_lite_pro.LitePro.test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls) ... ERROR
+test_04_mobile_accessible_dialog_and_lite_settings (test_lite_pro.LitePro.test_04_mobile_accessible_dialog_and_lite_settings) ... ERROR
+test_05_untrusted_status_and_catalog_are_plain_text (test_lite_pro.LitePro.test_05_untrusted_status_and_catalog_are_plain_text) ... ERROR
+test_06_missing_catalog_models_has_recovery_not_skeleton (test_lite_pro.LitePro.test_06_missing_catalog_models_has_recovery_not_skeleton) ... ERROR
+test_07_fallback_actual_receipt_and_unknown_usage_failure (test_lite_pro.LitePro.test_07_fallback_actual_receipt_and_unknown_usage_failure) ... ERROR
+test_08_check_failure_leaves_draft_and_not_checked (test_lite_pro.LitePro.test_08_check_failure_leaves_draft_and_not_checked) ... ERROR
+test_09_exact_seven_review_screenshots (test_lite_pro.LitePro.test_09_exact_seven_review_screenshots) ... ERROR
+test_01_blinded_browser_and_lite_pro (test_model_jury.ModelJury.test_01_blinded_browser_and_lite_pro) ... ERROR
+test_02_same_maker_zero_calls (test_model_jury.ModelJury.test_02_same_maker_zero_calls) ... ERROR
+test_03_one_http500_ranks_two (test_model_jury.ModelJury.test_03_one_http500_ranks_two) ... ERROR
+test_04_two_http500_stop_before_judge (test_model_jury.ModelJury.test_04_two_http500_stop_before_judge) ... ERROR
+test_05_careful_exact_extra_call_and_gap_two (test_model_jury.ModelJury.test_05_careful_exact_extra_call_and_gap_two) ... ERROR
+test_06_mobile_no_horizontal_overflow (test_model_jury.ModelJury.test_06_mobile_no_horizontal_overflow) ... ERROR
+test_07_search_models_preserves_exact_selection_and_excludes_latest (test_model_jury.ModelJury.test_07_search_models_preserves_exact_selection_and_excludes_latest) ... ERROR
+test_08_careful_second_pass_must_have_cannot_win (test_model_jury.ModelJury.test_08_careful_second_pass_must_have_cannot_win) ... ERROR
+test_09_careful_second_pass_quote_error_is_retained_not_disqualified (test_model_jury.ModelJury.test_09_careful_second_pass_quote_error_is_retained_not_disqualified) ... ERROR
+test_10_lite_gateway_failure_and_same_winner_value_copy (test_model_jury.ModelJury.test_10_lite_gateway_failure_and_same_winner_value_copy) ... ERROR
+test_blocks_python_encoded_queries_symlinks_directories_tests (test_proxy.StaticSecurity.test_blocks_python_encoded_queries_symlinks_directories_tests) ... [shell] code 404, message Not Found
+[shell] "GET /proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /proxy.py?download=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /%70roxy%2epy?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /%2570roxy%252epy HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/ HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /tests/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /../proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/%2e%2e/proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /proxy.py?download=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /%70roxy%2epy?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /%2570roxy%252epy HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/ HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /tests/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /../proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/%2e%2e/proxy.py HTTP/1.1" 404 -
+ok
+test_static_shell_still_serves (test_proxy.StaticSecurity.test_static_shell_still_serves) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /index.html?x=1 HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "HEAD / HTTP/1.1" 200 -
+[shell] "HEAD /index.html?x=1 HTTP/1.1" 200 -
+[shell] "HEAD /js/app.js HTTP/1.1" 200 -
+ok
+test_flow_and_legacy_panels_with_offline_gateway (test_ui.BrowserSmoke.test_flow_and_legacy_panels_with_offline_gateway) ... ERROR
+test_01_gallery_five_second_default_mode (test_video_browser.VideoBrowser.test_01_gallery_five_second_default_mode) ... ERROR
+test_02_confirmed_offline_brief_player_download_retry (test_video_browser.VideoBrowser.test_02_confirmed_offline_brief_player_download_retry) ... ERROR
+test_03_unknown_price_invalid_json_and_http_errors_do_not_generate (test_video_browser.VideoBrowser.test_03_unknown_price_invalid_json_and_http_errors_do_not_generate) ... ERROR
+test_04_uncertain_reload_same_payload_token (test_video_browser.VideoBrowser.test_04_uncertain_reload_same_payload_token) ... ERROR
+test_05_queued_processing_failed_stop_then_explicit_resume (test_video_browser.VideoBrowser.test_05_queued_processing_failed_stop_then_explicit_resume) ... ERROR
+test_06_close_during_submission_does_not_restart_polling (test_video_browser.VideoBrowser.test_06_close_during_submission_does_not_restart_polling) ... ERROR
+test_07_mobile_review_no_overflow (test_video_browser.VideoBrowser.test_07_mobile_review_no_overflow) ... ERROR
+test_08_video_auth_credit_rejection_is_distinct_and_recoverable (test_video_browser.VideoBrowser.test_08_video_auth_credit_rejection_is_distinct_and_recoverable) ... ERROR
+test_clear_finished_selection_preserves_pending (test_video_browser.VideoBrowser.test_clear_finished_selection_preserves_pending) ... ERROR
+test_history_selection_cannot_bypass_pending_job (test_video_browser.VideoBrowser.test_history_selection_cannot_bypass_pending_job) ... ERROR
+test_incomplete_download_offers_retry_only_not_regeneration (test_video_browser.VideoBrowser.test_incomplete_download_offers_retry_only_not_regeneration) ... ERROR
+test_lite_shot_list_pro_editor_and_prompt_stay_synchronized (test_video_browser.VideoBrowser.test_lite_shot_list_pro_editor_and_prompt_stay_synchronized) ... ERROR
+test_open_panel_polls_past_three_minutes_fake_clock_then_close_stops (test_video_browser.VideoBrowser.test_open_panel_polls_past_three_minutes_fake_clock_then_close_stops) ... ERROR
+test_two_browser_tabs_simultaneous_generate_one_job_and_live_storage_refresh (test_video_browser.VideoBrowser.test_two_browser_tabs_simultaneous_generate_one_job_and_live_storage_refresh) ... ERROR
+test_two_real_tabs_use_shared_locks_and_saved_retry_token (test_video_browser.VideoBrowser.test_two_real_tabs_use_shared_locks_and_saved_retry_token) ... ERROR
+test_01_token_only_create_and_legacy_body (test_video_proxy.VideoProxy.test_01_token_only_create_and_legacy_body) ... [shell] "POST /v1/videos HTTP/1.1" 202 -
+[shell] "GET /v1/videos/vid_a HTTP/1.1" 200 -
+[shell] "POST /v1/chat/completions HTTP/1.1" 202 -
+ok
+test_02_streams_before_upstream_finishes (test_video_proxy.VideoProxy.test_02_streams_before_upstream_finishes) ... [shell] "GET /v1/videos/vid_stream/content HTTP/1.1" 200 -
+ok
+test_03_bound_and_redirect (test_video_proxy.VideoProxy.test_03_bound_and_redirect) ... [shell] code 413, message Video exceeds 100 MB
+[shell] "GET /v1/videos/vid_huge/content HTTP/1.1" 413 -
+[shell] "GET /v1/videos/vid_redirect/content HTTP/1.1" 502 -
+ok
+test_04_invalid_video_paths_do_not_forward (test_video_proxy.VideoProxy.test_04_invalid_video_paths_do_not_forward) ... [shell] code 404, message Not Found
+[shell] "GET /v1/videos/../content HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a/content?url=https://evil.test HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a%2Fcontent HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a/content/extra HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a\content HTTP/1.1" 404 -
+ok
+test_05_unknown_size_stream_is_bounded (test_video_proxy.VideoProxy.test_05_unknown_size_stream_is_bounded) ... [shell] "GET /v1/videos/vid_unknown/content HTTP/1.1" 200 -
+ok
+test_unknown_length_success_and_exact_bound_complete_normally (test_video_proxy.VideoProxy.test_unknown_length_success_and_exact_bound_complete_normally) ... [shell] "GET /v1/videos/vid_unknown/content HTTP/1.1" 200 -
+ok
+test_unknown_overflow_browser_fetch_and_download_reject_without_blob (test_video_proxy.VideoProxy.test_unknown_overflow_browser_fetch_and_download_reject_without_blob) ... ERROR
+test_video_errors_are_bounded_sanitized_and_closed (test_video_proxy.VideoProxy.test_video_errors_are_bounded_sanitized_and_closed) ... [shell] "POST /v1/videos HTTP/1.1" 500 -
+[shell] "GET /v1/videos/vid_error HTTP/1.1" 401 -
+[shell] "GET /v1/videos/vid_error/content HTTP/1.1" 502 -
+ok
+
+======================================================================
+ERROR: test_01_mode_default_persistence_and_guarded_routes (test_lite_pro.LitePro.test_01_mode_default_persistence_and_guarded_routes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 25, in setUp
+    self.browser = self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 14566, in launch
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_browser_type.py", line 97, in launch
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: BrowserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/playwright_chromiumdev_profile-Yi1epq --remote-debugging-pipe --no-startup-window
+<launched> pid=1127194
+Call log:
+  - <launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/playwright_chromiumdev_profile-Yi1epq --remote-debugging-pipe --no-startup-window
+  - <launched> pid=1127194
+  - [pid=1127194] <gracefully close start>
+  - [pid=1127194] <kill>
+  - [pid=1127194] <will force kill>
+  - [pid=1127194] <process did exit: exitCode=null, signal=SIGTRAP>
+  - [pid=1127194] starting temporary directories cleanup
+  - [pid=1127194] finished temporary directories cleanup
+  - [pid=1127194] <gracefully close end>
+
+
+======================================================================
+ERROR: test_02_gallery_and_fictional_sample_preserve_inputs (test_lite_pro.LitePro.test_02_gallery_and_fictional_sample_preserve_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls (test_lite_pro.LitePro.test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_04_mobile_accessible_dialog_and_lite_settings (test_lite_pro.LitePro.test_04_mobile_accessible_dialog_and_lite_settings)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_05_untrusted_status_and_catalog_are_plain_text (test_lite_pro.LitePro.test_05_untrusted_status_and_catalog_are_plain_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_06_missing_catalog_models_has_recovery_not_skeleton (test_lite_pro.LitePro.test_06_missing_catalog_models_has_recovery_not_skeleton)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_07_fallback_actual_receipt_and_unknown_usage_failure (test_lite_pro.LitePro.test_07_fallback_actual_receipt_and_unknown_usage_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_08_check_failure_leaves_draft_and_not_checked (test_lite_pro.LitePro.test_08_check_failure_leaves_draft_and_not_checked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_09_exact_seven_review_screenshots (test_lite_pro.LitePro.test_09_exact_seven_review_screenshots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_lite_pro.py", line 24, in setUp
+    self.pw = sync_playwright().start()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_01_blinded_browser_and_lite_pro (test_model_jury.ModelJury.test_01_blinded_browser_and_lite_pro)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_02_same_maker_zero_calls (test_model_jury.ModelJury.test_02_same_maker_zero_calls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_03_one_http500_ranks_two (test_model_jury.ModelJury.test_03_one_http500_ranks_two)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_04_two_http500_stop_before_judge (test_model_jury.ModelJury.test_04_two_http500_stop_before_judge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_05_careful_exact_extra_call_and_gap_two (test_model_jury.ModelJury.test_05_careful_exact_extra_call_and_gap_two)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_06_mobile_no_horizontal_overflow (test_model_jury.ModelJury.test_06_mobile_no_horizontal_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_07_search_models_preserves_exact_selection_and_excludes_latest (test_model_jury.ModelJury.test_07_search_models_preserves_exact_selection_and_excludes_latest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_08_careful_second_pass_must_have_cannot_win (test_model_jury.ModelJury.test_08_careful_second_pass_must_have_cannot_win)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_09_careful_second_pass_quote_error_is_retained_not_disqualified (test_model_jury.ModelJury.test_09_careful_second_pass_quote_error_is_retained_not_disqualified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_10_lite_gateway_failure_and_same_winner_value_copy (test_model_jury.ModelJury.test_10_lite_gateway_failure_and_same_winner_value_copy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_model_jury.py", line 23, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_flow_and_legacy_panels_with_offline_gateway (test_ui.BrowserSmoke.test_flow_and_legacy_panels_with_offline_gateway)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_ui.py", line 36, in test_flow_and_legacy_panels_with_offline_gateway
+    with sync_playwright() as p:
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_01_gallery_five_second_default_mode (test_video_browser.VideoBrowser.test_01_gallery_five_second_default_mode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_02_confirmed_offline_brief_player_download_retry (test_video_browser.VideoBrowser.test_02_confirmed_offline_brief_player_download_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_03_unknown_price_invalid_json_and_http_errors_do_not_generate (test_video_browser.VideoBrowser.test_03_unknown_price_invalid_json_and_http_errors_do_not_generate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_04_uncertain_reload_same_payload_token (test_video_browser.VideoBrowser.test_04_uncertain_reload_same_payload_token)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_05_queued_processing_failed_stop_then_explicit_resume (test_video_browser.VideoBrowser.test_05_queued_processing_failed_stop_then_explicit_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_06_close_during_submission_does_not_restart_polling (test_video_browser.VideoBrowser.test_06_close_during_submission_does_not_restart_polling)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_07_mobile_review_no_overflow (test_video_browser.VideoBrowser.test_07_mobile_review_no_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_08_video_auth_credit_rejection_is_distinct_and_recoverable (test_video_browser.VideoBrowser.test_08_video_auth_credit_rejection_is_distinct_and_recoverable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_clear_finished_selection_preserves_pending (test_video_browser.VideoBrowser.test_clear_finished_selection_preserves_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_history_selection_cannot_bypass_pending_job (test_video_browser.VideoBrowser.test_history_selection_cannot_bypass_pending_job)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_incomplete_download_offers_retry_only_not_regeneration (test_video_browser.VideoBrowser.test_incomplete_download_offers_retry_only_not_regeneration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_lite_shot_list_pro_editor_and_prompt_stay_synchronized (test_video_browser.VideoBrowser.test_lite_shot_list_pro_editor_and_prompt_stay_synchronized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_open_panel_polls_past_three_minutes_fake_clock_then_close_stops (test_video_browser.VideoBrowser.test_open_panel_polls_past_three_minutes_fake_clock_then_close_stops)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_two_browser_tabs_simultaneous_generate_one_job_and_live_storage_refresh (test_video_browser.VideoBrowser.test_two_browser_tabs_simultaneous_generate_one_job_and_live_storage_refresh)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_two_real_tabs_use_shared_locks_and_saved_retry_token (test_video_browser.VideoBrowser.test_two_real_tabs_use_shared_locks_and_saved_retry_token)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_browser.py", line 14, in setUp
+    self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 84, in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+======================================================================
+ERROR: test_unknown_overflow_browser_fetch_and_download_reject_without_blob (test_video_proxy.VideoProxy.test_unknown_overflow_browser_fetch_and_download_reject_without_blob)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source/tests/test_video_proxy.py", line 80, in test_unknown_overflow_browser_fetch_and_download_reject_without_blob
+    with sync_playwright() as pw:
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_context_manager.py", line 47, in __enter__
+    raise Error(
+playwright._impl._errors.Error: It looks like you are using Playwright Sync API inside the asyncio loop.
+Please use the Async API instead.
+
+----------------------------------------------------------------------
+Ran 45 tests in 7.908s
+
+FAILED (errors=36)

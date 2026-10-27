@@ -1,0 +1,123 @@
+{
+  "calls": [
+    {
+      "model": "eu-jev/eu-jeff-1.0.0",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You turn a task into a grading rubric before anyone answers it. You never answer the task yourself.\nReturn JSON only:\n{\n  \"criteria\": [\n    {\"name\": \"short name\", \"what_good_looks_like\": \"one observable sentence\", \"weight\": 1}\n  ],\n  \"must_haves\": [\"hard requirement stated in the task\"],\n  \"task_type\": \"writing|analysis|extraction|code|reasoning|other\"\n}\nRules:\n- 3 to 5 criteria. Each must be checkable by reading the answer alone.\n- If the user gave criteria, keep them in their words and add at most 2 of your own.\n- weight is 1, 2 or 3. Use 3 only for what the user said matters most.\n- must_haves only for explicit requirements in the task (format, length, language, audience). Do not invent any.\n- Do not reward length unless the task asks for it.\n"
+        },
+        {
+          "role": "user",
+          "content": "Task:\nRecommend a shipping date.\n\nContext the answers will be given (may be empty):\n\n\nUser's own criteria (may be empty):\n\n"
+        }
+      ],
+      "stream": false,
+      "routing": {
+        "maxPrice": 0.05
+      },
+      "response_format": {
+        "type": "json_object"
+      },
+      "max_tokens": 500
+    },
+    {
+      "model": "llmtech/decider-0.8b-fp8",
+      "messages": [
+        {
+          "role": "system",
+          "content": "\n"
+        },
+        {
+          "role": "user",
+          "content": "Recommend a shipping date.\n"
+        }
+      ],
+      "stream": false,
+      "routing": {
+        "maxPrice": 0.05
+      },
+      "max_tokens": 1500
+    },
+    {
+      "model": "perplexity/pplx-decider-v1.2",
+      "messages": [
+        {
+          "role": "system",
+          "content": "\n"
+        },
+        {
+          "role": "user",
+          "content": "Recommend a shipping date.\n"
+        }
+      ],
+      "stream": false,
+      "routing": {
+        "maxPrice": 0.05
+      },
+      "max_tokens": 1500
+    },
+    {
+      "model": "liquid/d1",
+      "messages": [
+        {
+          "role": "system",
+          "content": "\n"
+        },
+        {
+          "role": "user",
+          "content": "Recommend a shipping date.\n"
+        }
+      ],
+      "stream": false,
+      "routing": {
+        "maxPrice": 0.05
+      },
+      "max_tokens": 1500
+    },
+    {
+      "model": "subq/subq-snap-1.1",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You grade anonymous answers to the same task against a fixed rubric. You do not know which model wrote which answer. Do not guess.\nProcedure:\n1. For each answer, check every must_have. List the ones it fails.\n2. Score each criterion from 1 to 5. 5 = fully meets what_good_looks_like. 3 = partly. 1 = misses it.\n3. For every score, quote the words from the answer that justify it (max 20 words). No quote means the score cannot be above 2.\n4. Length is not quality. Do not reward an answer for being longer or more formatted.\n5. The order of answers is random. Do not favour the first or the last.\n6. An answer marked \"(no answer)\" gets no scores.\nDo not add up totals. Code does that.\nReturn JSON only:\n{\n  \"scores\": [\n    {\n      \"answer\": \"1\",\n      \"must_haves_failed\": [],\n      \"criteria\": [{\"name\": \"...\", \"score\": 1, \"quote\": \"...\"}],\n      \"strength\": \"one sentence\",\n      \"weakness\": \"one sentence\"\n    }\n  ],\n  \"best\": \"1\",\n  \"reason\": \"one sentence: why the best beats the runner-up\"\n}\n"
+        },
+        {
+          "role": "user",
+          "content": "Task:\nRecommend a shipping date.\n\nRubric:\n{\"criteria\": [{\"name\": \"clear\", \"weight\": 3}, {\"name\": \"short\", \"weight\": 1}], \"must_haves\": []}\n\nAnswer 1:\nShip on Friday. The risk is the payment bug.\n\nAnswer 2:\nShip Friday; fix payments first.\n\nAnswer 3:\nWe could consider many options.\n"
+        }
+      ],
+      "stream": false,
+      "routing": {
+        "maxPrice": 0.05
+      },
+      "response_format": {
+        "type": "json_object"
+      },
+      "max_tokens": 1500
+    },
+    {
+      "model": "subq/subq-snap-1.1",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You grade anonymous answers to the same task against a fixed rubric. You do not know which model wrote which answer. Do not guess.\nProcedure:\n1. For each answer, check every must_have. List the ones it fails.\n2. Score each criterion from 1 to 5. 5 = fully meets what_good_looks_like. 3 = partly. 1 = misses it.\n3. For every score, quote the words from the answer that justify it (max 20 words). No quote means the score cannot be above 2.\n4. Length is not quality. Do not reward an answer for being longer or more formatted.\n5. The order of answers is random. Do not favour the first or the last.\n6. An answer marked \"(no answer)\" gets no scores.\nDo not add up totals. Code does that.\nReturn JSON only:\n{\n  \"scores\": [\n    {\n      \"answer\": \"1\",\n      \"must_haves_failed\": [],\n      \"criteria\": [{\"name\": \"...\", \"score\": 1, \"quote\": \"...\"}],\n      \"strength\": \"one sentence\",\n      \"weakness\": \"one sentence\"\n    }\n  ],\n  \"best\": \"1\",\n  \"reason\": \"one sentence: why the best beats the runner-up\"\n}\n"
+        },
+        {
+          "role": "user",
+          "content": "Task:\nRecommend a shipping date.\n\nRubric:\n{\"criteria\": [{\"name\": \"clear\", \"weight\": 3}, {\"name\": \"short\", \"weight\": 1}], \"must_haves\": []}\n\nAnswer 3:\nWe could consider many options.\n\nAnswer 2:\nShip Friday; fix payments first.\n\nAnswer 1:\nShip on Friday. The risk is the payment bug.\n"
+        }
+      ],
+      "stream": false,
+      "routing": {
+        "maxPrice": 0.05
+      },
+      "response_format": {
+        "type": "json_object"
+      },
+      "max_tokens": 1500
+    }
+  ],
+  "result": "Comparison complete\n\nOne judge\u2019s opinion, not independent factual verification. Review the evidence.\n\nTotal estimated cost: <0.01\u00a2. Estimates are not billed charges or a guaranteed cap.\n\nWinner\n\nperplexity/pplx-decider-v1.2 \u00b7 Score 4 / 5 \u00b7 <0.01\u00a2\n\nShip on Friday. The risk is the payment bug.\nCopy answer\n\nJudge\u2019s stated reason: Explicit offline fixture: supported shipping recommendation.\n\nThis reason may differ from the code-verified ranking after quote checks, must-have failures or careful-pass averaging.\n\nBest value\n\nperplexity/pplx-decider-v1.2 \u00b7 Score 4 / 5 \u00b7 <0.01\u00a2\n\nShip on Friday. The risk is the payment bug.\nCopy answer\n\nThe winner is also the best value.\n\nOther answers\nRubric\n{\n  \"criteria\": [\n    {\n      \"name\": \"clear\",\n      \"weight\": 3\n    },\n    {\n      \"name\": \"short\",\n      \"weight\": 1\n    }\n  ],\n  \"must_haves\": []\n}\nScore table \u00b7 verified quotes and weighted scores\nRANK / SLOT\tSCORE\tCOST\tEVIDENCE\n1 \u00b7 slot_2\t4\t<0.01\u00a2\t\n{\n  \"criteria\": {\n    \"clear\": 5,\n    \"short\": 4\n  },\n  \"quote_failures\": [],\n  \"must_haves_failed\": [],\n  \"judges\": [\n    {\n      \"answer\": \"1\",\n      \"must_haves_failed\": [],\n      \"criteria\": [\n        {\n          \"name\": \"clear\",\n          \"score\": 5,\n          \"quote\": \"Ship on Friday. The risk is the payment bug.\"\n        },\n        {\n          \"name\": \"short\",\n          \"score\": 4,\n          \"quote\": \"Ship on Friday. The risk is the payment bug.\"\n        }\n      ]\n    },\n    {\n      \"answer\": \"1\",\n      \"must_haves_failed\": [],\n      \"criteria\": [\n        {\n          \"name\": \"clear\",\n          \"score\": 3,\n          \"quote\": \"Ship on Friday. The risk is the payment bug.\"\n        },\n        {\n          \"name\": \"short\",\n          \"score\": 4,\n          \"quote\": \"Ship on Friday. The risk is the payment bug.\"\n        }\n      ]\n    }\n  ]\n}\n\n2 \u00b7 slot_1\t4\t<0.01\u00a2\t\n{\n  \"criteria\": {\n    \"clear\": 5,\n    \"short\": 4\n  },\n  \"quote_failures\": [],\n  \"must_haves_failed\": [],\n  \"judges\": [\n    {\n      \"answer\": \"2\",\n      \"must_haves_failed\": [],\n      \"criteria\": [\n        {\n          \"name\": \"clear\",\n          \"score\": 5,\n          \"quote\": \"Ship Friday; fix payments first.\"\n        },\n        {\n          \"name\": \"short\",\n          \"score\": 4,\n          \"quote\": \"Ship Friday; fix payments first.\"\n        }\n      ]\n    },\n    {\n      \"answer\": \"2\",\n      \"must_haves_failed\": [],\n      \"criteria\": [\n        {\n          \"name\": \"clear\",\n          \"score\": 3,\n          \"quote\": \"Ship Friday; fix payments first.\"\n        },\n        {\n          \"name\": \"short\",\n          \"score\": 4,\n          \"quote\": \"Ship Friday; fix payments first.\"\n        }\n      ]\n    }\n  ]\n}\n\n3 \u00b7 slot_3\t4\t<0.01\u00a2\t\n{\n  \"criteria\": {\n    \"clear\": 5,\n    \"short\": 4\n  },\n  \"quote_failures\": [],\n  \"must_haves_failed\": [],\n  \"judges\": [\n    {\n      \"answer\": \"3\",\n      \"must_haves_failed\": [],\n      \"criteria\": [\n        {\n          \"name\": \"clear\",\n          \"score\": 5,\n          \"quote\": \"We could consider many options.\"\n        },\n        {\n          \"name\": \"short\",\n          \"score\": 4,\n          \"quote\": \"We could consider many options.\"\n        }\n      ]\n    },\n    {\n      \"answer\": \"3\",\n      \"must_haves_failed\": [],\n      \"criteria\": [\n        {\n          \"name\": \"clear\",\n          \"score\": 3,\n          \"quote\": \"We could consider many options.\"\n        },\n        {\n          \"name\": \"short\",\n          \"score\": 4,\n          \"quote\": \"We could consider many options.\"\n        }\n      ]\n    }\n  ]\n}\nSlot map \u00b7 revealed after judging\n{\n  \"1\": {\n    \"slot\": \"slot_2\",\n    \"model\": \"perplexity/pplx-decider-v1.2\"\n  },\n  \"2\": {\n    \"slot\": \"slot_1\",\n    \"model\": \"llmtech/decider-0.8b-fp8\"\n  },\n  \"3\": {\n    \"slot\": \"slot_3\",\n    \"model\": \"liquid/d1\"\n  }\n}\nDisagreement flags\n[\n  {\n    \"slot\": \"slot_2\",\n    \"criterion\": \"clear\",\n    \"scores\": [\n      5,\n      3\n    ]\n  },\n  {\n    \"slot\": \"slot_1\",\n    \"criterion\": \"clear\",\n    \"scores\": [\n      5,\n      3\n    ]\n  },\n  {\n    \"slot\": \"slot_3\",\n    \"criterion\": \"clear\",\n    \"scores\": [\n      5,\n      3\n    ]\n  }\n]\nPer-node receipts \u00b7 costs and tokens\nguard \u00b7 done \u00b7 \u2014\nrubric \u00b7 done \u00b7 <0.01\u00a2\nslot_1 \u00b7 done \u00b7 <0.01\u00a2\nslot_2 \u00b7 done \u00b7 <0.01\u00a2\nslot_3 \u00b7 done \u00b7 <0.01\u00a2\nmin_answers \u00b7 done \u00b7 \u2014\nblind \u00b7 done \u00b7 \u2014\njudge \u00b7 done \u00b7 <0.01\u00a2\njudge_reversed \u00b7 done \u00b7 <0.01\u00a2\ntally \u00b7 done \u00b7 \u2014",
+  "fixture": "Offline Chromium; scores differ by exactly 2"
+}

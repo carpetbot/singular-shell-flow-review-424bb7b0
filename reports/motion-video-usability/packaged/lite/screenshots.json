@@ -1,0 +1,65 @@
+[
+  {
+    "file": "reports/motion-video-usability/packaged/lite/01-lite-gallery.png",
+    "mode": "lite",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  },
+  {
+    "file": "reports/motion-video-usability/packaged/lite/02-lite-form.png",
+    "mode": "lite",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  },
+  {
+    "file": "reports/motion-video-usability/packaged/lite/03-lite-completed-result.png",
+    "mode": "lite",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  },
+  {
+    "file": "reports/motion-video-usability/packaged/lite/04-pro-gallery.png",
+    "mode": "pro",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  },
+  {
+    "file": "reports/motion-video-usability/packaged/lite/05-pro-form-breakdown.png",
+    "mode": "pro",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  },
+  {
+    "file": "reports/motion-video-usability/packaged/lite/06-pro-completed-breakdown.png",
+    "mode": "pro",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  },
+  {
+    "file": "reports/motion-video-usability/packaged/lite/07-mobile-lite-form-progress.png",
+    "mode": "lite",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "fixture": "Explicit offline model responses; no real inference or key"
+  }
+]

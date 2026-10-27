@@ -1,0 +1,11 @@
+✔ approved five second default mode validates exact defaults and sends only documented fields (54.107002ms)
+✔ default generation refuses missing, stale, mismatched, unroutable or nonexact catalog before POST (97.066105ms)
+✔ default audio label is backed by catalog and history capacity recovers after clearing 20 finished refs (18.247245ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 299.82717

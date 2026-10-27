@@ -1,0 +1,16 @@
+{
+  "archive": "dist/motion-trimmer-video-review.zip",
+  "sha256": "d853ea8367aed9f7cf0b0e3bbfe59c12462c91a49776cdbd9c97824a3bf42da9",
+  "runtime_files": 40,
+  "crc_ok": true,
+  "all_source_archive_extracted_bytes_equal": true,
+  "protected_legacy_files": 29,
+  "proxy_unchanged_from_HEAD": true,
+  "source_node": 94,
+  "source_python": 45,
+  "relocated_node": 94,
+  "relocated_python_targeted": 1,
+  "packaged_python_targeted": 1,
+  "relocated_full_python_rerun": false,
+  "workspaces_outside_evidence": "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-clear-check-tbjlywvw"
+}

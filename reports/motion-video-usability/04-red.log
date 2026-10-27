@@ -1,0 +1,24 @@
+✔ video money always uses two decimals without rounding the numeric quote (1.779462ms)
+✖ clear finished atomically rereads all 20 refs, preserves every unresolved state and new work (1.209917ms)
+✔ video test catalog lives in source fixture and all readers are location relative (8.4877ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.913406
+
+✖ failing tests:
+
+test at tests/video-usability.test.mjs:11:1
+✖ clear finished atomically rereads all 20 refs, preserves every unresolved state and new work (1.209917ms)
+  TypeError: s.clearFinished is not a function
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-usability.test.mjs:14:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)

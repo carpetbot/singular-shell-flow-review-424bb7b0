@@ -1,0 +1,17 @@
+✔ exact catalog quote, documented body, duration release gate (3.554993ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.783694ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (101.328574ms)
+✔ reload polls bounded states then retries only safe authenticated content; blob lifecycle (14.242133ms)
+✔ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (24.802855ms)
+✔ video price refusals and schema boundaries are never coerced (5.459931ms)
+✔ new explicit generation changes token, retains prior job receipt; unknown completed cost is not zero (28.208553ms)
+✔ download byte mismatches and broken streams report exact incomplete retry message without Blob (2.20805ms)
+✔ definite create auth/credit rejection is not an uncertain held job and allows explicit recovery (21.69687ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 320.324187

@@ -1,0 +1,22 @@
+✔ two already-open sessions serialize creation, refresh storage, preserve history (72.95011ms)
+✔ stale tab retries uncertain creation with persisted token and identical body only (17.929166ms)
+✔ all saved same-account pending jobs block new versions even when old completed job selected (36.458465ms)
+✔ idempotency token binds canonical logical request and persisted shared plan identity (17.918176ms)
+✔ delayed processing poll cannot regress persisted completed or its receipt (17.386221ms)
+✔ delayed processing poll cannot regress persisted failed or its receipt (10.461218ms)
+✔ same-job stale save preserves settled receipt, quote and recovery metadata (8.215619ms)
+✔ same-token mismatched job, key or version identity never overwrites recovery (31.330894ms)
+✔ late old-version poll preserves a distinct new-version identity and history (16.032077ms)
+✔ clear finished prevents a late processing poll from resurrecting a removed job (8.687685ms)
+✔ clear finished prevents a late completed poll from resurrecting a removed job (8.956348ms)
+✔ clear finished prevents a late failed poll from resurrecting a removed job (7.798499ms)
+✔ clear finished deletes only active-account terminal refs after a locked reread (1.294435ms)
+✔ creation fails closed without safe origin locks (0.352741ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 374.199546

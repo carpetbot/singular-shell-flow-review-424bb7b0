@@ -1,5 +1,6 @@
 """Offline fake inference only. All non-loopback traffic is aborted."""
 import http.server, importlib.util, json, os, threading, unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 from playwright.sync_api import sync_playwright
@@ -12,7 +13,8 @@ class VideoBrowser(unittest.TestCase):
   self.server=http.server.ThreadingHTTPServer(('127.0.0.1',0),p.Handler);threading.Thread(target=self.server.serve_forever,daemon=True).start()
   self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
   self.calls=[];self.errors=[];self.content_fail=False;self.polls=0;self.state='completed';self.chat_status=200;self.video_status=202;self.lost=False
-  self.catalog=json.loads(Path('/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-pricing.json').read_text())
+  self.catalog=json.loads(Path(ROOT/'tests/fixtures/video-pricing.json').read_text())
+  self.catalog['as_of']=datetime.now(timezone.utc).isoformat() # explicit offline fresh response
   self.ctx.route('**/*',self.route);self.page=self.ctx.new_page();self.page.on('pageerror',lambda e:self.errors.append(str(e)));self.page.set_default_timeout(4000)
   self.url='http://127.0.0.1:'+str(self.server.server_port)
  def tearDown(self):
@@ -30,7 +32,7 @@ class VideoBrowser(unittest.TestCase):
    if self.lost:r.abort();return
    r.fulfill(status=self.video_status,json={'id':'vid_offline','status':'queued'})
   elif path=='/v1/videos/vid_offline':
-   self.polls+=1;r.fulfill(json={'id':'vid_offline','status':self.state,'cost_usd':1.583334 if self.state=='completed' else 0,'result_url':'/v1/videos/vid_offline/content' if self.state=='completed' else None,'error':'content_policy_violation' if self.state=='failed' else None})
+   self.polls+=1;r.fulfill(json={'id':'vid_offline','status':self.state,'cost_usd':.527778 if self.state=='completed' else 0,'result_url':'/v1/videos/vid_offline/content' if self.state=='completed' else None,'error':'content_policy_violation' if self.state=='failed' else None})
   elif path=='/v1/videos/vid_offline/content':
    self.calls.append({'path':path,'auth':r.request.headers.get('authorization')})
    if self.content_fail:r.fulfill(status=502,json={'code':'video_result_unavailable'})
@@ -44,14 +46,54 @@ class VideoBrowser(unittest.TestCase):
   else:self.page.locator('.skill-card').filter(has_text='Motion Trimmer → Video').click()
  def plan(self):
   self.page.locator('#video-topic').fill('An offline paper boat');self.page.locator('#video-plan').click();self.page.wait_for_function("document.querySelector('#video-plan-json')?.value.includes('shotbeats')")
- def test_01_gallery_default_release_gate(self):
-  self.open();self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("document.querySelector('#video-price').textContent.includes('1.583334')")
-  self.assertTrue(self.page.locator('#video-generate').is_disabled());self.assertIn('duration field',self.page.locator('.modal').inner_text());self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),0)
+ def test_clear_finished_selection_preserves_pending(self):
+  self.open(True)
+  self.page.evaluate('''async()=>{const {VideoSession}=await import('/js/video.js');const s=new VideoSession({key:'offline-not-real-key',fields:{duration:'fixture_duration'}});await s.create({model:'alibaba/wan-3.0/text-to-video',duration:15,prompt:'Offline boat'},1.583334);const pending=structuredClone(s.record);localStorage.setItem('motion-video.v1',JSON.stringify([{...pending,token:'done',id:'old',status:'completed'},pending]));}''')
+  self.open(True);self.page.locator('#video-history').select_option('0');self.page.locator('#video-clear').click()
+  self.page.wait_for_function("document.querySelector('#video-history').options.length===1")
+  self.assertIn('vid_offline',self.page.locator('#video-history').inner_text())
+  self.assertTrue(self.page.locator('#video-new').is_disabled());self.assertFalse(self.page.locator('#video-resume').is_disabled())
+  self.assertEqual(len(self.page.evaluate("JSON.parse(localStorage.getItem('motion-video.v1'))")),1)
+ def test_lite_shot_list_pro_editor_and_prompt_stay_synchronized(self):
+  self.open(True);self.plan()
+  self.assertFalse(self.page.locator('#video-plan-json').is_visible())
+  self.assertIn('0–5 s',self.page.locator('#video-shot-list').inner_text())
+  self.assertIn('Offline editor overlay',self.page.locator('#video-shot-list').inner_text())
+  self.assertIn('Exact logo unsupported',self.page.locator('#video-shot-list').inner_text())
+  self.page.locator('#video-prompt').fill('Changed shared prompt')
+  self.page.evaluate("document.documentElement.dataset.mode='pro'")
+  self.assertTrue(self.page.locator('#video-plan-json').is_visible())
+  p=json.loads(self.page.locator('#video-plan-json').input_value());self.assertEqual(p['prompt'],'Changed shared prompt')
+  p['shotbeats'][0]['description']='<img src=x onerror=alert(1)>';p['prompt']='Edited in Pro'
+  self.page.locator('#video-plan-json').fill(json.dumps(p))
+  self.page.evaluate("document.documentElement.dataset.mode='lite'")
+  self.assertEqual(self.page.locator('#video-prompt').input_value(),'Edited in Pro')
+  self.assertIn('<img src=x onerror=alert(1)>',self.page.locator('#video-shot-list').inner_text())
+  self.assertEqual(self.page.locator('#video-shot-list img').count(),0)
+  EVIDENCE.mkdir(parents=True,exist_ok=True)
+  self.page.screenshot(path=str(EVIDENCE/'lite-plan.png'))
+  self.page.evaluate("document.documentElement.dataset.mode='pro'")
+  self.page.screenshot(path=str(EVIDENCE/'pro-plan.png'))
+  self.assertEqual(self.errors,[])
+ def test_01_gallery_five_second_default_mode(self):
+  self.open();self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  self.assertIn('$0.53',self.page.locator('#video-price').inner_text())
+  self.assertEqual(self.page.locator('#video-duration').count(),0)
+  self.assertIn('ratio not guaranteed',self.page.locator('.modal').inner_text())
+  self.page.locator('#video-generate').click();self.page.wait_for_selector('#video-player[src^="blob:"]')
+  body=[c['body'] for c in self.calls if c['path']=='/v1/videos'][0]
+  self.assertEqual(set(body),{'model','prompt','resolution'})
+  self.assertEqual(json.loads(self.page.locator('#video-plan-json').input_value())['shotbeats'][0]['duration_s'],5)
+  self.page.locator('#video-new').click();self.page.locator('#video-model').select_option('minimax/h3-max-turbo');self.page.locator('#video-quote').click();self.page.wait_for_function("document.querySelector('#video-price').textContent.includes('$0.21')")
+  self.assertIn('unspecified',self.page.locator('#video-defaults').inner_text())
+  self.catalog['models'][next(i for i,m in enumerate(self.catalog['models']) if m['id']=='minimax/h3-max-turbo')]['videoPricing']['defaults']['duration']=15
+  self.page.locator('#video-quote').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('defaults could not be confirmed')")
+  self.assertTrue(self.page.locator('#video-generate').is_disabled())
   self.assertEqual(self.errors,[])
  def test_02_confirmed_offline_brief_player_download_retry(self):
   self.content_fail=True;self.open(True);self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
   self.page.locator('#video-generate').dblclick();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('retry download')")
-  self.assertIn('completed',self.page.locator('#video-receipts').inner_text());self.assertIn('1.583334',self.page.locator('#video-receipts').inner_text())
+  self.assertIn('completed',self.page.locator('#video-receipts').inner_text());self.assertIn('$0.53',self.page.locator('#video-receipts').inner_text())
   self.content_fail=False;self.page.locator('#video-download-retry').click();self.page.wait_for_selector('#video-player[src^="blob:"]')
   self.page.wait_for_function("document.querySelector('#video-player').readyState>=1")
   self.page.locator('#video-player').evaluate('async e=>{e.muted=true;await e.play();}')
@@ -69,6 +111,7 @@ class VideoBrowser(unittest.TestCase):
 
  def test_03_unknown_price_invalid_json_and_http_errors_do_not_generate(self):
   self.open(True);self.plan()
+  self.page.evaluate("document.documentElement.dataset.mode='pro'")
   self.page.locator('#video-plan-json').fill('{"shotbeats":[]}');self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('Invalid planner')")
   self.assertFalse(any(c['path']=='/v1/videos' for c in self.calls))
   self.page.locator('#video-plan-json').fill('{"shotbeats":[]}')
@@ -88,7 +131,7 @@ class VideoBrowser(unittest.TestCase):
   self.state='queued';self.open(True);self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('vid_offline · queued')")
   self.state='processing';self.page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('processing')")
   self.page.locator('.close-modal').click();polls=self.polls;self.page.wait_for_timeout(2000);self.assertEqual(self.polls,polls)
-  self.state='failed';self.open(True);self.page.locator('#video-resume').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('Generation failed')");self.assertIn('settled $0.000000',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
+  self.state='failed';self.open(True);self.page.locator('#video-resume').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('Generation failed')");self.assertIn('settled $0.00',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
   self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1);self.assertEqual(self.errors,[])
  def test_06_close_during_submission_does_not_restart_polling(self):
   self.open(True);self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
@@ -100,6 +143,14 @@ class VideoBrowser(unittest.TestCase):
    self.page.wait_for_timeout(50)
   self.assertEqual(len(held),1);self.page.locator('.close-modal').click();held[0].fulfill(status=202,json={'id':'vid_offline','status':'queued'});self.page.wait_for_timeout(300)
   self.assertEqual(self.polls,0,'closing during create must not start a new polling loop')
+ def test_open_panel_polls_past_three_minutes_fake_clock_then_close_stops(self):
+  self.state='processing';self.open();self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  self.page.clock.install();self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('processing')")
+  for _ in range(20):self.page.clock.run_for(15000);self.page.wait_for_timeout(25)
+  self.assertGreater(self.polls,15)
+  self.assertNotIn('deadline',self.page.locator('#video-message').inner_text())
+  self.page.locator('.close-modal').click();polls=self.polls;self.page.clock.run_for(60000);self.assertEqual(polls,self.polls)
+  self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
 
  def test_07_mobile_review_no_overflow(self):
   self.page.set_viewport_size({'width':390,'height':844});self.open();self.plan();self.assertLessEqual(self.page.locator('.modal').evaluate('e=>e.scrollWidth'),self.page.locator('.modal').evaluate('e=>e.clientWidth')+1);self.assertEqual(self.errors,[])
@@ -156,6 +207,6 @@ class VideoBrowser(unittest.TestCase):
  def test_08_video_auth_credit_rejection_is_distinct_and_recoverable(self):
   for status,word in [(401,'Authentication'),(402,'credits')]:
    self.open(True);self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.video_status=status;self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('rejected')")
-   self.assertIn(word,self.page.locator('#video-message').inner_text());self.assertFalse(self.page.locator('#video-new').is_disabled());self.assertIn('settled $0.000000',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
+   self.assertIn(word,self.page.locator('#video-message').inner_text());self.assertFalse(self.page.locator('#video-new').is_disabled());self.assertIn('settled $0.00',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
    self.page.locator('.close-modal').click();self.page.evaluate("localStorage.removeItem('motion-video.v1')")
   self.assertEqual(self.errors,[])

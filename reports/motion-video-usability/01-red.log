@@ -1,0 +1,132 @@
+✖ video test catalog lives in source fixture and all readers are location relative (2.801384ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 101.890018
+
+✖ failing tests:
+
+test at tests/video-usability.test.mjs:5:1
+✖ video test catalog lives in source fixture and all readers are location relative (2.801384ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /\/home\/orangepi|motion-trimmer-video-pricing\.json/. Input:
+  
+  "import test from 'node:test';\n" +
+    "import assert from 'node:assert/strict';\n" +
+    "import {readFileSync} from 'node:fs';\n" +
+    "const v=await import('../js/video.js').catch(()=>({}));\n" +
+    "const catalog=JSON.parse(readFileSync('/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-pricing.json'));\n" +
+    "test('exact catalog quote, documented body, duration release gate',()=>{\n" +
+    " assert.equal(typeof v.quoteVideo,'function','video quote feature missing');\n" +
+    " for(const [model,res,prices] of [['alibaba/wan-3.0/text-to-video','720p',[.527778,1.055556,1.583334]],['minimax/h3-max-turbo','768p',[.211111,.422222,.633334]]]){\n" +
+    '  for(const [i,duration] of [5,10,15].entries())assert.equal(v.quoteVideo(catalog,model,duration).price,prices[i]);\n' +
+    "  assert.deepEqual(v.videoBody({model,prompt:'Boat',duration:15}),{model,prompt:'Boat',resolution:res});\n" +
+    ' }\n' +
+    " assert.throws(()=>v.quoteVideo(catalog,'invented',15));\n" +
+    ' assert.throws(()=>v.quoteVideo(catalog,v.MODELS[0].id,60));\n' +
+    ' assert.throws(()=>v.quoteVideo({models:[]},v.MODELS[0].id,15));\n' +
+    ' assert.equal(v.releaseReady(),false);\n' +
+    ' assert.deepEqual(v.FIELDS,{duration:null,aspectRatio:null,audio:null});\n' +
+    " const confirmed={duration:'fixture_duration',aspectRatio:null,audio:null};\n" +
+    ' assert.equal(v.releaseReady(confirmed),true);\n' +
+    " assert.equal(v.videoBody({model:v.MODELS[0].id,prompt:'Boat',duration:10},confirmed).fixture_duration,10);\n" +
+    '});\n' +
+    "const planFixture={shotbeats:[{duration_s:15,description:'Boat drifts'}],prompt:'A paper boat drifts on a calm pond, slowly tracking the ripples.',overlays:[{at_s:0,text:'Hello'}],dropped:['Exact brand logo requires editor assets']};\n" +
+    "test('one structured planner call; typed edits; 5xx-only backup and honest receipts',async()=>{\n" +
+    " assert.equal(typeof v.planVideo,'function','planner feature missing');\n" +
+    ' let calls=[];const chat=async(msg,opts)=>{calls.push({msg,opts});return {content:JSON.stringify(planFixture),receipt:{estCost:.001}};};\n' +
+    " const result=await v.planVideo({topic:'Boat',duration:15,platform:'x'},{chat,catalog});\n" +
+    " assert.equal(calls.length,1);assert.equal(calls[0].opts.model,'anthropic/claude-sonnet-5.5');\n" +
+    ' assert.match(calls[0].msg[0].content,/Do not.*text/i);assert.deepEqual(result.plan,planFixture);\n' +
+    ' assert.equal(result.receipts[0].estCost,.001);\n' +
+    " for(const change of [{shotbeats:[{duration_s:'15',description:'bad'}]},{shotbeats:[{duration_s:10,description:'bad'}]},{overlays:[{at_s:15,text:'late'}]},{overlays:[{at_s:'0',text:'bad'}]},{dropped:'not array'},{prompt:''}])assert.throws(()=>v.validatePlan({...planFixture,...change},15));\n" +
+    ' for(const status of [401,402,429,500]){\n' +
+    "  calls=[];const bad=async(msg,opts)=>{calls.push(opts.model);if(calls.length===1)throw Object.assign(new Error('offline gateway failure'),{status});return chat(msg,opts);};\n" +
+    "  if(status===500){await v.planVideo({topic:'Boat',duration:15},{chat:bad,catalog});assert.equal(calls[1],'deepseek/deepseek-v4.1-flash-1017');}\n" +
+    "  else {await assert.rejects(v.planVideo({topic:'Boat',duration:15},{chat:bad,catalog}),e=>e.receipts.length===1&&e.receipts[0].estCost===null);assert.equal(calls.length,1);}\n" +
+    ' }\n' +
+    " await assert.rejects(v.planVideo({topic:'Boat',duration:15},{chat,catalog:{models:[]}}));\n" +
+    '});\n' +
+    '\n' +
+    "const memory=()=>{const m=new Map();return {getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k),dump:()=>[...m.values()].join('')};};\n" +
+    '// Deterministic Web Locks fixture: shared across sessions, like one origin.\n' +
+    'const locks={tail:Promise.resolve(),request(name,options,fn){const task=this.tail.then(fn);this.tail=task.catch(()=>{});return task;}};\n' +
+    "const confirmed={duration:'fixture_duration',aspectRatio:null,audio:null};\n" +
+    "const spec={model:'alibaba/wan-3.0/text-to-video',duration:15,prompt:'A private paper boat.'};\n" +
+    "test('explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body',async()=>{\n" +
+    " assert.equal(typeof v.VideoSession,'function','video submission feature missing');\n" +
+    ' const storage=memory();const calls=[];let lose=true;\n' +
+    " const fetcher=async(path,opts={})=>{if(path==='/pricing.json')return Response.json(catalog);calls.push({path,...opts});if(lose)throw new TypeError('offline network lost after acceptance');return Response.json({id:'vid_fixture',status:'queued'},{status:202});};\n" +
+    " const s=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});\n" +
+    ' await Promise.allSettled([s.create(spec,1.583334),s.create(spec,1.583334)]);assert.equal(calls.length,1);\n' +
+    " assert.equal(s.record.status,'uncertain');assert.equal(s.record.settled,null);\n" +
+    " assert.ok(!storage.dump().includes('fixture-secret'));assert.ok(!storage.dump().includes(spec.prompt));\n" +
+    " const token=calls[0].headers['Idempotency-Key'];lose=false;\n" +
+    " const reloaded=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});\n" +
+    " await assert.rejects(reloaded.create({...spec,prompt:'edited'},1.583334),/identical/);\n" +
+    " await reloaded.create(spec,1.583334);assert.equal(calls.length,2);assert.equal(calls[1].headers['Idempotency-Key'],token);assert.equal(calls[1].body,calls[0].body);\n" +
+    " const again=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});assert.equal(again.record.id,'vid_fixture');\n" +
+    ' await assert.rejects(again.create(spec,1.583334),/existing/);assert.equal(calls.length,2);\n' +
+    " const wrong=new v.VideoSession({locks,key:'different-key',fetcher,storage,fields:confirmed});await assert.rejects(wrong.resume(),/creating key/);assert.equal(calls.length,2);\n" +
+    " const locked=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory()});await assert.rejects(locked.create(spec,1.583334),/Release gate/);\n" +
+    " const priced=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory(),fields:confirmed});await assert.rejects(priced.create(spec,0),/Price changed/);assert.equal(calls.length,2);\n" +
+    '});\n' +
+    '\n' +
+    "test('reload polls bounded states then retries only safe authenticated content; blob lifecycle',async()=>{\n" +
+    " assert.equal(typeof v.VideoSession.prototype.download,'function','inline authenticated download missing');\n" +
+    " const storage=memory(),calls=[],urls={created:[],revoked:[],createObjectURL(blob){this.created.push(blob);return 'blob:fixture-'+this.created.length;},revokeObjectURL(url){this.revoked.push(url);}};\n" +
+    ' let polls=0,contentFails=true;\n' +
+    ' const fetcher=async(path,opts={})=>{calls.push({path,...opts});\n' +
+    "  if(path==='/pricing.json')return Response.json(catalog);\n" +
+    "  if(opts.method==='POST')return Response.json({id:'vid_safe',status:'queued'},{status:202});\n" +
+    "  if(path.endsWith('/content'))return contentFails?Response.json({code:'video_result_unavailable'},{status:502}):new Response(new Uint8Array([0,1,2]),{headers:{'Content-Type':'video/mp4'}});\n" +
+    "  return Response.json({id:'vid_safe',status:++polls===1?'processing':'completed',cost_usd:polls===1?0:1.58,result_url:polls===1?null:'https://api.impossi.build/v1/videos/vid_safe/content'});\n" +
+    ' };\n' +
+    " let s=new v.VideoSession({locks,key:'fixture-key',fetcher,storage,fields:confirmed,urlAPI:urls});await s.create(spec,1.583334);\n" +
+    " s=new v.VideoSession({locks,key:'fixture-key',fetcher,storage,fields:confirmed,urlAPI:urls});const states=[];s.onChange=r=>states.push([r.status,r.settled]);\n" +
+    " await s.resume({sleep:async()=>{},deadlineMs:1000});assert.deepEqual(states.slice(0,2),[['processing',null],['completed',1.58]]);\n" +
+    " await assert.rejects(s.download(),e=>e.status===502);assert.equal(s.record.status,'completed');assert.equal(s.record.settled,1.58);\n" +
+    " contentFails=false;await s.download();assert.equal(s.blobURL,'blob:fixture-1');\n" +
+    " assert.equal(calls.filter(c=>c.method==='POST').length,1);assert.ok(calls.filter(c=>c.path.endsWith('/content')).every(c=>c.path==='/v1/videos/vid_safe/content'&&c.headers.Authorization==='Bearer fixture-key'));\n" +
+    " await s.download();assert.deepEqual(urls.revoked,['blob:fixture-1']);s.dispose();assert.deepEqual(urls.revoked,['blob:fixture-1','blob:fixture-2']);\n" +
+    " for(const bad of ['https://evil.test/v1/videos/vid_safe/content','//evil.test/a','/v1/videos/other/content','/v1/videos/vid_safe/content?key=x','/v1/videos/vid_safe/content#secret'])assert.throws(()=>v.safeContentPath('vid_safe',bad));\n" +
+    " assert.throws(()=>v.safeContentPath('../bad',null));\n" +
+    '});\n' +
+    '\n' +
+    "test('poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ',async()=>{\n" +
+    " const storage=memory();let mode='queued',status=200,count=0,clock=0,signals=[];\n" +
+    ' const fetcher=async(path,opts={})=>{\n' +
+    "  if(path==='/pricing.json')return Response.json(catalog);\n" +
+    "  if(opts.method==='POST')return Response.json({id:'vid_stop',status:'queued'},{status:202});\n" +
+    "  count++;signals.push(opts.signal);return Response.json(status===200?{id:'vid_stop',status:mode,cost_usd:0,error:mode==='failed'?'content_policy_violation':null}:{code:'failure'},{status});\n" +
+    ' };\n' +
+    " const s=new v.VideoSession({locks,key:'fixture',fetcher,storage,fields:confirmed});await s.create(spec,1.583334);\n" +
+    ' await assert.rejects(s.resume({deadlineMs:5000,now:()=>clock,sleep:async ms=>{clock+=ms;}}),/deadline/);\n' +
+    " assert.ok(signals.every(s=>s instanceof AbortSignal),'poll requests must be abortable');\n" +
+    " assert.equal(s.record.settled,null);const before=count;await s.resume({sleep:async()=>s.dispose()});assert.equal(count,before+1);assert.equal(s.record.status,'queued');\n" +
+    " mode='failed';await s.resume();assert.equal(s.record.settled,0);assert.equal(s.record.error,'content_policy_violation');\n" +
+    ' await assert.rejects(s.download(),/Complete/);\n' +
+    ' for(const code of [401,402,404,500]){status=code;await assert.rejects(s.resume(),e=>e.status===code);}\n' +
+    " await s.newVersion();assert.equal(s.record,null);assert.equal(storage.dump().includes('vid_stop'),true);\n" +
+    '});\n' +
+    '\n' +
+    "test('video price refusals and schema boundaries are never coerced',()=>{\n" +
+    " for(const bad of [null,'15',true,0,60])assert.throws(()=>v.validatePlan(planFixture,bad));\n" +
+    " for(const bad of [null,'0',false,-1,Infinity])assert.throws(()=>v.validatePlan({...planFixture,overlays:[{at_s:bad,text:'Hello'}]},15));\n" +
+    ' const altered=structuredClone(catalog);const m=altered.models.find(m=>m.id===spec.model);m.videoPricing.configs.find(c=>c.durati'... 2654 more characters
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-usability.test.mjs:6:98)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {readFileSync} from 'node:fs';\nconst v=await import('../js/video.js').catch(()=>({}));\nconst catalog=JSON.parse(readFileSync('/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-pricing.json'));\ntest('exact catalog quote, documented body, duration release gate',()=>{\n assert.equal(typeof v.quoteVideo,'function','video quote feature missing');\n for(const [model,res,prices] of [['alibaba/wan-3.0/text-to-video','720p',[.527778,1.055556,1.583334]],['minimax/h3-max-turbo','768p',[.211111,.422222,.633334]]]){\n  for(const [i,duration] of [5,10,15].entries())assert.equal(v.quoteVideo(catalog,model,duration).price,prices[i]);\n  assert.deepEqual(v.videoBody({model,prompt:'Boat',duration:15}),{model,prompt:'Boat',resolution:res});\n }\n assert.throws(()=>v.quoteVideo(catalog,'invented',15));\n assert.throws(()=>v.quoteVideo(catalog,v.MODELS[0].id,60));\n assert.throws(()=>v.quoteVideo({models:[]},v.MODELS[0].id,15));\n assert.equal(v.releaseReady(),false);\n assert.deepEqual(v.FIELDS,{duration:null,aspectRatio:null,audio:null});\n const confirmed={duration:'fixture_duration',aspectRatio:null,audio:null};\n assert.equal(v.releaseReady(confirmed),true);\n assert.equal(v.videoBody({model:v.MODELS[0].id,prompt:'Boat',duration:10},confirmed).fixture_duration,10);\n});\nconst planFixture={shotbeats:[{duration_s:15,description:'Boat drifts'}],prompt:'A paper boat drifts on a calm pond, slowly tracking the ripples.',overlays:[{at_s:0,text:'Hello'}],dropped:['Exact brand logo requires editor assets']};\ntest('one structured planner call; typed edits; 5xx-only backup and honest receipts',async()=>{\n assert.equal(typeof v.planVideo,'function','planner feature missing');\n let calls=[];const chat=async(msg,opts)=>{calls.push({msg,opts});return {content:JSON.stringify(planFixture),receipt:{estCost:.001}};};\n const result=await v.planVideo({topic:'Boat',duration:15,platform:'x'},{chat,catalog});\n assert.equal(calls.length,1);assert.equal(calls[0].opts.model,'anthropic/claude-sonnet-5.5');\n assert.match(calls[0].msg[0].content,/Do not.*text/i);assert.deepEqual(result.plan,planFixture);\n assert.equal(result.receipts[0].estCost,.001);\n for(const change of [{shotbeats:[{duration_s:'15',description:'bad'}]},{shotbeats:[{duration_s:10,description:'bad'}]},{overlays:[{at_s:15,text:'late'}]},{overlays:[{at_s:'0',text:'bad'}]},{dropped:'not array'},{prompt:''}])assert.throws(()=>v.validatePlan({...planFixture,...change},15));\n for(const status of [401,402,429,500]){\n  calls=[];const bad=async(msg,opts)=>{calls.push(opts.model);if(calls.length===1)throw Object.assign(new Error('offline gateway failure'),{status});return chat(msg,opts);};\n  if(status===500){await v.planVideo({topic:'Boat',duration:15},{chat:bad,catalog});assert.equal(calls[1],'deepseek/deepseek-v4.1-flash-1017');}\n  else {await assert.rejects(v.planVideo({topic:'Boat',duration:15},{chat:bad,catalog}),e=>e.receipts.length===1&&e.receipts[0].estCost===null);assert.equal(calls.length,1);}\n }\n await assert.rejects(v.planVideo({topic:'Boat',duration:15},{chat,catalog:{models:[]}}));\n});\n\nconst memory=()=>{const m=new Map();return {getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k),dump:()=>[...m.values()].join('')};};\n// Deterministic Web Locks fixture: shared across sessions, like one origin.\nconst locks={tail:Promise.resolve(),request(name,options,fn){const task=this.tail.then(fn);this.tail=task.catch(()=>{});return task;}};\nconst confirmed={duration:'fixture_duration',aspectRatio:null,audio:null};\nconst spec={model:'alibaba/wan-3.0/text-to-video',duration:15,prompt:'A private paper boat.'};\ntest('explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body',async()=>{\n assert.equal(typeof v.VideoSession,'function','video submission feature missing');\n const storage=memory();const calls=[];let lose=true;\n const fetcher=async(path,opts={})=>{if(path==='/pricing.json')return Response.json(catalog);calls.push({path,...opts});if(lose)throw new TypeError('offline network lost after acceptance');return Response.json({id:'vid_fixture',status:'queued'},{status:202});};\n const s=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});\n await Promise.allSettled([s.create(spec,1.583334),s.create(spec,1.583334)]);assert.equal(calls.length,1);\n assert.equal(s.record.status,'uncertain');assert.equal(s.record.settled,null);\n assert.ok(!storage.dump().includes('fixture-secret'));assert.ok(!storage.dump().includes(spec.prompt));\n const token=calls[0].headers['Idempotency-Key'];lose=false;\n const reloaded=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});\n await assert.rejects(reloaded.create({...spec,prompt:'edited'},1.583334),/identical/);\n await reloaded.create(spec,1.583334);assert.equal(calls.length,2);assert.equal(calls[1].headers['Idempotency-Key'],token);assert.equal(calls[1].body,calls[0].body);\n const again=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});assert.equal(again.record.id,'vid_fixture');\n await assert.rejects(again.create(spec,1.583334),/existing/);assert.equal(calls.length,2);\n const wrong=new v.VideoSession({locks,key:'different-key',fetcher,storage,fields:confirmed});await assert.rejects(wrong.resume(),/creating key/);assert.equal(calls.length,2);\n const locked=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory()});await assert.rejects(locked.create(spec,1.583334),/Release gate/);\n const priced=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory(),fields:confirmed});await assert.rejects(priced.create(spec,0),/Price changed/);assert.equal(calls.length,2);\n});\n\ntest('reload polls bounded states then retries only safe authenticated content; blob lifecycle',async()=>{\n assert.equal(typeof v.VideoSession.prototype.download,'function','inline authenticated download missing');\n const storage=memory(),calls=[],urls={created:[],revoked:[],createObjectURL(blob){this.created.push(blob);return 'blob:fixture-'+this.created.length;},revokeObjectURL(url){this.revoked.push(url);}};\n let polls=0,contentFails=true;\n const fetcher=async(path,opts={})=>{calls.push({path,...opts});\n  if(path==='/pricing.json')return Response.json(catalog);\n  if(opts.method==='POST')return Response.json({id:'vid_safe',status:'queued'},{status:202});\n  if(path.endsWith('/content'))return contentFails?Response.json({code:'video_result_unavailable'},{status:502}):new Response(new Uint8Array([0,1,2]),{headers:{'Content-Type':'video/mp4'}});\n  return Response.json({id:'vid_safe',status:++polls===1?'processing':'completed',cost_usd:polls===1?0:1.58,result_url:polls===1?null:'https://api.impossi.build/v1/videos/vid_safe/content'});\n };\n let s=new v.VideoSession({locks,key:'fixture-key',fetcher,storage,fields:confirmed,urlAPI:urls});await s.create(spec,1.583334);\n s=new v.VideoSession({locks,key:'fixture-key',fetcher,storage,fields:confirmed,urlAPI:urls});const states=[];s.onChange=r=>states.push([r.status,r.settled]);\n await s.resume({sleep:async()=>{},deadlineMs:1000});assert.deepEqual(states.slice(0,2),[['processing',null],['completed',1.58]]);\n await assert.rejects(s.download(),e=>e.status===502);assert.equal(s.record.status,'completed');assert.equal(s.record.settled,1.58);\n contentFails=false;await s.download();assert.equal(s.blobURL,'blob:fixture-1');\n assert.equal(calls.filter(c=>c.method==='POST').length,1);assert.ok(calls.filter(c=>c.path.endsWith('/content')).every(c=>c.path==='/v1/videos/vid_safe/content'&&c.headers.Authorization==='Bearer fixture-key'));\n await s.download();assert.deepEqual(urls.revoked,['blob:fixture-1']);s.dispose();assert.deepEqual(urls.revoked,['blob:fixture-1','blob:fixture-2']);\n for(const bad of ['https://evil.test/v1/videos/vid_safe/content','//evil.test/a','/v1/videos/other/content','/v1/videos/vid_safe/content?key=x','/v1/videos/vid_safe/content#secret'])assert.throws(()=>v.safeContentPath('vid_safe',bad));\n assert.throws(()=>v.safeContentPath('../bad',null));\n});\n\ntest('poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ',async()=>{\n const storage=memory();let mode='queued',status=200,count=0,clock=0,signals=[];\n const fetcher=async(path,opts={})=>{\n  if(path==='/pricing.json')return Response.json(catalog);\n  if(opts.method==='POST')return Response.json({id:'vid_stop',status:'queued'},{status:202});\n  count++;signals.push(opts.signal);return Response.json(status===200?{id:'vid_stop',status:mode,cost_usd:0,error:mode==='failed'?'content_policy_violation':null}:{code:'failure'},{status});\n };\n const s=new v.VideoSession({locks,key:'fixture',fetcher,storage,fields:confirmed});await s.create(spec,1.583334);\n await assert.rejects(s.resume({deadlineMs:5000,now:()=>clock,sleep:async ms=>{clock+=ms;}}),/deadline/);\n assert.ok(signals.every(s=>s instanceof AbortSignal),'poll requests must be abortable');\n assert.equal(s.record.settled,null);const before=count;await s.resume({sleep:async()=>s.dispose()});assert.equal(count,before+1);assert.equal(s.record.status,'queued');\n mode='failed';await s.resume();assert.equal(s.record.settled,0);assert.equal(s.record.error,'content_policy_violation');\n await assert.rejects(s.download(),/Complete/);\n for(const code of [401,402,404,500]){status=code;await assert.rejects(s.resume(),e=>e.status===code);}\n await s.newVersion();assert.equal(s.record,null);assert.equal(storage.dump().includes('vid_stop'),true);\n});\n\ntest('video price refusals and schema boundaries are never coerced',()=>{\n for(const bad of [null,'15',true,0,60])assert.throws(()=>v.validatePlan(planFixture,bad));\n for(const bad of [null,'0',false,-1,Infinity])assert.throws(()=>v.validatePlan({...planFixture,overlays:[{at_s:bad,text:'Hello'}]},15));\n const altered=structuredClone(catalog);const m=altered.models.find(m=>m.id===spec.model);m.videoPricing.configs.find(c=>c.durati"... 2654 more characters,
+    expected: /\/home\/orangepi|motion-trimmer-video-pricing\.json/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

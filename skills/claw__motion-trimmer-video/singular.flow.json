@@ -1,6 +1,6 @@
 {
  "id":"claw__motion-trimmer-video", "name":"Motion Trimmer → Video", "version":"0.0.2",
  "author":{"name":"Community"},
- "description":"Brief → editable plan → explicit quoted video generation → inline download. Duration mapping release-gated.",
+ "description":"Brief → editable five-second plan → quoted video generation using model defaults → inline download.",
  "runtime":{"video":true}, "ui":{"fields":[]}
 }

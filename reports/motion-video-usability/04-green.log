@@ -1,0 +1,11 @@
+✔ video money always uses two decimals without rounding the numeric quote (1.238467ms)
+✔ clear finished atomically rereads all 20 refs, preserves every unresolved state and new work (10.429636ms)
+✔ video test catalog lives in source fixture and all readers are location relative (5.805863ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.484668

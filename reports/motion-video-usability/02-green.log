@@ -1,0 +1,10 @@
+✔ video money always uses two decimals without rounding the numeric quote (1.244906ms)
+✔ video test catalog lives in source fixture and all readers are location relative (7.119376ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.438896

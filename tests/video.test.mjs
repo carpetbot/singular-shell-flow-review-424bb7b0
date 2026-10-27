@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const v=await import('../js/video.js').catch(()=>({}));
-const catalog=JSON.parse(readFileSync('/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-pricing.json'));
+const catalog=JSON.parse(readFileSync(new URL('./fixtures/video-pricing.json',import.meta.url)));
 test('exact catalog quote, documented body, duration release gate',()=>{
  assert.equal(typeof v.quoteVideo,'function','video quote feature missing');
  for(const [model,res,prices] of [['alibaba/wan-3.0/text-to-video','720p',[.527778,1.055556,1.583334]],['minimax/h3-max-turbo','768p',[.211111,.422222,.633334]]]){
@@ -54,8 +54,8 @@ test('explicit fresh-priced submit deduplicates; uncertain retry and reload keep
  await reloaded.create(spec,1.583334);assert.equal(calls.length,2);assert.equal(calls[1].headers['Idempotency-Key'],token);assert.equal(calls[1].body,calls[0].body);
  const again=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage,fields:confirmed});assert.equal(again.record.id,'vid_fixture');
  await assert.rejects(again.create(spec,1.583334),/existing/);assert.equal(calls.length,2);
- const wrong=new v.VideoSession({locks,key:'different-key',fetcher,storage,fields:confirmed});await assert.rejects(wrong.resume(),/creating key/);assert.equal(calls.length,2);
- const locked=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory()});await assert.rejects(locked.create(spec,1.583334),/Release gate/);
+ const wrong=new v.VideoSession({locks,key:'different-key',fetcher,storage,fields:confirmed});await assert.rejects(wrong.resume(),/key you used/);assert.equal(calls.length,2);
+ const locked=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory()});await assert.rejects(locked.create(spec,1.583334),/length setting/);
  const priced=new v.VideoSession({locks,key:'fixture-secret',fetcher,storage:memory(),fields:confirmed});await assert.rejects(priced.create(spec,0),/Price changed/);assert.equal(calls.length,2);
 });
 
@@ -88,7 +88,8 @@ test('poll requests carry bounded abort signals; pause never cancels job; termin
   count++;signals.push(opts.signal);return Response.json(status===200?{id:'vid_stop',status:mode,cost_usd:0,error:mode==='failed'?'content_policy_violation':null}:{code:'failure'},{status});
  };
  const s=new v.VideoSession({locks,key:'fixture',fetcher,storage,fields:confirmed});await s.create(spec,1.583334);
- await assert.rejects(s.resume({deadlineMs:5000,now:()=>clock,sleep:async ms=>{clock+=ms;}}),/deadline/);
+ await s.resume({now:()=>clock,sleep:async ms=>{assert.ok(ms<=15000);clock+=ms;if(clock>240000)s.dispose();}});
+ assert.ok(clock>240000,'panel must continue polling beyond three minutes');
  assert.ok(signals.every(s=>s instanceof AbortSignal),'poll requests must be abortable');
  assert.equal(s.record.settled,null);const before=count;await s.resume({sleep:async()=>s.dispose()});assert.equal(count,before+1);assert.equal(s.record.status,'queued');
  mode='failed';await s.resume();assert.equal(s.record.settled,0);assert.equal(s.record.error,'content_policy_violation');

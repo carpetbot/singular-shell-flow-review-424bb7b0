@@ -1,0 +1,10 @@
+✔ approved five second default mode validates exact defaults and sends only documented fields (75.465191ms)
+✔ default generation refuses missing, stale, mismatched, unroutable or nonexact catalog before POST (144.03679ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 368.509855

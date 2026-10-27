@@ -1,0 +1,63 @@
+{
+  "fixture": "OFFLINE FAKE INFERENCE, synthetic MP4; not a paid model render",
+  "wan_quote": "$0.53 \u00b7 5 s / 720p \u00b7 catalog 2026-10-27T07:40:25.645864+00:00 \u00b7 checked again before submit. Planner excluded.",
+  "minimax_quote": "$0.21 \u00b7 5 s / 768p \u00b7 catalog 2026-10-27T07:40:25.645864+00:00 \u00b7 checked again before submit. Planner excluded.",
+  "requests": [
+    {
+      "path": "/v1/chat/completions",
+      "body": {
+        "model": "anthropic/claude-sonnet-5.5",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Return JSON only: {\"shotbeats\":[{\"duration_s\":5,\"description\":\"visual beat\"}],\"prompt\":\"one scene description, max 120 words\",\"overlays\":[{\"at_s\":0,\"text\":\"editor text\"}],\"dropped\":[\"unsupported asset or detail\"]}. Shot durations must sum to the selected duration. Preserve beat order. Do not render words, logos, UI or on-screen text in the video prompt; return every text line only in overlays for a human editor. Mark unsupported asset/logo requirements and precise easing/cuts in dropped; no uploaded assets exist. Describe subject, setting, camera motion, lighting, colour and pacing. Platform is creative context only, not guaranteed framing. No automatic composition."
+          },
+          {
+            "role": "user",
+            "content": "{\"topic\":\"An offline paper boat\",\"context\":\"\",\"platform\":\"x\",\"duration\":5}"
+          }
+        ],
+        "stream": false,
+        "routing": {
+          "maxPrice": 0.05
+        },
+        "response_format": {
+          "type": "json_object"
+        },
+        "max_tokens": 1200
+      }
+    },
+    {
+      "path": "/v1/videos",
+      "body": {
+        "model": "alibaba/wan-3.0/text-to-video",
+        "prompt": "A paper boat drifts on a calm pond.",
+        "resolution": "720p"
+      },
+      "token": "70a06ca4afacd4cc8d552ee2085dd812e3eacfcb3f836cc95d06965284150910"
+    },
+    {
+      "path": "/v1/videos/vid_offline/content",
+      "auth": true
+    }
+  ],
+  "plan": {
+    "shotbeats": [
+      {
+        "duration_s": 5,
+        "description": "Offline fixture boat drift"
+      }
+    ],
+    "prompt": "A paper boat drifts on a calm pond.",
+    "overlays": [
+      {
+        "at_s": 0,
+        "text": "Offline editor overlay"
+      }
+    ],
+    "dropped": [
+      "Exact logo unsupported"
+    ]
+  },
+  "errors": []
+}

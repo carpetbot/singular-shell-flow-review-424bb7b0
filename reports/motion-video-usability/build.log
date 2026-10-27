@@ -1,0 +1,8 @@
+{
+  "archive": "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/dist/motion-trimmer-video-review.zip",
+  "sha256": "4346595ff81376624bea8650ab332bbed24729f20ce88ebc18b5ae7609ec94e4",
+  "files": 40,
+  "protected_files": 29,
+  "relocated_source": "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/relocated-source",
+  "package": "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/reports/motion-video-usability/packaged-runtime"
+}

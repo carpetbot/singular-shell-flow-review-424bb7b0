@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {VideoSession} from '../js/video.js';
-const catalog=JSON.parse(readFileSync('/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-pricing.json'));
+const catalog=JSON.parse(readFileSync(new URL('./fixtures/video-pricing.json',import.meta.url)));
 const fields={duration:'fixture_duration',aspectRatio:null,audio:null};
 const spec={model:'alibaba/wan-3.0/text-to-video',duration:15,prompt:'Private boat.'};
 function fixtures(){
@@ -10,7 +10,11 @@ function fixtures(){
  const storage={getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};
  const locks={tail:Promise.resolve(),request(name,opts,fn){assert.equal(opts.mode,'exclusive');assert.equal(name,'motion-video.v1');const p=this.tail.then(fn);this.tail=p.catch(()=>{});return p;}};
  let lost=false;
- const fetcher=async(path,opts={})=>{if(path==='/pricing.json')return Response.json(catalog);if(opts.method==='POST'){posts.push(opts);if(lost)throw Error('lost fixture');return Response.json({id:'vid_'+posts.length,status:'queued'});}return Response.json({id:'vid_1',status:'completed',cost_usd:1.58});};
+ const fetcher=async(path,opts={})=>{if(path==='/pricing.json')return Response.json(catalog);if(opts.method==='POST'){
+  const pending=JSON.parse(storage.getItem('motion-video.v1')).filter(r=>r.token===opts.headers['Idempotency-Key']);
+  assert.equal(pending.length,1,'initial intent must be persisted exactly once before POST');assert.equal(pending[0].status,'creating');
+  posts.push(opts);if(lost)throw Error('lost fixture');return Response.json({id:'vid_'+posts.length,status:'queued'});
+ }return Response.json({id:'vid_1',status:'completed',cost_usd:1.58});};
  return {storage,locks,fetcher,fields,key:'offline-private-key',posts,setLost:x=>lost=x};
 }
 test('two already-open sessions serialize creation, refresh storage, preserve history',async()=>{
@@ -26,6 +30,7 @@ test('two already-open sessions serialize creation, refresh storage, preserve hi
 test('stale tab retries uncertain creation with persisted token and identical body only',async()=>{
  const f=fixtures(),a=new VideoSession(f),b=new VideoSession(f);f.setLost(true);
  await assert.rejects(a.create(spec,1.583334));f.setLost(false);
+ const uncertain=f.storage.getItem('motion-video.v1');await b.clearFinished();assert.equal(f.storage.getItem('motion-video.v1'),uncertain);
  await assert.rejects(b.create({...spec,prompt:'Changed'},1.583334),/identical/);
  await b.create(spec,1.583334);
  assert.equal(f.posts.length,2);assert.equal(f.posts[0].body,f.posts[1].body);
@@ -108,6 +113,36 @@ test('late old-version poll preserves a distinct new-version identity and histor
  assert.deepEqual(JSON.parse(f.storage.getItem('motion-video.v1')),saved);
  assert.equal(a.record.token,saved[0].token);assert.equal(a.record.status,'completed');
  assert.notEqual(saved[0].token,saved[1].token);assert.notEqual(saved[0].id,saved[1].id);
+});
+
+for(const status of ['processing','completed','failed'])test(`clear finished prevents a late ${status} poll from resurrecting a removed job`,async()=>{
+ const f=fixtures(),a=new VideoSession(f);await a.create(spec,1.583334);
+ let release,started;const waiting=new Promise(resolve=>{started=resolve;});
+ a.fetcher=async()=>{started();await new Promise(resolve=>{release=resolve;});return Response.json({id:'vid_1',status,cost_usd:1.58});};
+ const changes=[];a.onChange=r=>changes.push(structuredClone(r));
+ const late=a.resume({sleep:async()=>a.dispose()});const outcome=assert.rejects(late,/removed|cleared/i);await waiting;
+ const b=new VideoSession(f);await b.resume();assert.equal(b.record.settled,1.58);await b.clearFinished();
+ release();await outcome;
+ assert.deepEqual(JSON.parse(f.storage.getItem('motion-video.v1')),[]);
+ assert.equal(a.record,null,'caller must not retain a cleared job for UI/download');
+ assert.equal(changes.at(-1),null);assert.equal(f.posts.length,1);
+ await assert.rejects(a.download(),/Complete/);
+});
+
+test('clear finished deletes only active-account terminal refs after a locked reread',async()=>{
+ const {createHash}=await import('node:crypto');const f=fixtures();
+ const own=createHash('sha256').update(f.key).digest('hex'),other=createHash('sha256').update('other-key').digest('hex');
+ const states=['completed','failed','rejected','creating','uncertain','queued','processing','unknown','alien'];
+ const records=[own,other].flatMap(keyHash=>states.map(status=>({token:keyHash+'-'+status,keyHash,status,id:'vid_ref'})));
+ records.push({token:'legacy-no-account',status:'completed'});
+ f.storage.setItem('motion-video.v1',JSON.stringify(records));const a=new VideoSession(f);a.record=a.records[0];
+ // This second tab writes after A's snapshot, before its clear obtains the lock.
+ const b=new VideoSession({...f,key:'other-key'});b.record={...b.record,token:other+'-late',keyHash:other,status:'completed'};
+ const added=b.record;f.storage.setItem('motion-video.v1',JSON.stringify([...records,added]));
+ await a.clearFinished();
+ const expected=[...records,added].filter(r=>r.keyHash!==own||!['completed','failed','rejected'].includes(r.status));
+ assert.deepEqual(JSON.parse(f.storage.getItem('motion-video.v1')),expected);
+ assert.deepEqual(a.records,expected);assert.ok(expected.some(r=>r.token===a.record?.token));
 });
 
 test('creation fails closed without safe origin locks',async()=>{

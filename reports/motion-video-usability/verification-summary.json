@@ -1,0 +1,40 @@
+{
+  "tests": {
+    "source-node": {
+      "passed": 90,
+      "failed": 0,
+      "skipped": 0
+    },
+    "relocated-node": {
+      "passed": 90,
+      "failed": 0,
+      "skipped": 0
+    },
+    "source-python": {
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0
+    },
+    "relocated-python": {
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0
+    },
+    "packaged-python": {
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "source_runtime_manifest_sha256": "9bb9c7ed9ffb057df55e70b6465f42507cb52ffdc43715344b773ff79bb7ee62",
+  "copied_package_runtime_manifest_sha256": "9bb9c7ed9ffb057df55e70b6465f42507cb52ffdc43715344b773ff79bb7ee62",
+  "relocated_source_runtime_manifest_sha256": "9bb9c7ed9ffb057df55e70b6465f42507cb52ffdc43715344b773ff79bb7ee62",
+  "zip_sha256": "4346595ff81376624bea8650ab332bbed24729f20ce88ebc18b5ae7609ec94e4",
+  "zip_regular_files": 40,
+  "fixture_sha256": "6f992c577a7c5934980244358f056ef8fbc5d9b7131aeed585b4afd5e51dc3bd",
+  "catalog_as_of": "2026-10-27T07:04:16.704Z",
+  "protected_base_files": 29,
+  "paid_calls": 0,
+  "deployed": false,
+  "pushed": false
+}

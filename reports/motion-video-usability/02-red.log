@@ -1,0 +1,21 @@
+✖ video money always uses two decimals without rounding the numeric quote (1.80442ms)
+✔ video test catalog lives in source fixture and all readers are location relative (7.165525ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 122.826429
+
+✖ failing tests:
+
+test at tests/video-usability.test.mjs:5:1
+✖ video money always uses two decimals without rounding the numeric quote (1.80442ms)
+  TypeError: ui.videoMoney is not a function
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-usability.test.mjs:6:119)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)

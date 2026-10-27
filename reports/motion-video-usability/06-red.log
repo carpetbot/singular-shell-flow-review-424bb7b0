@@ -1,0 +1,35 @@
+✔ video money always uses two decimals without rounding the numeric quote (1.760502ms)
+✔ clear finished atomically rereads all 20 refs, preserves every unresolved state and new work (26.796531ms)
+✖ video platform labels and customer copy are plain language (5.224638ms)
+✔ video test catalog lives in source fixture and all readers are location relative (5.047053ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.688527
+
+✖ failing tests:
+
+test at tests/video-usability.test.mjs:23:1
+✖ video platform labels and customer copy are plain language (5.224638ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(view.includes('>'+label+'</option>'))
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-usability.test.mjs:25:69)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

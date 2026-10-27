@@ -14,6 +14,13 @@ export function quoteVideo(catalog,model,duration){
  if(m?.kind!=='video'||m.routable!==true||m.videoPricing?.exact!==true||configs?.length!==1||typeof configs[0].priceUsd!=='number'||!Number.isFinite(configs[0].priceUsd)||configs[0].priceUsd<0)throw new Error('Exact video price unavailable; generation blocked');
  return {model,duration,resolution:choice.resolution,price:configs[0].priceUsd,as_of:catalog.as_of};
 }
+// Defaults are permitted only with a fresh, exact catalog; no guessed request keys.
+export function quoteDefaultVideo(catalog,model,duration=5,now=Date.now()){
+ const choice=MODELS.find(m=>m.id===model),defaults=catalog?.models?.find(m=>m.id===model)?.videoPricing?.defaults;
+ const age=now-Date.parse(catalog?.as_of);
+ if(duration!==5||!choice||defaults?.duration!==5||defaults.resolution!==choice.resolution||defaults.audio!==(model===MODELS[0].id?true:null)||!Number.isFinite(age)||age< -300000||age>86400000)throw new Error('Five-second model defaults could not be confirmed with fresh pricing; refresh price before generating');
+ return {...quoteVideo(catalog,model,5),defaultMode:true};
+}
 export function videoBody({model,prompt,duration},fields=FIELDS){
  const choice=MODELS.find(m=>m.id===model);
  if(!choice||![5,10,15].includes(duration)||typeof prompt!=='string'||!prompt.trim()||prompt.length>12000)throw new Error('Invalid video request');
@@ -53,8 +60,8 @@ const RECOVERY='motion-video.v1';
 const jobId=id=>typeof id==='string'&&/^[A-Za-z0-9_-]{1,160}$/.test(id);
 async function digest(value){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value)))].map(b=>b.toString(16).padStart(2,'0')).join('');}
 export class VideoSession{
- constructor({key,fetcher=fetch,storage=localStorage,fields=FIELDS,onChange=()=>{},urlAPI=URL,locks=globalThis.navigator?.locks}){
-  this.locks=locks;
+ constructor({key,fetcher=fetch,storage=localStorage,fields=FIELDS,onChange=()=>{},urlAPI=URL,locks=globalThis.navigator?.locks,now=()=>Date.now()}){
+  this.locks=locks;this.now=now;
   this.urlAPI=urlAPI;this.blobURL=null;this.stopped=false;this.key=key.trim();this.fetcher=(...args)=>fetcher(...args);this.storage=storage;this.fields=fields;this.onChange=onChange;this.busy=false;
   try{this.records=JSON.parse(storage.getItem(RECOVERY)||'[]');if(!Array.isArray(this.records)||this.records.some(r=>!r||typeof r.token!=='string'||(r.id&&!jobId(r.id))))throw new Error();}catch{this.records=[];this.recoveryError=true;}
   this.record=this.records.at(-1)||null;
@@ -72,7 +79,7 @@ export class VideoSession{
   // A newly persisted logical run supersedes any stale selection/new-version intent.
   this.record=records.at(-1)?.token!==previous?records.at(-1)||null:selected?records.find(r=>r.token===selected)||records.at(-1)||null:null;
  }
- async save(underLock=false){
+ async save(underLock=false,insert=false){
   const write=()=>{
    const updated=this.record;
    this.refresh();
@@ -84,7 +91,8 @@ export class VideoSession{
      const terminal=['completed','failed'].includes(latest.status);
      this.record=terminal&&latest.status!==updated.status?latest:{...latest,...updated,quote:latest.quote,settled:finite(latest.settled)?latest.settled:updated.settled};
      this.records[i]=this.record;
-    }else{this.records.push(updated);this.record=updated;}
+    }else if(insert){this.records.push(updated);this.record=updated;}
+   else{this.record=null;this.onChange(null);throw new Error('Saved job was cleared in another tab; observation stopped');}
    }
    this.storage.setItem(RECOVERY,JSON.stringify(this.records));this.onChange(this.record);
   };
@@ -92,32 +100,33 @@ export class VideoSession{
  }
  async guardPending(exceptToken=null){
   const keyHash=await digest(this.key);
-  if(this.records.some(r=>r.keyHash===keyHash&&r.token!==exceptToken&&!['completed','failed','rejected'].includes(r.status)))throw new Error('Resolve the existing pending or uncertain job first');
+  if(this.records.some(r=>r.keyHash===keyHash&&r.token!==exceptToken&&!['completed','failed','rejected'].includes(r.status)))throw new Error('Resolve the existing pending or unconfirmed job first');
  }
- async sameKey(){if(!this.key||this.record&&this.record.keyHash!==await digest(this.key))throw new Error('Use the same creating key in Settings');}
+ async sameKey(){if(!this.key||this.record&&this.record.keyHash!==await digest(this.key))throw new Error('Use the same key you used to start this video in Settings');}
  async create(spec,approvedPrice){
   if(this.busy)return;this.busy=true;
   try{return await this.exclusive(async()=>{
    this.refresh();
-   if(!releaseReady(this.fields))throw new Error('Release gate: duration field unconfirmed; real generation disabled');
+   if(!releaseReady(this.fields)&&spec.duration!==5)throw new Error('Only five-second model defaults are available; custom length settings are not confirmed');
    if(this.recoveryError)throw new Error('Recovery references unreadable; resolve before a new paid generation');
    await this.sameKey();
    await this.guardPending(this.record?.token);
-   if(this.record?.id)throw new Error('Resume existing job; new generation requires explicit new version');
+   if(this.record?.id)throw new Error('Resume existing job; choose Make another version for a separate video');
    const body=JSON.stringify(videoBody(spec,this.fields)),bodyHash=await digest(body);
-   if(this.record&&this.record.bodyHash!==bodyHash)throw new Error('Uncertain request: re-enter the identical prompt and configuration to retry');
-   const pricing=await this.request('/pricing.json',{},false);const quote=quoteVideo(pricing,spec.model,spec.duration);
+   if(this.record&&this.record.bodyHash!==bodyHash)throw new Error('We couldn’t confirm whether the video started: re-enter the identical prompt and configuration to retry');
+   const pricing=await this.request('/pricing.json',{},false);const quote=releaseReady(this.fields)?quoteVideo(pricing,spec.model,spec.duration):quoteDefaultVideo(pricing,spec.model,spec.duration,this.now());
    if(quote.price!==approvedPrice)throw new Error('Price changed; review a fresh quote before approving');
-   if(!this.record){
-    if(this.records.length>=20)throw new Error('Recovery history full; review saved jobs before removing history');
+   const insert=!this.record;
+   if(insert){
+    if(this.records.length>=20)throw new Error('Saved job list full; use Clear finished jobs to make room');
     // One persisted plan/version identity is shared under the origin lock.
     // Intentional regeneration gets a new identity only after terminal history.
     const planId=crypto.randomUUID();
     const token=await digest(JSON.stringify({planId,model:spec.model,prompt:spec.prompt,duration:spec.duration,resolution:quote.resolution}));
-    this.record={planId,token,bodyHash,keyHash:await digest(this.key),quote,settled:null,status:'creating',id:null};this.records.push(this.record);
+    this.record={planId,token,bodyHash,keyHash:await digest(this.key),quote,settled:null,status:'creating',id:null};
    }
    // Persist before POST. A lost response must never create a fresh logical run.
-   this.record.status='creating';await this.save(true);
+   this.record.status='creating';await this.save(true,insert);
    try{
     const job=await this.request('/v1/videos',{method:'POST',headers:{'Idempotency-Key':this.record.token,'Content-Type':'application/json'},body});
     if(!jobId(job.id)||!['queued','processing','completed','failed'].includes(job.status))throw new Error('Invalid create response');
@@ -127,15 +136,16 @@ export class VideoSession{
  }
  async request(path,opts={},auth=true){
   let r;try{r=await this.fetcher(path,{...opts,signal:opts.signal||AbortSignal.timeout(30000),redirect:'error',cache:'no-store',headers:{...opts.headers,...(auth?{Authorization:'Bearer '+this.key}:{})}});}catch{throw Object.assign(new Error('Network unavailable; request outcome may be unknown'),{kind:'network'});}
-  if(!r.ok)throw Object.assign(new Error(r.status===401?'Authentication failed; check the creating key':r.status===402?'Insufficient credits':r.status===404?'Job not found for the creating key':r.status===502?'Content temporarily unavailable; retry download only':'Gateway HTTP '+r.status),{status:r.status,kind:r.status===401?'auth':r.status===402?'credit':'gateway'});
+  if(!r.ok)throw Object.assign(new Error(r.status===401?'Authentication failed; check the key you used to start this video':r.status===402?'Insufficient credits':r.status===404?'Job not found for the key you used to start this video':r.status===502?'Content temporarily unavailable; retry download only':'Gateway HTTP '+r.status),{status:r.status,kind:r.status===401?'auth':r.status===402?'credit':'gateway'});
   return r.json();
  }
- async resume({sleep=ms=>new Promise(r=>setTimeout(r,ms)),deadlineMs=180000,now=()=>Date.now()}={}){
-  await this.sameKey();if(!this.record?.id)throw new Error('Uncertain creation: re-enter identical request and retry with saved idempotency token');
-  if(this.polling)return;this.polling=true;this.stopped=false;this.pollAbort=new AbortController();const until=now()+Math.min(deadlineMs,180000);let delay=1000;
+ async resume({sleep}={}){
+  await this.sameKey();if(!this.record?.id)throw new Error('We couldn’t confirm whether the video started. Re-enter the identical prompt and settings, then retry the saved request.');
+  if(this.polling)return;this.polling=true;this.stopped=false;this.pollAbort=new AbortController();let delay=1000;
+  const pause=sleep||((ms)=>new Promise(resolve=>{const signal=this.pollAbort.signal;const done=()=>{clearTimeout(timer);signal.removeEventListener('abort',done);resolve();};const timer=setTimeout(done,ms);signal.addEventListener('abort',done,{once:true});if(signal.aborted)done();}));
   try{
-   while(!this.stopped&&now()<until){
-    const job=await this.request('/v1/videos/'+this.record.id,{signal:AbortSignal.any([this.pollAbort.signal,AbortSignal.timeout(Math.max(1,Math.min(20000,until-now())))])});
+   while(!this.stopped){
+    const job=await this.request('/v1/videos/'+this.record.id,{signal:AbortSignal.any([this.pollAbort.signal,AbortSignal.timeout(20000)])});
     if(this.stopped)return;
     if(job.id!==this.record.id||!['queued','processing','completed','failed'].includes(job.status))throw new Error('Invalid job status response');
     this.record.status=job.status;this.record.settled=job.status==='failed'?0:job.status==='completed'&&finite(job.cost_usd)?job.cost_usd:null;
@@ -144,16 +154,15 @@ export class VideoSession{
     if(job.status==='completed')this.contentPath=safeContentPath(this.record.id,job.result_url);
     await this.save();
     if(['completed','failed'].includes(this.record.status))return {...job,status:this.record.status,cost_usd:this.record.settled,error:this.record.error};
-    await sleep(delay);delay=Math.min(15000,Math.round(delay*1.7));
+    await pause(delay);delay=Math.min(15000,Math.round(delay*1.7));
    }
-   if(!this.stopped)throw Object.assign(new Error('Polling deadline reached; explicitly Resume existing job. No cancellation or refund implied.'),{kind:'deadline'});
   }finally{this.polling=false;}
  }
  async download(){
   await this.sameKey();if(this.record?.status!=='completed')throw new Error('Complete the existing job before download');
   const path=safeContentPath(this.record.id);let r;
   try{r=await this.fetcher(path,{signal:AbortSignal.timeout(120000),headers:{Authorization:'Bearer '+this.key},redirect:'error',cache:'no-store'});}catch{throw new Error('Download network error; retry download only');}
-  if(!r.ok)throw Object.assign(new Error(r.status===502?'Content temporarily unavailable; retry download only. Completed job remains charged.':'Download HTTP '+r.status+'; use the creating key'),{status:r.status});
+  if(!r.ok)throw Object.assign(new Error(r.status===502?'Content temporarily unavailable; retry download only. Completed job remains charged.':'Download HTTP '+r.status+'; use the key you used to start this video'),{status:r.status});
   const type=r.headers.get('Content-Type')||'';if(!type.startsWith('video/'))throw new Error('Unexpected media type');
   const limit=100*1024*1024,declared=r.headers.get('Content-Length');
   const incomplete=()=>new Error('Download incomplete, retry download');
@@ -167,7 +176,14 @@ export class VideoSession{
   if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);
   this.blobURL=this.urlAPI.createObjectURL(new Blob(parts,{type}));return this.blobURL;
  }
- async newVersion(){return this.exclusive(async()=>{this.refresh();await this.guardPending();if(this.record&&!['completed','failed','rejected'].includes(this.record.status))throw new Error('Resolve the existing pending or uncertain job first');if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);this.blobURL=null;this.record=null;this.stopped=false;});}
+ async clearFinished(){return this.exclusive(async()=>{
+  this.refresh();const selected=this.record?.token,keyHash=await digest(this.key);
+  this.records=this.records.filter(r=>r.keyHash!==keyHash||!['completed','failed','rejected'].includes(r.status));
+  this.record=this.records.find(r=>r.token===selected)||this.records.at(-1)||null;
+  if(!this.record&&this.blobURL){this.urlAPI.revokeObjectURL(this.blobURL);this.blobURL=null;}
+  this.storage.setItem(RECOVERY,JSON.stringify(this.records));this.onChange(this.record);
+ });}
+ async newVersion(){return this.exclusive(async()=>{this.refresh();await this.guardPending();if(this.record&&!['completed','failed','rejected'].includes(this.record.status))throw new Error('Resolve the existing pending or unconfirmed job first');if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);this.blobURL=null;this.record=null;this.stopped=false;});}
  dispose(){this.stopped=true;this.pollAbort?.abort();if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);this.blobURL=null;}
 
 }

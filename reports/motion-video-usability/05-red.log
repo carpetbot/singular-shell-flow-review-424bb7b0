@@ -1,0 +1,29 @@
+✔ exact catalog quote, documented body, duration release gate (3.354609ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.518151ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (88.145843ms)
+✔ reload polls bounded states then retries only safe authenticated content; blob lifecycle (17.220672ms)
+✖ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (21.809496ms)
+✔ video price refusals and schema boundaries are never coerced (6.202452ms)
+✔ new explicit generation changes token, retains prior job receipt; unknown completed cost is not zero (21.035728ms)
+✔ download byte mismatches and broken streams report exact incomplete retry message without Blob (2.254069ms)
+✔ definite create auth/credit rejection is not an uncertain held job and allows explicit recovery (22.579726ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 292.861844
+
+✖ failing tests:
+
+test at tests/video.test.mjs:83:1
+✖ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (21.809496ms)
+  Error: Polling deadline reached; explicitly Resume existing job. No cancellation or refund implied.
+      at VideoSession.resume (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/js/video.js:149:41)
+      at async TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video.test.mjs:91:2)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    kind: 'deadline'
+  }
