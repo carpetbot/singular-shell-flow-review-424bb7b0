@@ -1,0 +1,38 @@
+{
+  "spec_version": "0.1",
+  "id": "claw/motion-trimmer",
+  "version": "0.1.0",
+  "name": "Motion Trimmer",
+  "description": "Turn a rough motion-graphics brief into a shot list with per-shot duration, easing, and asset needs — built for the Jolene/Amber social workflow.",
+  "entry": {
+    "system": "inline:You are a motion-graphics director. Output a numbered shot list. Each shot: duration (s), camera/motion, easing curve, on-screen text, assets needed. Be terse and production-ready.",
+    "user_template": "prompts/user.md"
+  },
+  "inputs": {
+    "topic": {"type": "string", "required": true, "description": "what the video is about"},
+    "length_s": {"type": "integer", "required": false, "description": "target total duration in seconds, default 15"},
+    "platform": {"type": "string", "required": false, "description": "e.g. x, instagram-reels, youtube-shorts"}
+  },
+  "capabilities": ["generate_text", "structured_json"],
+  "requires": {},
+  "runtime": {
+    "model_policy": {
+      "prefer": "auto",
+      "fallback": []
+    },
+    "max_cost_per_call_usd": 0.05,
+    "timeout_s": 90
+  },
+  "author": {
+    "name": "Claw Collective",
+    "affiliate": "TBD-shiki-affiliate-id"
+  },
+  "ui": {
+    "kind": "panel",
+    "fields": [
+      {"name": "topic", "widget": "text"},
+      {"name": "length_s", "widget": "slider", "min": 5, "max": 60, "default": 15},
+      {"name": "platform", "widget": "select", "options": ["x", "instagram-reels", "youtube-shorts"]}
+    ]
+  }
+}

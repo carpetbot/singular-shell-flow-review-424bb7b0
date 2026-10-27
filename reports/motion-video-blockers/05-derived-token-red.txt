@@ -1,0 +1,30 @@
+✖ idempotency token binds canonical logical request and persisted shared plan identity (50.158806ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.274044
+
+✖ failing tests:
+
+test at tests/video-cross-tab.test.mjs:50:1
+✖ idempotency token binds canonical logical request and persisted shared plan identity (50.158806ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'string'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:54:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'string',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,178 @@
+{
+  "spec_version": "0.3",
+  "id": "impossibuild/model-jury",
+  "version": "0.0.1",
+  "name": "Model Jury",
+  "description": "Give one task to three models at once. A judge from a different model maker scores the anonymous answers against a rubric written before anyone answered. See which answer wins and what each one cost.",
+  "inputs": {
+    "task": {
+      "type": "string",
+      "required": true,
+      "description": "the exact prompt you would send a model"
+    },
+    "context": {
+      "type": "string",
+      "required": false,
+      "description": "optional system prompt every contestant gets (role, audience, rules)"
+    },
+    "criteria": {
+      "type": "string",
+      "required": false,
+      "description": "what a good answer must do, in your words. Leave blank and the rubric step writes it."
+    },
+    "contestant_1": {
+      "type": "model",
+      "required": true,
+      "description": "slot: frontier"
+    },
+    "contestant_2": {
+      "type": "model",
+      "required": true,
+      "description": "slot: value"
+    },
+    "contestant_3": {
+      "type": "model",
+      "required": true,
+      "description": "slot: Alibaba-family"
+    },
+    "careful_mode": {
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "judge twice with the answer order reversed; flags scores that disagree"
+    },
+    "judge": {
+      "type": "model",
+      "required": true,
+      "description": "slot: judge; must be a different maker from all three contestants"
+    },
+    "rubric_writer": {
+      "type": "model",
+      "required": true,
+      "description": "Writes the rubric before answers; choose an exact chat model."
+    }
+  },
+  "runtime": {
+    "graph": [
+      {
+        "id": "guard",
+        "node": "rule",
+        "rule": "judge_family_differs_from_all_contestants",
+        "on_fail": "stop",
+        "message": "Pick a judge from a different model maker than all three contestants."
+      },
+      {
+        "id": "rubric",
+        "node": "model",
+        "slot": "rubric_writer (reasoning)",
+        "system": "prompts/1-rubric.system.md",
+        "user_template": "prompts/1-rubric.user.md",
+        "response_format": "json",
+        "max_output_tokens": 500,
+        "model_from_input": "rubric_writer"
+      },
+      {
+        "id": "slot_1",
+        "node": "model",
+        "model_from_input": "contestant_1",
+        "system": "prompts/2-answer.system.md",
+        "user_template": "prompts/2-answer.user.md",
+        "max_output_tokens": 1500,
+        "parallel_group": "answers",
+        "on_fail": "continue_as_no_answer"
+      },
+      {
+        "id": "slot_2",
+        "node": "model",
+        "model_from_input": "contestant_2",
+        "system": "prompts/2-answer.system.md",
+        "user_template": "prompts/2-answer.user.md",
+        "max_output_tokens": 1500,
+        "parallel_group": "answers",
+        "on_fail": "continue_as_no_answer"
+      },
+      {
+        "id": "slot_3",
+        "node": "model",
+        "model_from_input": "contestant_3",
+        "system": "prompts/2-answer.system.md",
+        "user_template": "prompts/2-answer.user.md",
+        "max_output_tokens": 1500,
+        "parallel_group": "answers",
+        "on_fail": "continue_as_no_answer"
+      },
+      {
+        "id": "min_answers",
+        "node": "rule",
+        "rule": "at_least_2_answers",
+        "on_fail": "stop",
+        "message": "Fewer than 2 models answered. Nothing to compare."
+      },
+      {
+        "id": "blind",
+        "node": "merge",
+        "rule": "shuffle_and_relabel",
+        "inputs": [
+          "slot_1",
+          "slot_2",
+          "slot_3"
+        ],
+        "outputs": [
+          "answer_1",
+          "answer_2",
+          "answer_3"
+        ],
+        "keeps_private_map": true
+      },
+      {
+        "id": "judge",
+        "node": "model",
+        "slot": "judge (different family from all contestants)",
+        "system": "prompts/3-judge.system.md",
+        "user_template": "prompts/3-judge.user.md",
+        "response_format": "json",
+        "max_output_tokens": 1500,
+        "model_from_input": "judge"
+      },
+      {
+        "id": "judge_reversed",
+        "node": "model",
+        "when": "careful_mode",
+        "model_from_input": "judge",
+        "system": "prompts/3-judge.system.md",
+        "user_template": "prompts/3-judge.reversed.user.md",
+        "response_format": "json",
+        "max_output_tokens": 1500,
+        "note": "same labels as judge, listed in reverse order, so one private map serves both passes"
+      },
+      {
+        "id": "tally",
+        "node": "rule",
+        "rule": "score_cost_and_rank",
+        "inputs": [
+          "judge",
+          "judge_reversed",
+          "rubric",
+          "receipts",
+          "blind.private_map"
+        ]
+      }
+    ],
+    "output": {
+      "show": [
+        "tally.ranking",
+        "tally.best_overall",
+        "tally.best_value",
+        "tally.disagreements",
+        "judge.reason",
+        "rubric.criteria"
+      ]
+    },
+    "max_cost_per_run_usd": 0.25,
+    "timeout_s": 180
+  },
+  "author": {
+    "name": "Impossibuild",
+    "affiliate": "TBD"
+  }
+}

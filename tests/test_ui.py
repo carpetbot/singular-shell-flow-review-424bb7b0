@@ -2,6 +2,7 @@
 import http.server
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import threading
@@ -41,7 +42,7 @@ class BrowserSmoke(unittest.TestCase):
                 page.wait_for_selector('.skill-card',timeout=10000)
                 page.get_by_role('button',name='Pro',exact=True).click()
                 page.evaluate("async()=>{const {get}=await import('/js/store.js');get().settings.apiKey='offline-demo';}")
-                self.assertEqual(page.locator('.skill-card').count(),3)
+                self.assertEqual(page.locator('.skill-card').count(),4)
                 self.assertIn('4 AI steps',page.locator('.skill-card').filter(has_text='prospect-to-cold-email').inner_text())
                 page.locator('.skill-card').filter(has_text='prospect-to-cold-email').click()
                 self.assertEqual(page.locator('#flow-steps li').count(),4)
@@ -67,7 +68,7 @@ class BrowserSmoke(unittest.TestCase):
                 self.assertEqual(page.evaluate('navigator.clipboard.readText()'),'team plans')
                 page.locator('#skout details summary').click()
                 self.assertIn('company_does',page.locator('#skout details').inner_text())
-                report=ROOT/'reports';report.mkdir(exist_ok=True)
+                report=Path(os.environ.get('VIDEO_LEGACY_EVIDENCE',str(ROOT/'reports')));report.mkdir(exist_ok=True)
                 page.screenshot(path=str(report/'flow-ui.png'),full_page=True)
                 page.locator('.modal').evaluate('(el)=>el.scrollTop=0')
                 page.screenshot(path=str(report/'flow-ui-top.png'),full_page=True)
@@ -83,7 +84,7 @@ class BrowserSmoke(unittest.TestCase):
                 page.screenshot(path=str(report/'fit-score-string-stop.png'),full_page=True)
                 calls[:]=first_run_calls
                 page.keyboard.press('Escape')
-                page.locator('.skill-card').filter(has_text='motion-trimmer').click()
+                page.locator('.skill-card').filter(has=page.get_by_text('Motion Trimmer',exact=True)).click()
                 page.locator('#fld-topic').fill('Legacy topic')
                 page.locator('#preview').click()
                 self.assertIn('Legacy topic',page.locator('#skout').inner_text())

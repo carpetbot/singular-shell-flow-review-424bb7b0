@@ -73,7 +73,7 @@ class LitePro(unittest.TestCase):
 
     def test_02_gallery_and_fictional_sample_preserve_inputs(self):
         self.gallery()
-        self.assertEqual(self.page.locator('.skill-card').count(),3)
+        self.assertEqual(self.page.locator('.skill-card').count(),4)
         self.assertEqual(self.page.locator('.skill-card').first.evaluate('e=>e.tagName'),'BUTTON')
         self.assertNotIn('skeleton',self.page.locator('#view').inner_text())
         self.assertNotIn('ui:panel',self.page.locator('#view').inner_text())
@@ -248,7 +248,7 @@ class LitePro(unittest.TestCase):
         self.assertNotIn('AI check passed',self.page.locator('#skout').inner_text())
         self.assertEqual(self.errors,[])
     def test_09_exact_seven_review_screenshots(self):
-        destination=ROOT/'reports/review';destination.mkdir(exist_ok=True)
+        destination=Path(os.environ.get('VIDEO_LITE_EVIDENCE',str(ROOT/'reports/review')));destination.mkdir(exist_ok=True)
         shots=[]
         def shot(name):
             path=destination/name

@@ -12,7 +12,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
 APP_ROOT=Path(os.environ.get('JURY_APP_ROOT',str(ROOT)))
-REPORT=ROOT/'reports/model-jury'
+REPORT=Path(os.environ.get('VIDEO_JURY_EVIDENCE',str(ROOT/'reports/model-jury')))
 spec=importlib.util.spec_from_file_location('jury_proxy',APP_ROOT/'proxy.py')
 proxy=importlib.util.module_from_spec(spec);spec.loader.exec_module(proxy)
 

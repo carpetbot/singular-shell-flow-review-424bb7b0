@@ -1,0 +1,171 @@
+{
+  "zip": "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/dist/motion-trimmer-video-review.zip",
+  "sha256": "89032c442e2726c60084378462cc4da9616d77ce3b4f614c50386cf0f976fa59",
+  "regular_files": 40,
+  "crc": "PASS",
+  "source_copy_zip_bytes": "PASS",
+  "runtime_allowlist": [
+    "index.html",
+    "styles.css",
+    "proxy.py",
+    "MOTION_VIDEO_REVIEW.md",
+    "js/api.js",
+    "js/app.js",
+    "js/chrome.js",
+    "js/flow-ui.js",
+    "js/flow.js",
+    "js/graph-ui.js",
+    "js/graph.js",
+    "js/presentation.js",
+    "js/store.js",
+    "js/ui.js",
+    "js/video-ui.js",
+    "js/video.js",
+    "js/views/chat.js",
+    "js/views/models.js",
+    "js/views/settings.js",
+    "js/views/skills.js",
+    "skills/claw__motion-trimmer/prompts/user.md",
+    "skills/claw__motion-trimmer/singular.skill.json",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md",
+    "skills/impossibuild__prospect-to-cold-email/singular.flow.json",
+    "skills/impossibuild__model-jury/prompts/1-rubric.system.md",
+    "skills/impossibuild__model-jury/prompts/1-rubric.user.md",
+    "skills/impossibuild__model-jury/prompts/2-answer.system.md",
+    "skills/impossibuild__model-jury/prompts/2-answer.user.md",
+    "skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md",
+    "skills/impossibuild__model-jury/prompts/3-judge.system.md",
+    "skills/impossibuild__model-jury/prompts/3-judge.user.md",
+    "skills/impossibuild__model-jury/singular.flow.json",
+    "skills/claw__motion-trimmer-video/singular.flow.json"
+  ],
+  "copied_server_probes": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/index.html?x=1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/video.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/proxy.py",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/%70roxy%2epy?x=1",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/%2570roxy%252epy",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/js/",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/tests/video.test.mjs",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/MOTION_VIDEO_REVIEW.md",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/reports/",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/../proxy.py",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/js/%2e%2e/proxy.py",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/index.html?x=1",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/video.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/proxy.py",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/%70roxy%2epy?x=1",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/%2570roxy%252epy",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/tests/video.test.mjs",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/MOTION_VIDEO_REVIEW.md",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/reports/",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/../proxy.py",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/%2e%2e/proxy.py",
+      "status": 404
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "js/video.js": "19e4f553d0a7eee14896a7dcb90477707fe9023802078ddfb610c8465ecf70ed",
+  "tests/video-cross-tab.test.mjs": "bb550aa5424056706fceb3f8f76564e84dec41dae5574b74cda51166425c48e1",
+  "proxy.py": "29226e43310192a9cab4882a53812da456dae964ac276597d6db3a240c075e6e",
+  "MOTION_VIDEO_REVIEW.md": "2ad4e6c632f4b8a238491f61a60d885d2697a87dfdf0fd6f006d141a9d0c383e",
+  "dist/motion-trimmer-video-review.zip": "89032c442e2726c60084378462cc4da9616d77ce3b4f614c50386cf0f976fa59"
+}

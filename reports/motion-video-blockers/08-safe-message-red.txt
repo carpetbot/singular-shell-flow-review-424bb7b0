@@ -1,0 +1,16 @@
+test_video_errors_are_bounded_sanitized_and_closed (test_video_proxy.VideoProxy.test_video_errors_are_bounded_sanitized_and_closed) ... [shell] "POST /v1/videos HTTP/1.1" 500 -
+ERROR
+
+======================================================================
+ERROR: test_video_errors_are_bounded_sanitized_and_closed (test_video_proxy.VideoProxy.test_video_errors_are_bounded_sanitized_and_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/test_video_proxy.py", line 51, in test_video_errors_are_bounded_sanitized_and_closed
+    self.assertEqual(json.loads(data)['error_message'],'Video gateway request failed')
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'error_message'
+
+----------------------------------------------------------------------
+Ran 1 test in 1.007s
+
+FAILED (errors=1)

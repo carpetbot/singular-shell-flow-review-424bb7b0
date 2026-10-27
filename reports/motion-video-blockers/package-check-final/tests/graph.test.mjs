@@ -1,0 +1,160 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+const graph=await import('../js/graph.js').catch(()=>({}));
+const A={slot_1:'Ship on Friday. The risk is the payment bug.',slot_2:'We could consider many options regarding the timeline going forward.',slot_3:'Ship Friday; fix payments first.'};
+const R={criteria:[{name:'clear',weight:3},{name:'short',weight:1}],must_haves:[]};
+const costs={slot_1:.01,slot_2:.0004,slot_3:.0006};
+function judge(map,fake){const inv=Object.fromEntries(Object.entries(map).map(([k,v])=>[v,k]));return {scores:[['slot_1',5,4,'The risk is the payment bug'],['slot_2',2,2,'consider many options'],['slot_3',5,5,'fix payments first']].map(([slot,clear,short,q])=>({answer:inv[slot],must_haves_failed:[],criteria:[{name:'clear',score:clear,quote:slot===fake?'invented words':q},{name:'short',score:short,quote:slot===fake?'invented words':q}]})),best:inv.slot_3};}
+function blinded(){return graph.shuffle_and_relabel(A,()=>.37);}
+test('reference 1: guard rejects same family judge',()=>{assert.equal(typeof graph.judge_family_differs_from_all_contestants,'function');assert.equal(graph.judge_family_differs_from_all_contestants('anthropic/opus',['anthropic/sonnet','qwen/max','deepseek/x'])[0],false);assert.equal(graph.judge_family_differs_from_all_contestants('google/flash',['anthropic/sonnet','qwen/max','deepseek/x'])[0],true);});
+test('reference 2: guard rejects unpinned model',()=>{assert.throws(()=>graph.judge_family_differs_from_all_contestants('auto',['a/x']),/exact provider/);});
+
+test('reference 3: minimum two answers',()=>{assert.equal(graph.at_least_2_answers({a:'x',b:'y',c:''}),true);assert.equal(graph.at_least_2_answers({a:'x',b:' ',c:null}),false);});
+
+test('reference 4: blind hides slots and keeps map',()=>{const [b,m]=graph.shuffle_and_relabel({...A,slot_3:''},()=>.37);assert.deepEqual(new Set(Object.values(m)),new Set(Object.keys(A)));assert.ok(Object.values(b).includes('(no answer)'));for(const [label,slot] of Object.entries(m))assert.equal(b['answer_'+label],slot==='slot_3'?'(no answer)':A[slot]);});
+
+test('reference 5: quotes must exist',()=>{assert.equal(graph.quoteFound('the risk is the  payment bug',A.slot_1),true);assert.equal(graph.quoteFound('guaranteed on-time delivery',A.slot_1),false);});
+
+test('reference 6: tally rank and best value',()=>{const [b,m]=blinded();const out=graph.score_cost_and_rank(judge(m),R,b,m,costs);assert.equal(out.best_overall,'slot_3');assert.equal(out.best_value,'slot_3');assert.deepEqual(out.ranking.map(r=>r.slot),['slot_3','slot_1','slot_2']);});
+
+test('reference 7: invented quotes cap score',()=>{const [b,m]=blinded();const out=graph.score_cost_and_rank(judge(m,'slot_3'),R,b,m,costs);assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').quote_failures,['clear','short']);assert.equal(out.best_overall,'slot_1');});
+
+test('reference 8: unknown cost never wins value',()=>{const [b,m]=blinded();const out=graph.score_cost_and_rank(judge(m),R,b,m,{...costs,slot_3:null});assert.equal(out.best_overall,'slot_3');assert.equal(out.best_value,'slot_1');});
+
+test('reference 9: must-have failures rank last',()=>{const [b,m]=blinded(),j=judge(m);j.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['under 10 words'];const out=graph.score_cost_and_rank(j,R,b,m,costs);assert.equal(out.ranking.at(-1).slot,'slot_3');assert.equal(out.best_overall,'slot_1');});
+
+test('reference 10: careful mode flags disagreement',()=>{const [b,m]=blinded(),j1=judge(m),j2=judge(m);j2.scores.find(s=>m[s.answer]==='slot_2').criteria[0].score=5;const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2);assert.deepEqual(out.disagreements,[{slot:'slot_2',criterion:'clear',scores:[2,5]}]);});
+
+test('careful must-have eligibility conservatively reconciles both pass orders',async t=>{
+ for(const failedPass of [2,1])await t.test(`failure only in pass ${failedPass}`,()=>{
+  const [b,m]=blinded(),passes=[judge(m),judge(m)];
+  passes[failedPass-1].scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['under 10 words'];
+  const out=graph.score_cost_and_rank(passes[0],R,b,m,costs,passes[1]);
+  assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').must_haves_failed,['under 10 words']);
+  assert.equal(out.ranking.at(-1).slot,'slot_3');
+  assert.equal(out.best_overall,'slot_1');
+  assert.equal(out.best_value,'slot_1');
+  assert.deepEqual(out.disagreements,[{slot:'slot_3',criterion:'must_haves',scores:failedPass===2?[[],['under 10 words']]:[['under 10 words'],[]]}]);
+ });
+});
+
+test('model picker prices use three significant digits without changing catalog values',async()=>{
+ const {get}=await import('../js/store.js'),store=get(),previous=store.catalog;
+ const {renderField}=await import('../js/views/skills.js');
+ try{store.catalog={models:[{...fixtureCatalog.models[0],promptPerMillionUsd:0.123456789,completionPerMillionUsd:1.23456789}]};
+  const html=renderField({type:'model',key:'judge',label:'Judge'});
+  assert.match(html,/\$0\.123 input \/ \$1\.23 output/);
+  assert.equal(store.catalog.models[0].promptPerMillionUsd,0.123456789);
+ }finally{store.catalog=previous;}
+});
+
+test('same winner and best value states equality instead of zero percent savings',async()=>{
+ const {renderGraphResult}=await import('../js/graph-ui.js');
+ const m=await fixtureManifest(),ctx=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:fakeGateway()});
+ assert.equal(ctx.steps.tally.json.best_overall,ctx.steps.tally.json.best_value);
+ const html=renderGraphResult(m,ctx);
+ assert.match(html,/The winner is also the best value\./);
+ assert.doesNotMatch(html,/0\.0% cheaper/);
+});
+
+test('reference 11: test_careful_mode_must_have_from_second_pass_counts',()=>{
+ const [b,m]=blinded(),j1=judge(m),j2=judge(m);
+ j2.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['under 10 words'];
+ const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2);
+ assert.notEqual(out.best_overall,'slot_3');assert.notEqual(out.best_value,'slot_3');
+ assert.equal(out.ranking.at(-1).slot,'slot_3');
+ assert.ok(out.disagreements.some(d=>JSON.stringify(d)===JSON.stringify({slot:'slot_3',criterion:'must_haves',scores:[[],['under 10 words']]})));
+});
+
+test('careful unions distinct must-have failures and flags both lists even when both fail',()=>{
+ const [b,m]=blinded(),j1=judge(m),j2=judge(m);
+ j1.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['z','z'];
+ j2.scores.find(s=>m[s.answer]==='slot_3').must_haves_failed=['a'];
+ const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2);
+ assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').must_haves_failed,['a','z']);
+ assert.deepEqual(out.disagreements,[{slot:'slot_3',criterion:'must_haves',scores:[['z'],['a']]}]);
+});
+
+test('reference 12: test_careful_mode_invented_quote_in_second_pass_caps_not_disqualifies',()=>{
+ const [b,m]=blinded(),j1=judge(m),j2=judge(m,'slot_3');
+ const out=graph.score_cost_and_rank(j1,R,b,m,costs,j2),row=out.ranking.find(r=>r.slot==='slot_3');
+ assert.deepEqual(row.quote_failures,['clear','short']);assert.equal(row.avg,3.5);
+ assert.deepEqual(row.must_haves_failed,[]);assert.equal(out.best_overall,'slot_1');
+ assert.ok(out.disagreements.some(d=>JSON.stringify(d)===JSON.stringify({slot:'slot_3',criterion:'clear',scores:[5,2]})));
+});
+
+test('invented quotes in either pass retain eligibility for overall and value',async t=>{
+ for(const failedPass of [1,2])await t.test(`invented quote in pass ${failedPass}`,()=>{
+  const [b,m]=blinded(),passes=[judge(m),judge(m)];
+  passes[failedPass-1].scores.find(s=>m[s.answer]==='slot_3').criteria[1].quote='invented words';
+  const out=graph.score_cost_and_rank(passes[0],R,b,m,costs,passes[1]);
+  assert.deepEqual(out.ranking.find(r=>r.slot==='slot_3').quote_failures,['short']);
+  assert.equal(out.best_overall,'slot_1');assert.equal(out.best_value,'slot_3');
+  const only={...R,criteria:[{name:'short',weight:1}]},single=passes.map(j=>({scores:j.scores.filter(s=>m[s.answer]==='slot_3').map(s=>({...s,criteria:s.criteria.filter(c=>c.name==='short')}))}));
+  const eligible=graph.score_cost_and_rank(single[0],only,b,m,costs,single[1]);
+  assert.equal(eligible.best_overall,'slot_3');assert.equal(eligible.best_value,'slot_3');
+ });
+});
+
+test('Lite contestant gateway failure names exact model with plain no-answer reason',async()=>{
+ const {renderGraphResult}=await import('../js/graph-ui.js'),m=await fixtureManifest(),base=fakeGateway();
+ const ctx=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{
+  if(opts.model===vals.contestant_3)throw Object.assign(Error('upstream HTTP500 fixture'),{status:500});
+  return base(messages,opts);
+ }});
+ const html=renderGraphResult(m,ctx),failure=html.match(/<p class="next-action">([\s\S]*?)<\/p>/)?.[1];
+ assert.equal(failure,'c/three: no answer (gateway error 500)');
+ assert.match(html,/upstream HTTP500 fixture/,'raw detail retained in Pro');
+});
+
+test('mutable -latest IDs are hidden and refused before any graph calls without normalization',async()=>{
+ const alias='a/one-latest',cat={models:[...fixtureCatalog.models,{...fixtureCatalog.models[0],id:alias}]};
+ assert.ok(!graph.routableModels(cat).some(m=>m.id===alias));
+ const {get}=await import('../js/store.js'),store=get(),previous=store.catalog;
+ try{store.catalog=cat;const {renderField}=await import('../js/views/skills.js');assert.ok(!renderField({type:'model',key:'judge',label:'Judge'}).includes(alias));}finally{store.catalog=previous;}
+ let calls=0;const out=await graph.runGraph(await fixtureManifest(),{...vals,contestant_1:alias},()=>{},{catalog:cat,chat:async()=>calls++});
+ assert.equal(out.status,'failed');assert.equal(calls,0);assert.match(out.error,/Exact routable chat model required/);
+ assert.equal(cat.models.at(-1).id,alias);
+});
+
+const fixtureCatalog={models:['a/one','b/two','c/three','d/judge','e/rubric'].map(id=>({id,kind:'chat',routable:true,promptPerMillionUsd:1,completionPerMillionUsd:2}))};
+const vals={task:'Choose a shipping date',context:'',criteria:'',contestant_1:'a/one',contestant_2:'b/two',contestant_3:'c/three',judge:'d/judge',rubric_writer:'e/rubric',careful_mode:false};
+async function fixtureManifest(){const root=new URL('../skills/impossibuild__model-jury/',import.meta.url);const m=JSON.parse(await readFile(new URL('singular.flow.json',root),'utf8'));m.runtime.graph.find(n=>n.id==='rubric').model_from_input='rubric_writer';m.prompts={};for(const n of m.runtime.graph)for(const path of [n.system,n.user_template].filter(Boolean))m.prompts[path]=await readFile(new URL(path,root),'utf8');return m;}
+function fakeGateway(seen=[],extra={}){return async(messages,opts)=>{seen.push({messages,model:opts.model});let content;if(opts.model===vals.rubric_writer)content=JSON.stringify(R);else if(opts.model===vals.judge){const user=messages[1].content;const pairs=[...user.matchAll(/Answer ([123]):\n([\s\S]*?)(?=\n\nAnswer [123]:|$)/g)];content=JSON.stringify({scores:pairs.filter(p=>!p[2].trim().startsWith('(no answer)')).map(([_,label,answer])=>({answer:label,must_haves_failed:[],criteria:[{name:'clear',score:5,quote:answer.trim()},{name:'short',score:4,quote:answer.trim()}]})),reason:'Offline fixture comparison'});}else content=A['slot_'+(Object.keys(vals).find(k=>vals[k]===opts.model)?.slice(-1))];return {content,receipt:{requested:opts.model,prompt_tokens:10,completion_tokens:10,estCost:.00003,...extra}};};}
+test('graph end-to-end dynamic models, blinded requests, named code nodes and receipts',async()=>{assert.equal(typeof graph.runGraph,'function');const m=await fixtureManifest(),seen=[];const out=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:fakeGateway(seen),rng:()=>.37});assert.equal(out.status,'done',out.error);assert.equal(seen.length,5);assert.equal(out.steps.tally.json.ranking.length,3);assert.equal(out.steps.slot_1.receipt.estCost,.00003);assert.ok(Math.abs(out.estCost-.00015)<1e-12);const request=JSON.stringify(seen.at(-1));for(const v of ['a/one','b/two','c/three','slot_1','slot_2','slot_3','private_map'])assert.ok(!request.includes(v));assert.deepEqual(Object.keys(graph.BUILTINS).sort(),['at_least_2_answers','judge_family_differs_from_all_contestants','score_cost_and_rank','shuffle_and_relabel']);});
+
+test('preflight refuses missing caps, non-routable aliases, unknown prices and excessive estimates before calls',async()=>{for(const kind of ['missing','string','tiny','alias','not-routable','unknown-price','unknown-rule']){const m=await fixtureManifest(),v={...vals},cat=structuredClone(fixtureCatalog);if(kind==='missing')delete m.runtime.max_cost_per_run_usd;if(kind==='string')m.runtime.max_cost_per_run_usd='1';if(kind==='tiny')m.runtime.max_cost_per_run_usd=1e-9;if(kind==='alias')v.contestant_1='auto';if(kind==='not-routable')cat.models[0].routable=false;if(kind==='unknown-price')delete cat.models[0].promptPerMillionUsd;if(kind==='unknown-rule')m.runtime.graph.at(-1).rule='evil';let calls=0;const out=await graph.runGraph(m,v,()=>{},{catalog:cat,chat:async()=>{calls++;throw Error('must not call');}});assert.equal(out.status,'failed',kind);assert.equal(calls,0,kind);}});
+
+test('contestant HTTP500 continues with receipt; fewer than two stops after answer calls',async()=>{for(const failures of [1,2]){const seen=[],chat=fakeGateway(seen);let attempts=0;const out=await graph.runGraph(await fixtureManifest(),vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{attempts++;if(['a/one','b/two'].slice(0,failures).includes(opts.model))throw Object.assign(Error('Offline HTTP500 fixture'),{status:500});return chat(messages,opts);}});assert.equal(out.status,failures===1?'done':'stopped',out.error);assert.equal(attempts,failures===1?5:4);assert.equal(out.steps.slot_1.status,'failed');assert.equal(out.steps.slot_1.receipt.httpStatus,500);assert.equal(out.steps.slot_1.output,'');if(failures===1)assert.equal(out.steps.tally.json.ranking.length,2);else assert.equal(out.steps.judge.status,'skipped');}});
+
+test('call budget rechecks and unknown usage never become zero',async()=>{for(const cost of [null,1]){let calls=0;const chat=fakeGateway([], {estCost:cost});const out=await graph.runGraph(await fixtureManifest(),vals,()=>{},{catalog:fixtureCatalog,chat:async(...args)=>{calls++;return chat(...args);}});assert.equal(calls,1);assert.equal(out.status,'failed');assert.match(out.error,/budget|unknown/i);assert.equal(out.estCost,cost);}});
+
+test('contestants start concurrently and group budget is reserved atomically before any start',async()=>{let release;const gate=new Promise(resolve=>release=resolve),started=[];const base=fakeGateway();const promise=graph.runGraph(await fixtureManifest(),vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{if(['a/one','b/two','c/three'].includes(opts.model)){started.push(opts.model);await gate;}return base(messages,opts);}});await new Promise(r=>setTimeout(r,30));const count=started.length;release();await promise;assert.equal(count,3,'all contestant calls must be in flight');
+const m=await fixtureManifest();let calls=0;const cap=m.runtime.max_cost_per_run_usd;const out=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{calls++;if(calls===1)return {content:JSON.stringify(R),receipt:{estCost:cap-.007}};return base(messages,opts);}});assert.equal(calls,1,'all three estimates must fit together, not individually');assert.equal(out.status,'failed');});
+
+test('careful mode uses same private labels reversed and preflight includes exactly one extra judge',async()=>{const m=await fixtureManifest(),v={...vals,careful_mode:true},seen=[];const normal=graph.graphPreflight(m,vals,fixtureCatalog),careful=graph.graphPreflight(m,v,fixtureCatalog);assert.ok(careful>normal);const base=fakeGateway(seen);let judges=0;const out=await graph.runGraph(m,v,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{const result=await base(messages,opts);if(opts.model===vals.judge && ++judges===2){const j=JSON.parse(result.content);j.scores[0].criteria[0].score=3;result.content=JSON.stringify(j);}return result;}});assert.equal(out.status,'done',out.error);assert.equal(seen.length,6);assert.equal(out.steps.tally.json.disagreements.length,1);assert.deepEqual(out.steps.tally.json.disagreements[0].scores,[5,3]);assert.ok(seen.at(-1).messages[1].content.indexOf('Answer 3:')<seen.at(-1).messages[1].content.indexOf('Answer 1:'));m.runtime.max_cost_per_run_usd=(normal+careful)/2;let calls=0;await graph.runGraph(m,v,()=>{},{catalog:fixtureCatalog,chat:async()=>calls++});assert.equal(calls,0);});
+
+test('deadline aborts an outstanding request and retains unknown-cost failure receipt',async()=>{const m=await fixtureManifest();m.runtime.timeout_s=.02;let signal;const out=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:async(_,opts)=>{signal=opts.signal;return new Promise(()=>{});}});assert.equal(out.status,'failed');assert.match(out.error,/timeout/i);assert.equal(signal.aborted,true);assert.equal(out.estCost,null);assert.equal(out.steps.rubric.attempts.length,1);});
+
+test('failed answers cannot be ranked even if judge scores their anonymous placeholder',async()=>{const m=await fixtureManifest(),base=fakeGateway();const out=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{if(opts.model==='a/one')throw Object.assign(Error('HTTP500 fixture'),{status:500});const result=await base(messages,opts);if(opts.model===vals.judge){const j=JSON.parse(result.content);const missing=[...messages[1].content.matchAll(/Answer ([123]):\n\(no answer\)/g)][0][1];j.scores.push({answer:missing,must_haves_failed:[],criteria:[{name:'clear',score:5,quote:'(no answer)'}]});result.content=JSON.stringify(j);}return result;}});assert.equal(out.status,'done',out.error);assert.equal(out.steps.tally.json.ranking.length,2);});
+
+test('model JSON is validated before scoring and invalid judge output stops with its receipt',async()=>{for(const defect of ['score','label','criterion','duplicate','missing']){const base=fakeGateway();const out=await graph.runGraph(await fixtureManifest(),vals,()=>{},{catalog:fixtureCatalog,chat:async(messages,opts)=>{const result=await base(messages,opts);if(opts.model===vals.judge){const j=JSON.parse(result.content);if(defect==='score')j.scores[0].criteria[0].score=99;if(defect==='label')j.scores[0].answer='__proto__';if(defect==='criterion')j.scores[0].criteria[0].name='invented';if(defect==='duplicate')j.scores[1].answer=j.scores[0].answer;if(defect==='missing')j.scores.pop();result.content=JSON.stringify(j);}return result;}});assert.equal(out.status,'failed',defect);assert.match(out.error,/Invalid judge/);assert.equal(out.steps.judge.attempts.length,1);assert.equal(out.steps.tally.status,'skipped');}});
+
+test('graph loader reads all seven prompt files and model picker lists only exact routable chat IDs',async()=>{const {loadSkill,renderField}=await import('../js/views/skills.js');const m=await fixtureManifest(),seen=[];await loadSkill('jury',async url=>{seen.push(url);return {ok:true,status:200,json:async()=>m,text:async()=>'fixture prompt'};});assert.equal(seen.filter(url=>url.includes('/prompts/')).length,7);const {get}=await import('../js/store.js');get().catalog={models:[...fixtureCatalog.models,{id:'auto',kind:'chat',routable:true},{id:'bad/image',kind:'image',routable:true},{id:'x/blocked',kind:'chat',routable:false}]};const html=renderField({type:'model',key:'judge',label:'Judge'});assert.match(html,/<select/);assert.match(html,/a\/one/);assert.match(html,/\$1/);assert.ok(!html.includes('bad/image'));assert.ok(!html.includes('x/blocked'));assert.ok(!html.includes('value="auto"'));});
+
+test('graph result Lite winner and value, folded answers; Pro details reveal map only after judging',async()=>{const ui=await import('../js/graph-ui.js').catch(()=>({}));assert.equal(typeof ui.renderGraphResult,'function');const m=await fixtureManifest(),ctx=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:fakeGateway(),rng:()=>.37});const html=ui.renderGraphResult(m,ctx);assert.match(html,/Winner/);assert.match(html,/Best value/);assert.match(html,/<details[^>]*><summary>Other answers/);assert.match(html,/pro-only/);assert.match(html,/Rubric/);assert.match(html,/Slot map/);assert.match(html,/Score table/);assert.match(html,/Disagreement/);assert.match(html,/prompt_tokens/);const pending=structuredClone(ctx);pending.status='running';delete pending.steps.tally.json;assert.ok(!ui.renderGraphResult(m,pending).includes('Slot map'));ctx.steps.slot_1.output='<img onerror=alert(1)>';assert.ok(!ui.renderGraphResult(m,ctx).includes('<img'));});
+
+test('exact catalog identifiers are preserved verbatim, including punctuation, never normalized to aliases',()=>{const cat={models:[{id:'maker/model:thinking',kind:'chat',routable:true,promptPerMillionUsd:1,completionPerMillionUsd:1},{id:'router/auto',kind:'chat',routable:true,promptPerMillionUsd:1,completionPerMillionUsd:1}]};assert.deepEqual(graph.routableModels(cat).map(m=>m.id),['maker/model:thinking']);});
+
+test('model template contexts cannot access private maps or selected contestant identifiers',async()=>{const m=await fixtureManifest(),seen=[];m.prompts['prompts/3-judge.user.md']+='\n{{steps.blind.private_map.1}} {{contestant_1}}';const out=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:fakeGateway(seen)});const request=JSON.stringify(seen.at(-1));assert.ok(!request.includes('slot_'));assert.ok(!request.includes(vals.contestant_1));});
+
+test('real API graph receipts use exact catalog price rather than legacy colon normalization',async()=>{const {get}=await import('../js/store.js'),store=get(),previous=store.catalog,fetcher=globalThis.fetch;const cat=structuredClone(fixtureCatalog);cat.models.push({...cat.models.at(-1),id:'e/rubric:thinking',promptPerMillionUsd:5,completionPerMillionUsd:9});store.catalog=cat;const base=fakeGateway();globalThis.fetch=async(_,request)=>{const b=JSON.parse(request.body),result=await base(b.messages,{model:b.model==='e/rubric:thinking'?vals.rubric_writer:b.model});return {ok:true,status:200,json:async()=>({model:b.model,choices:[{message:{content:result.content}}],usage:{prompt_tokens:10,completion_tokens:10}})};};try{const out=await graph.runGraph(await fixtureManifest(),{...vals,rubric_writer:'e/rubric:thinking'});assert.equal(out.status,'done',out.error);assert.equal(out.steps.rubric.receipt.estCost,.00014);}finally{store.catalog=previous;globalThis.fetch=fetcher;}});
+
+test('invalid rubric stops before contestants and retains the rubric receipt',async()=>{for(const rubric of [{criteria:[]},{criteria:[{name:'clear',weight:-1}]},{criteria:[{name:'x',weight:1},{name:'x',weight:2}]}]){let calls=0;const out=await graph.runGraph(await fixtureManifest(),vals,()=>{},{catalog:fixtureCatalog,chat:async()=>{calls++;return {content:JSON.stringify(rubric),receipt:{estCost:.0001}};}});assert.equal(calls,1);assert.equal(out.status,'failed');assert.match(out.error,/Invalid rubric/);assert.equal(out.steps.rubric.attempts.length,1);}});
+
+test('weighted averages preserve Python reference ties-to-even rounding',()=>{const rubric={criteria:[{name:'a',weight:3},{name:'b',weight:3},{name:'c',weight:1},{name:'d',weight:1}]};const j={scores:[{answer:'1',criteria:['a','b','c','d'].map((name,i)=>({name,score:i===3?2:1,quote:'yes'}))}]};const result=graph.score_cost_and_rank(j,rubric,{answer_1:'yes'},{'1':'slot_1'},{slot_1:.01});assert.equal(result.ranking[0].avg,1.12);});
+
+test('guard validates every contestant identifier before reporting same-maker verdict',()=>{assert.throws(()=>graph.judge_family_differs_from_all_contestants('a/judge',['a/one','auto']),/exact provider/);});
+
+test('Lite distinguishes the judge stated reason from the code-verified winner',async()=>{const {renderGraphResult}=await import('../js/graph-ui.js');const m=await fixtureManifest(),ctx=await graph.runGraph(m,vals,()=>{},{catalog:fixtureCatalog,chat:fakeGateway()});const html=renderGraphResult(m,ctx);assert.match(html,/Judge’s stated reason/);assert.match(html,/may differ from the code-verified ranking/);});

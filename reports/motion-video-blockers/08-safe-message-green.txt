@@ -1,0 +1,9 @@
+test_video_errors_are_bounded_sanitized_and_closed (test_video_proxy.VideoProxy.test_video_errors_are_bounded_sanitized_and_closed) ... [shell] "POST /v1/videos HTTP/1.1" 500 -
+[shell] "GET /v1/videos/vid_error HTTP/1.1" 401 -
+[shell] "GET /v1/videos/vid_error/content HTTP/1.1" 502 -
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.009s
+
+OK

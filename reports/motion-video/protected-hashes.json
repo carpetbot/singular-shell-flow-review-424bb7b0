@@ -1,0 +1,147 @@
+[
+  {
+    "file": "js/flow.js",
+    "sha256": "c375f7158c3dfe7c24528aaae456399e3293c2de5352b68e54290f81b8328615",
+    "byte_identical": true
+  },
+  {
+    "file": "js/flow-ui.js",
+    "sha256": "1300320e7a2ea5dd041667357d97d5112b62230c947333226c5cf7252fdeb6b2",
+    "byte_identical": true
+  },
+  {
+    "file": "js/api.js",
+    "sha256": "a1d25bd8b0b23d2a0c2715f0de0f045b0273993aed831789271c546375f7a20c",
+    "byte_identical": true
+  },
+  {
+    "file": "js/store.js",
+    "sha256": "44b80c553832d82f329bcbe2fcc6f7fd786a44e4e7f2c0cc7ba8f1ba7e9d6fe3",
+    "byte_identical": true
+  },
+  {
+    "file": "js/graph.js",
+    "sha256": "18786c0a83ddbf450cce54c9a725ac31543fa0f13621c4f563276a06612ecbb7",
+    "byte_identical": true
+  },
+  {
+    "file": "js/graph-ui.js",
+    "sha256": "3dbf43e656b82d441e32fb063e779c316bf0adf8e75acc862bc228e39215a5a6",
+    "byte_identical": true
+  },
+  {
+    "file": "js/ui.js",
+    "sha256": "b2885c27f0e9fb6d8d2369a2c583bb494a2ab74a05eab9146efae5e9339cee18",
+    "byte_identical": true
+  },
+  {
+    "file": "js/presentation.js",
+    "sha256": "69c0fe6ebf5bf01b85e044136591402aa15d5c393833bbd872fe7a2991c2192d",
+    "byte_identical": true
+  },
+  {
+    "file": "styles.css",
+    "sha256": "df23f7bc084bc39ba3d4435545965f241dd6fca28e83982cb037f4ec92a7fcae",
+    "byte_identical": true
+  },
+  {
+    "file": "index.html",
+    "sha256": "8ddc9094cb937b8e02809b6ac5cdec714155d34124e7b8b7abc1c497782a388a",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/singular.flow.json",
+    "sha256": "63000701cdfe22b0fbe4e5e9b126317b659c3c2a18ad15a60410024ca622e0ae",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/singular.flow.json",
+    "sha256": "3d6a46beeb5a146253fa932fc8a5bf082460f2c4ace62e1eb16fadb0c47a2033",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/claw__motion-trimmer/singular.skill.json",
+    "sha256": "34f9be9f576703556c84c4a8e489f3664ade7dbd7bb8aff8b98208c538317fbb",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/1-rubric.user.md",
+    "sha256": "4cab372f1b7ed9af322f675eae9d4601a2911298a47d7545a87ebf69357e8f20",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/3-judge.system.md",
+    "sha256": "c2172d23a1f4a5b6252218d5cf7a08bc04e294d2dd4eee3cf2abf69f5e214f6e",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/2-answer.system.md",
+    "sha256": "d17923ad1281238a759f39dfcf2951d75b3893a494646b1164f7b903f840f56f",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/1-rubric.system.md",
+    "sha256": "04bf84b7a236e73efcd0e76e258c1a781b89ce89a73b13896d4c4eee33831202",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/3-judge.user.md",
+    "sha256": "f2ece9501daa7c7eb2202b7bdf5acd926a2f69d8ecb0dbcfe66f097cde8072ad",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/2-answer.user.md",
+    "sha256": "b264690eb943f91a8b3405ed9150f8f59a5f460b027693fe8e8f8800ee00cf25",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md",
+    "sha256": "eea0fba118227bfcf92da91a064bc4a7e809152485412c7896a0598fe0dcf86f",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md",
+    "sha256": "6e1d1f6b35656b9227b86b2ba8b89557f98add06964b96051fe4b74cfca1d8cd",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md",
+    "sha256": "84c829532db343b18baaf617be96713f83178ca46eb6b0fa742c32f3ecc8e889",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md",
+    "sha256": "dbe1f4a4838d5a9926bcfd20fc3f022db23bad696ce5d31ab94e5b059e56cc74",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md",
+    "sha256": "8b424362f031e41cb7a82623af4597e9e6eecade20fd8690d82c32e036ec3ea1",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md",
+    "sha256": "10cd3b3a74c8793e2646e53d76dd0572dbada494205fdaf8e1cf0a61ede826bc",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md",
+    "sha256": "24d97205ecac97739c6e52f84a08156462d2b7945b57d2b3fd16cf86d2a45fd3",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md",
+    "sha256": "980fd44daec70f8bc6b88384dcd0ad2ad5dfad1e6a1179ab935509f1d84c2107",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md",
+    "sha256": "db7cfb71fbb9d2b21290b2902f40e67ab5dabc089a5930d8f75d2dec6ff361a1",
+    "byte_identical": true
+  },
+  {
+    "file": "skills/claw__motion-trimmer/prompts/user.md",
+    "sha256": "0166619a137b3a4e413485edc996f0cdbdcc485ee01338ca8a1f8a20f2d040f3",
+    "byte_identical": true
+  }
+]

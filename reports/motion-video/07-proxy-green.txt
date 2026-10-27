@@ -1,0 +1,27 @@
+test_01_token_only_create_and_legacy_body (test_video_proxy.VideoProxy.test_01_token_only_create_and_legacy_body) ... [shell] "POST /v1/videos HTTP/1.1" 202 -
+[shell] "GET /v1/videos/vid_a HTTP/1.1" 200 -
+[shell] "POST /v1/chat/completions HTTP/1.1" 202 -
+ok
+test_02_streams_before_upstream_finishes (test_video_proxy.VideoProxy.test_02_streams_before_upstream_finishes) ... [shell] "GET /v1/videos/vid_stream/content HTTP/1.1" 200 -
+ok
+test_03_bound_and_redirect (test_video_proxy.VideoProxy.test_03_bound_and_redirect) ... [shell] code 413, message Video exceeds 100 MB
+[shell] "GET /v1/videos/vid_huge/content HTTP/1.1" 413 -
+[shell] code 502, message Media redirects are not permitted
+[shell] "GET /v1/videos/vid_redirect/content HTTP/1.1" 502 -
+ok
+test_04_invalid_video_paths_do_not_forward (test_video_proxy.VideoProxy.test_04_invalid_video_paths_do_not_forward) ... [shell] code 404, message Not Found
+[shell] "GET /v1/videos/../content HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a/content?url=https://evil.test HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a%2Fcontent HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a/content/extra HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a\content HTTP/1.1" 404 -
+ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.808s
+
+OK

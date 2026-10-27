@@ -1,0 +1,390 @@
+diff --git a/js/views/skills.js b/js/views/skills.js
+index 69dee87..309ef99 100644
+--- a/js/views/skills.js
++++ b/js/views/skills.js
+@@ -9,7 +9,8 @@ import { esc, toast, fmtUsd, openModal } from "../ui.js";
+ import { openFlowRunner } from '../flow-ui.js';
+ import {routableModels} from '../graph.js';
+ import {openGraphRunner} from '../graph-ui.js';
+-const SKILL_INDEX = ["claw__motion-trimmer", "impossibuild__prospect-to-cold-email", "impossibuild__model-jury"];
++import {openVideoRunner} from '../video-ui.js';
++const SKILL_INDEX = ["claw__motion-trimmer", "impossibuild__prospect-to-cold-email", "impossibuild__model-jury", "claw__motion-trimmer-video"];
+ 
+ export async function loadSkill(id, fetcher = fetch){
+   let r = await fetcher(`/skills/${id}/singular.flow.json`);
+@@ -108,9 +109,9 @@ export async function bind(root){
+   }
+   grid.innerHTML = cards.length ? cards.map((c, i) => `
+     <button type="button" class="skill-card" data-i="${i}">
+-      <span class="template-top"><span class="tag">${c.manifest.runtime?.graph ? '5–6 AI calls' : c.manifest.runtime?.steps ? `${c.manifest.runtime.steps.length} AI steps` : '1 AI step'} · your key</span><span class="template-arrow" aria-hidden="true">↗</span></span>
++      <span class="template-top"><span class="tag">${c.manifest.runtime?.video ? 'Plan + explicit video' : c.manifest.runtime?.graph ? '5–6 AI calls' : c.manifest.runtime?.steps ? `${c.manifest.runtime.steps.length} AI steps` : '1 AI step'} · your key</span><span class="template-arrow" aria-hidden="true">↗</span></span>
+       <span class="template-title">${esc(c.manifest.name || c.id)}</span>
+-      <span class="skill-desc">${c.manifest.runtime?.graph ? 'Compare three answers blind. Find the winner and best value.' : c.manifest.runtime?.steps ? 'Turn your prospect notes into an email and two follow-ups.' : 'Turn a video idea into a timed, shoot-ready shot list.'}</span>
++      <span class="skill-desc">${c.manifest.runtime?.video ? 'Review a draft plan, then generate and download here. Release-gated.' : c.manifest.runtime?.graph ? 'Compare three answers blind. Find the winner and best value.' : c.manifest.runtime?.steps ? 'Turn your prospect notes into an email and two follow-ups.' : 'Turn a video idea into a timed, shoot-ready shot list.'}</span>
+       <span class="template-bottom">${esc(c.manifest.author?.name || 'Community')}<span>Open flow →</span></span>
+       <span class="skill-id pro-only">${esc(c.manifest.id)}@${esc(c.manifest.version)}</span>
+     </button>`).join('') : '<p role="alert">Templates could not be loaded. Reload to try again.</p>';
+@@ -119,6 +120,7 @@ export async function bind(root){
+ }
+ 
+ function openRunner({ id, manifest }){
++  if(manifest.runtime?.video)return openVideoRunner();
+   if(manifest.runtime?.graph)return openGraphRunner({id,manifest},renderField);
+   const fields = (manifest.ui?.fields || []).map(normField);
+   const req = Object.fromEntries(Object.entries(manifest.inputs || {}).map(([k, v]) => [k, v.required]));
+diff --git a/proxy.py b/proxy.py
+index 7747324..6db4796 100644
+--- a/proxy.py
++++ b/proxy.py
+@@ -11,7 +11,13 @@ Authorization header on every request — the proxy never persists it.
+ Run:  python3 proxy.py [port]   (default 8730)
+ Then open http://localhost:8730
+ """
+-import http.server, urllib.request, urllib.error, json, sys, os
++import http.server, urllib.request, urllib.error, json, sys, os, re
++
++MAX_VIDEO_BYTES = 100 * 1024 * 1024
++
++class NoMediaRedirect(urllib.request.HTTPRedirectHandler):
++    def redirect_request(self, req, fp, code, msg, headers, newurl):
++        return None
+ 
+ GATEWAY = "https://api.impossi.build"
+ ROOT = os.path.dirname(os.path.abspath(__file__))
+@@ -33,6 +39,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
+ 
+     def _proxy(self, method):
+         path = self.path  # e.g. /v1/chat/completions or /pricing.json
++        media = path.startswith('/v1/videos')
++        if media and not (path == '/v1/videos' or (method in ('GET', 'HEAD') and re.fullmatch(r'/v1/videos/[A-Za-z0-9_-]{1,160}(?:/content)?', path))):
++            self.send_error(404)
++            return
++        content = media and path.endswith('/content')
+         url = GATEWAY + path
+         length = int(self.headers.get("Content-Length") or 0)
+         body = self.rfile.read(length) if length else None
+@@ -42,11 +53,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
+             req.add_header("Authorization", self.headers["Authorization"])
+         if body:
+             req.add_header("Content-Type", self.headers.get("Content-Type", "application/json"))
++        if method == 'POST' and path == '/v1/videos' and self.headers.get('Idempotency-Key'):
++            req.add_header('Idempotency-Key', self.headers['Idempotency-Key'])
+         want_stream = "text/event-stream" in (self.headers.get("Accept") or "")
+         try:
+-            with urllib.request.urlopen(req, timeout=300) as r:
++            opener = urllib.request.build_opener(NoMediaRedirect()).open if media else urllib.request.urlopen
++            with opener(req, timeout=300) as r:
+                 ctype = r.headers.get("Content-Type", "")
+-                if want_stream and "event-stream" in ctype:
++                if content:
++                    self._stream_video(r, method)
++                elif want_stream and "event-stream" in ctype:
+                     # stream SSE through chunk-by-chunk
+                     self.send_response(200)
+                     self.send_header("Content-Type", ctype)
+@@ -61,10 +77,41 @@ class Handler(http.server.SimpleHTTPRequestHandler):
+                 else:
+                     self._corsless_copy(r, r.read())
+         except urllib.error.HTTPError as e:
+-            self._corsless_copy(e, e.read())
++            if media and 300 <= e.code < 400:
++                self.send_error(502, 'Media redirects are not permitted')
++            else:
++                self._corsless_copy(e, e.read())
+         except Exception as e:
+             self.send_error(502, f"proxy: {e}")
+ 
++    def _stream_video(self, resp, method):
++        declared = resp.headers.get('Content-Length')
++        if declared and (not declared.isdigit() or int(declared) > MAX_VIDEO_BYTES):
++            self.send_error(413, 'Video exceeds 100 MB')
++            return
++        self.send_response(resp.status)
++        self.send_header('Content-Type', resp.headers.get('Content-Type', 'video/mp4'))
++        self.send_header('Cache-Control', 'private, no-store')
++        if declared:
++            self.send_header('Content-Length', declared)
++        self.end_headers()
++        if method == 'HEAD':
++            return
++        total = 0
++        try:
++            while True:
++                chunk = resp.read(min(65536, MAX_VIDEO_BYTES - total + 1))
++                if not chunk:
++                    break
++                if total + len(chunk) > MAX_VIDEO_BYTES:
++                    self.close_connection = True
++                    break
++                self.wfile.write(chunk)
++                self.wfile.flush()
++                total += len(chunk)
++        except (BrokenPipeError, ConnectionResetError, TimeoutError):
++            self.close_connection = True
++
+     def do_POST(self):
+         if self.path.startswith("/v1/"):
+             self._proxy("POST")
+diff --git a/js/video.js b/js/video.js
+new file mode 100644
+index 0000000..b2c8c87
+--- /dev/null
++++ b/js/video.js
+@@ -0,0 +1,134 @@
++// Motion Trimmer → Video v1. No implicit paid generation or model fallback.
++export const MODELS=Object.freeze([
++ {id:'alibaba/wan-3.0/text-to-video',resolution:'720p',name:'Wan 3.0 · quality'},
++ {id:'minimax/h3-max-turbo',resolution:'768p',name:'MiniMax H3 Max Turbo · budget'}
++]);
++// June must confirm actual gateway request names before release. Never guess.
++export const FIELDS=Object.freeze({duration:null,aspectRatio:null,audio:null});
++export const releaseReady=(fields=FIELDS)=>typeof fields.duration==='string' && /^[a-zA-Z_][\w]*$/.test(fields.duration) && !['model','prompt','resolution','__proto__','constructor','prototype'].includes(fields.duration);
++export function quoteVideo(catalog,model,duration){
++ const choice=MODELS.find(m=>m.id===model);
++ if(!choice||![5,10,15].includes(duration))throw new Error('Unsupported video configuration');
++ const m=catalog?.models?.find(m=>m.id===model);
++ const configs=m?.videoPricing?.configs?.filter(c=>c.duration===duration && c.resolution===choice.resolution && (c.mode==null||c.mode==='text_to_video') && c.audio==null);
++ if(m?.kind!=='video'||m.routable!==true||m.videoPricing?.exact!==true||configs?.length!==1||typeof configs[0].priceUsd!=='number'||!Number.isFinite(configs[0].priceUsd)||configs[0].priceUsd<0)throw new Error('Exact video price unavailable; generation blocked');
++ return {model,duration,resolution:choice.resolution,price:configs[0].priceUsd,as_of:catalog.as_of};
++}
++export function videoBody({model,prompt,duration},fields=FIELDS){
++ const choice=MODELS.find(m=>m.id===model);
++ if(!choice||![5,10,15].includes(duration)||typeof prompt!=='string'||!prompt.trim()||prompt.length>12000)throw new Error('Invalid video request');
++ const body={model,prompt,resolution:choice.resolution};
++ if(releaseReady(fields))body[fields.duration]=duration;
++ return body;
++}
++
++const finite=n=>typeof n==='number'&&Number.isFinite(n)&&n>=0;
++const text=(s,max=4000)=>typeof s==='string'&&s.trim().length>0&&s.length<=max;
++export function validatePlan(p,duration){
++ if(![5,10,15].includes(duration)||!p||!Array.isArray(p.shotbeats)||!p.shotbeats.length||p.shotbeats.length>15||!text(p.prompt,12000)||p.prompt.trim().split(/\s+/).length>120||!Array.isArray(p.overlays)||p.overlays.length>30||!Array.isArray(p.dropped)||p.dropped.length>30)throw new Error('Invalid planner JSON');
++ if(p.shotbeats.some(b=>!b||!finite(b.duration_s)||b.duration_s<=0||!text(b.description))||Math.abs(p.shotbeats.reduce((s,b)=>s+b.duration_s,0)-duration)>.001)throw new Error('Shot durations must sum to selected duration');
++ if(p.overlays.some(o=>!o||!finite(o.at_s)||o.at_s>=duration||!text(o.text,500))||p.dropped.some(d=>!text(d)))throw new Error('Invalid overlays or dropped details');
++ return p;
++}
++export async function planVideo(brief,{chat,catalog,signal}){
++ const receipts=[];const models=['anthropic/claude-sonnet-5.5','deepseek/deepseek-v4.1-flash-1017'];
++ const messages=[{role:'system',content:'Return JSON only: {"shotbeats":[{"duration_s":5,"description":"visual beat"}],"prompt":"one scene description, max 120 words","overlays":[{"at_s":0,"text":"editor text"}],"dropped":["unsupported asset or detail"]}. Shot durations must sum to the selected duration. Preserve beat order. Do not render words, logos, UI or on-screen text in the video prompt; return every text line only in overlays for a human editor. Mark unsupported asset/logo requirements and precise easing/cuts in dropped; no uploaded assets exist. Describe subject, setting, camera motion, lighting, colour and pacing. Platform is creative context only, not guaranteed framing. No automatic composition.'},{role:'user',content:JSON.stringify(brief)}];
++ if(!text(brief.topic)||![5,10,15].includes(brief.duration))throw new Error('Topic and supported duration required');
++ const tokens=Math.ceil(JSON.stringify(messages).length/4)+100;
++ for(const id of models){const m=catalog?.models?.find(m=>m.id===id);if(m?.kind!=='chat'||m.routable!==true||!finite(m.promptPerMillionUsd)||!finite(m.completionPerMillionUsd)||(tokens*m.promptPerMillionUsd+1200*m.completionPerMillionUsd)/1e6>.1)throw new Error('Planner price unavailable or estimate exceeds $0.10 per attempt');}
++ for(const [i,model] of models.entries()){
++  try{
++   const result=await chat(messages,{model,maxTokens:1200,responseFormat:'json',signal});
++   receipts.push({model,...result.receipt,estCost:finite(result.receipt?.estCost)?result.receipt.estCost:null});
++   return {plan:validatePlan(JSON.parse(result.content),brief.duration),receipts};
++  }catch(e){
++   if(receipts.length<=i)receipts.push({model,...e.receipt,estCost:finite(e.receipt?.estCost)?e.receipt.estCost:null,error:'Planner attempt failed; charge unknown without usage'});
++   if(i===0&&e.status>=500&&e.status<=599)continue;
++   e.receipts=receipts;throw e;
++  }
++ }
++}
++
++const RECOVERY='motion-video.v1';
++const jobId=id=>typeof id==='string'&&/^[A-Za-z0-9_-]{1,160}$/.test(id);
++async function digest(value){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value)))].map(b=>b.toString(16).padStart(2,'0')).join('');}
++export class VideoSession{
++ constructor({key,fetcher=fetch,storage=localStorage,fields=FIELDS,onChange=()=>{},urlAPI=URL}){
++  this.urlAPI=urlAPI;this.blobURL=null;this.stopped=false;this.key=key.trim();this.fetcher=(...args)=>fetcher(...args);this.storage=storage;this.fields=fields;this.onChange=onChange;this.busy=false;
++  try{this.records=JSON.parse(storage.getItem(RECOVERY)||'[]');if(!Array.isArray(this.records)||this.records.some(r=>!r||typeof r.token!=='string'||(r.id&&!jobId(r.id))))throw new Error();}catch{this.records=[];this.recoveryError=true;}
++  this.record=this.records.at(-1)||null;
++ }
++ save(){this.storage.setItem(RECOVERY,JSON.stringify(this.records));this.onChange(this.record);}
++ async sameKey(){if(!this.key||this.record&&this.record.keyHash!==await digest(this.key))throw new Error('Use the same creating key in Settings');}
++ async create(spec,approvedPrice){
++  if(this.busy)return;this.busy=true;
++  try{
++   if(!releaseReady(this.fields))throw new Error('Release gate: duration field unconfirmed; real generation disabled');
++   if(this.recoveryError)throw new Error('Recovery references unreadable; resolve before a new paid generation');
++   await this.sameKey();
++   if(this.record?.id)throw new Error('Resume existing job; new generation requires explicit new version');
++   const body=JSON.stringify(videoBody(spec,this.fields)),bodyHash=await digest(body);
++   if(this.record&&this.record.bodyHash!==bodyHash)throw new Error('Uncertain request: re-enter the identical prompt and configuration to retry');
++   const pricing=await this.request('/pricing.json',{},false);const quote=quoteVideo(pricing,spec.model,spec.duration);
++   if(quote.price!==approvedPrice)throw new Error('Price changed; review a fresh quote before approving');
++   if(!this.record){
++    if(this.records.length>=20)throw new Error('Recovery history full; review saved jobs before removing history');
++    this.record={token:crypto.randomUUID(),bodyHash,keyHash:await digest(this.key),quote,settled:null,status:'creating',id:null};this.records.push(this.record);
++   }
++   // Persist before POST. A lost response must never create a fresh logical run.
++   this.record.status='creating';this.save();
++   try{
++    const job=await this.request('/v1/videos',{method:'POST',headers:{'Idempotency-Key':this.record.token,'Content-Type':'application/json'},body});
++    if(!jobId(job.id)||!['queued','processing','completed','failed'].includes(job.status))throw new Error('Invalid create response');
++    this.record.id=job.id;this.record.status=job.status;this.save();return job;
++   }catch(e){const rejected=[401,402].includes(e.status);this.record.status=rejected?'rejected':'uncertain';this.record.settled=rejected?0:null;this.record.error=rejected?(e.status===401?'authentication_rejected':'credit_rejected'):null;this.save();throw e;}
++  }finally{this.busy=false;}
++ }
++ async request(path,opts={},auth=true){
++  let r;try{r=await this.fetcher(path,{...opts,signal:opts.signal||AbortSignal.timeout(30000),redirect:'error',cache:'no-store',headers:{...opts.headers,...(auth?{Authorization:'Bearer '+this.key}:{})}});}catch{throw Object.assign(new Error('Network unavailable; request outcome may be unknown'),{kind:'network'});}
++  if(!r.ok)throw Object.assign(new Error(r.status===401?'Authentication failed; check the creating key':r.status===402?'Insufficient credits':r.status===404?'Job not found for the creating key':r.status===502?'Content temporarily unavailable; retry download only':'Gateway HTTP '+r.status),{status:r.status,kind:r.status===401?'auth':r.status===402?'credit':'gateway'});
++  return r.json();
++ }
++ async resume({sleep=ms=>new Promise(r=>setTimeout(r,ms)),deadlineMs=180000,now=()=>Date.now()}={}){
++  await this.sameKey();if(!this.record?.id)throw new Error('Uncertain creation: re-enter identical request and retry with saved idempotency token');
++  if(this.polling)return;this.polling=true;this.stopped=false;this.pollAbort=new AbortController();const until=now()+Math.min(deadlineMs,180000);let delay=1000;
++  try{
++   while(!this.stopped&&now()<until){
++    const job=await this.request('/v1/videos/'+this.record.id,{signal:AbortSignal.any([this.pollAbort.signal,AbortSignal.timeout(Math.max(1,Math.min(20000,until-now())))])});
++    if(this.stopped)return;
++    if(job.id!==this.record.id||!['queued','processing','completed','failed'].includes(job.status))throw new Error('Invalid job status response');
++    this.record.status=job.status;this.record.settled=job.status==='failed'?0:job.status==='completed'&&finite(job.cost_usd)?job.cost_usd:null;
++    this.record.error=job.status==='failed'&&typeof job.error==='string'?job.error.slice(0,100):null;
++    // Never retain or follow a result URL supplied by a model or external host.
++    if(job.status==='completed')this.contentPath=safeContentPath(this.record.id,job.result_url);
++    this.save();
++    if(['completed','failed'].includes(job.status))return job;
++    await sleep(delay);delay=Math.min(15000,Math.round(delay*1.7));
++   }
++   if(!this.stopped)throw Object.assign(new Error('Polling deadline reached; explicitly Resume existing job. No cancellation or refund implied.'),{kind:'deadline'});
++  }finally{this.polling=false;}
++ }
++ async download(){
++  await this.sameKey();if(this.record?.status!=='completed')throw new Error('Complete the existing job before download');
++  const path=safeContentPath(this.record.id);let r;
++  try{r=await this.fetcher(path,{signal:AbortSignal.timeout(120000),headers:{Authorization:'Bearer '+this.key},redirect:'error',cache:'no-store'});}catch{throw new Error('Download network error; retry download only');}
++  if(!r.ok)throw Object.assign(new Error(r.status===502?'Content temporarily unavailable; retry download only. Completed job remains charged.':'Download HTTP '+r.status+'; use the creating key'),{status:r.status});
++  const type=r.headers.get('Content-Type')||'';if(!type.startsWith('video/'))throw new Error('Unexpected media type');
++  const limit=100*1024*1024;if(Number(r.headers.get('Content-Length'))>limit)throw new Error('Video exceeds 100 MB');
++  const reader=r.body.getReader(),parts=[];let size=0;
++  try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>limit)throw new Error('Video exceeds 100 MB');parts.push(value);}}catch(e){await reader.cancel();throw e;}
++  if(this.stopped)throw new Error('View closed; resume download explicitly');
++  if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);
++  this.blobURL=this.urlAPI.createObjectURL(new Blob(parts,{type}));return this.blobURL;
++ }
++ newVersion(){if(this.record&&!['completed','failed','rejected'].includes(this.record.status))throw new Error('Resolve the existing pending or uncertain job first');if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);this.blobURL=null;this.record=null;this.stopped=false;}
++ dispose(){this.stopped=true;this.pollAbort?.abort();if(this.blobURL)this.urlAPI.revokeObjectURL(this.blobURL);this.blobURL=null;}
++
++}
++
++export function safeContentPath(id,resultURL=null){
++ if(!jobId(id))throw new Error('Invalid job id');
++ const path='/v1/videos/'+id+'/content';
++ if(resultURL!=null&&resultURL!==path&&resultURL!=='https://api.impossi.build'+path)throw new Error('Unsafe video content origin or path');
++ return path;
++}
+diff --git a/js/video-ui.js b/js/video-ui.js
+new file mode 100644
+index 0000000..c5e4099
+--- /dev/null
++++ b/js/video-ui.js
+@@ -0,0 +1,69 @@
++import {get} from './store.js';
++import {chatOnce,loadCatalog} from './api.js';
++import {openModal,esc} from './ui.js';
++import {MODELS,FIELDS,releaseReady,quoteVideo,planVideo,validatePlan,VideoSession} from './video.js';
++const usd=n=>typeof n==='number'&&Number.isFinite(n)?'$'+n.toFixed(6):'unknown / unsettled';
++export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorage,chat=chatOnce}={}){
++ openModal(`<h3>Motion Trimmer → Video</h3>
++ <p>A generated draft, not an exact editing timeline. Overlays are editor instructions, not composited video.</p>
++ ${!releaseReady(fields)?'<p role="status" class="key-note">Release gate: duration field unconfirmed. Real Generate is disabled until backend confirmation and authorized capped render. Planning and price review remain available.</p>':''}
++ <p class="note">Platform is creative context only. Aspect ratio and audio controls are not confirmed. No image uploads, stitching or music.</p>
++ ${!get().settings.apiKey?'<p class="key-note">Add your Singular key in Settings to plan or resume. No key is included in media URLs.</p>':''}
++ <div class="panel-ui" style="display:flex;flex-direction:column;gap:12px">
++ <label for="video-topic">Topic / brief</label><textarea id="video-topic" rows="3" maxlength="4000"></textarea>
++ <details><summary>Audience, style and key message · optional</summary><label for="video-context">Creative context / CTA</label><textarea id="video-context" rows="2" maxlength="4000"></textarea></details>
++ <label for="video-platform">Platform · creative context</label><select id="video-platform"><option>x</option><option>instagram-reels</option><option>youtube-shorts</option></select>
++ <label for="video-duration">Duration</label><select id="video-duration"><option>5</option><option>10</option><option selected>15</option></select>
++ <label for="video-model">Video model</label><select id="video-model">${MODELS.map(m=>`<option value="${esc(m.id)}">${esc(m.name)} · ${m.resolution}</option>`).join('')}</select>
++ <button class="btn" id="video-plan">Plan draft · paid text call</button>
++ <label for="video-plan-json">Editable shot beats, overlays and dropped details · JSON</label><textarea id="video-plan-json" rows="7" spellcheck="false"></textarea>
++ <label for="video-prompt">Editable video prompt · no rendered words/logos</label><textarea id="video-prompt" rows="4" maxlength="12000"></textarea>
++ <button class="btn ghost" id="video-quote">Refresh exact price</button><p id="video-price" class="note">No quote yet. Planner usage is separate; estimate is not a hard account cap.</p>
++ <button class="btn" id="video-generate" disabled>Generate video · quote required</button>
++ <p id="video-message" role="status" aria-live="polite"></p>
++ <div id="video-receipts" class="receipt"></div>
++ <label for="video-history">Saved video job references · no prompts or API keys stored here</label><select id="video-history"></select>
++ <button class="btn ghost" id="video-resume">Resume existing job</button>
++ <button class="btn ghost" id="video-download-retry" hidden>Retry download only</button>
++ <button class="btn ghost" id="video-new">New explicit generation</button>
++ <video id="video-player" controls playsinline preload="metadata" style="width:100%;max-height:360px" hidden></video>
++ <a id="video-download" class="btn" style="align-self:flex-start" download="motion-trimmer.mp4" hidden>Download MP4</a>
++ </div><p class="note">Closing stops polling, not the upstream job. No cancellation or refund is implied. Reload requires explicit Resume with the creating key. Uncertain creation requires the identical prompt/configuration; never submit a fresh version to recover it.</p>`,modal=>{
++  const el=id=>modal.querySelector('#video-'+id);let quote=null,planning=false,running=false,receipts=[];
++  const session=new VideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>render()});
++  const spec=()=>({model:el('model').value,duration:Number(el('duration').value),prompt:el('prompt').value});
++  const say=s=>{if(modal.isConnected)el('message').textContent=s;};
++  function render(){
++   if(!modal.isConnected)return;
++   el('plan').disabled=planning||running||!session.key;
++   const retry=session.record&&!session.record.id;
++   el('generate').disabled=running||!releaseReady(fields)||!session.key||!quote||(!retry&&!el('plan-json').value)||(session.record?.id!=null);
++   el('generate').textContent=(retry?'Retry identical submission':'Generate video')+' · '+(quote?usd(quote.price):'quote required');
++   el('receipts').textContent='Planner attempts: '+(receipts.length?receipts.map(r=>(r.model||r.requested)+' · estimated '+usd(r.estCost)).join('; '):'none in this view (not retained after reload)')+'\nVideo receipts: '+(session.records.length?session.records.map(r=>(r.id||(r.status==='rejected'?'submission rejected':'creation uncertain'))+' · '+r.status+' · quoted '+usd(r.quote?.price)+' · '+(['completed','failed','rejected'].includes(r.status)?'settled ':'pending; unsettled ')+usd(r.settled)+(r.error?' · '+r.error:'')).join('\n'):'none');
++   el('receipts').style.whiteSpace='pre-wrap';
++   el('history').innerHTML=session.records.map((r,i)=>`<option value="${i}"${session.record===r?' selected':''}>${esc(r.id||(r.status==='rejected'?'rejected submission':'uncertain submission'))} · ${esc(r.status)}</option>`).join('');
++   el('resume').disabled=running||!session.record?.id;el('new').disabled=running||!!session.record&&!['completed','failed','rejected'].includes(session.record.status);
++   el('download-retry').hidden=session.record?.status!=='completed';
++  }
++  const show=async()=>{const url=await session.download();if(!modal.isConnected)return;el('player').src=url;el('player').hidden=false;el('download').href=url;el('download').hidden=false;say('Ready · generated draft. Download does not create another job.');};
++  async function follow(){if(!modal.isConnected||session.stopped)return;await session.resume();if(session.stopped)return;if(session.record.status==='completed')await show();else if(session.record.status==='failed')say('Generation failed: '+session.record.error+' · gateway reports failed jobs uncharged. Edit and explicitly create a new version.');}
++  const perform=fn=>async()=>{if(running)return;running=true;render();try{await fn();}catch(e){say(e.message);}finally{running=false;render();}};
++  el('plan').onclick=async()=>{
++   if(planning||running)return;planning=true;render();say('Planning draft…');
++   try{const catalog=await loadCatalog();const result=await planVideo({topic:el('topic').value,context:el('context').value,platform:el('platform').value,duration:Number(el('duration').value)},{chat,catalog,signal:AbortSignal.timeout(60000)});receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
++   catch(e){receipts.push(...e.receipts||[]);say(e.status===401?'Planner authentication failed':e.status===402?'Planner insufficient credits':e.message);}
++   finally{planning=false;render();}
++  };
++  el('quote').onclick=perform(async()=>{quote=null;const r=await fetcher('/pricing.json',{cache:'no-store',redirect:'error'});if(!r.ok)throw new Error('Fresh pricing unavailable');quote=quoteVideo(await r.json(),spec().model,spec().duration);el('price').textContent=usd(quote.price)+' · '+quote.duration+' s / '+quote.resolution+' · catalog '+quote.as_of+' · checked again before submit. Planner excluded.';});
++  el('generate').onclick=perform(async()=>{if(!quote)throw new Error('Review fresh price first');if(!session.record){const p=JSON.parse(el('plan-json').value);p.prompt=el('prompt').value;validatePlan(p,spec().duration);}say('Creating job · quote pending, charge not settled');await session.create(spec(),quote.price);await follow();});
++  el('resume').onclick=perform(async()=>{say('Resuming existing job, no new generation');await follow();});
++  el('download-retry').onclick=perform(show);
++  el('new').onclick=()=>{try{session.newVersion();quote=null;el('player').removeAttribute('src');el('player').hidden=true;el('download').removeAttribute('href');el('download').hidden=true;say('Review edits and refresh price. New explicit submission will use a new idempotency token.');render();}catch(e){say(e.message);}};
++  el('history').onchange=()=>{if(running)return;session.dispose();session.record=session.records[Number(el('history').value)];session.stopped=false;el('player').removeAttribute('src');el('player').hidden=true;el('download').removeAttribute('href');el('download').hidden=true;render();};
++  for(const name of ['model','duration'])el(name).onchange=()=>{quote=null;el('price').textContent='Configuration changed; refresh price and review plan durations.';render();};
++  el('plan-json').oninput=render;
++  if(session.record){el('model').value=session.record.quote.model;el('duration').value=session.record.quote.duration;say(session.record.status==='rejected'?'Submission rejected before job creation. Fix authentication/credits, then explicitly choose New generation (close/reopen after changing Settings).':session.record.id?'Saved job found. Explicitly Resume with the creating key.':'Creation uncertain: re-enter identical prompt and configuration, refresh price, retry same submission. Prompt is not stored.');}
++  const observer=new MutationObserver(()=>{if(!modal.isConnected){session.dispose();observer.disconnect();window.removeEventListener('pagehide',dispose);}});observer.observe(modal.parentNode,{childList:true});const dispose=()=>session.dispose();window.addEventListener('pagehide',dispose,{once:true});
++  render();
++ });
++}
+diff --git a/skills/claw__motion-trimmer-video/singular.flow.json b/skills/claw__motion-trimmer-video/singular.flow.json
+new file mode 100644
+index 0000000..b1374b6
+--- /dev/null
++++ b/skills/claw__motion-trimmer-video/singular.flow.json
+@@ -0,0 +1,6 @@
++{
++ "id":"claw__motion-trimmer-video", "name":"Motion Trimmer → Video", "version":"0.0.2",
++ "author":{"name":"Community"},
++ "description":"Brief → editable plan → explicit quoted video generation → inline download. Duration mapping release-gated.",
++ "runtime":{"video":true}, "ui":{"fields":[]}
++}
+diff --git a/MOTION_VIDEO_REVIEW.md b/MOTION_VIDEO_REVIEW.md
+new file mode 100644
+index 0000000..d36a5e3
+--- /dev/null
++++ b/MOTION_VIDEO_REVIEW.md
+@@ -0,0 +1,30 @@
++# Motion Trimmer → Video · offline review build
++
++Base: `378d6f4`. Spec pinned: `shuenrui/singular-flows@960213c`, Motion Trimmer Video v0.0.2 overrides v0.0.1. This README describes implementation, not a live quality or billing result.
++
++## Status and safety gates
++- Built and tested locally with explicitly fake inference replies and a synthetic, locally generated 1-second MP4. No paid inference, authentication discovery, deployment or external push was performed.
++- **Real video generation is disabled.** `js/video.js` has a single `FIELDS` map: duration, aspectRatio and audio are all `null`. The ordinary request builder omits all three; the runtime refuses POST while duration is unconfirmed. Do not enable this based on a price-table field name.
++- June must document/confirm gateway duration forwarding. Aspect ratio and audio remain unspecified; there are no controls or portrait/audio promises. Then obtain separate user approval and a capped key for acceptance #12: one 5-second 480p Wan adapter-validation render (a controlled diagnostic, not the normal 720p UI), confirm media duration/resolution, content download and settled charge. That live check has NOT been performed. Do not claim live end-to-end completion.
++- Offline tests inject `fixture_duration` via the same map to exercise the complete UI. It is deliberately not a production field name and is never configured by the gallery. There is no URL/query/localStorage release override.
++
++## Use
++Run `python3 proxy.py 8730` from this extracted folder; open `http://localhost:8730/#/skills`. This is a local review command, not deployment authorization. Existing Settings owns the API key. Planning is a paid text operation only when the user explicitly clicks Plan; reviewing prices is public. The old Motion Trimmer remains planning-only and its existing request is unchanged.
++
++The new card opens one modal: brief/context/platform → 5/10/15-second plan → editable JSON shot beats/overlays/dropped details and separate editable prompt → Refresh exact price → explicit Generate approval → queued/processing → inline Blob player/Download MP4. There is no automatic video fallback, regeneration, composition, stitching, music or uploaded assets. Overlays are editor instructions, not burned into the MP4. Exact typography, brand assets, easing and second-perfect edits are not promised. Review generated prompts before any future approved render.
++
++Video choices are only `alibaba/wan-3.0/text-to-video` at 720p (default, 15 seconds) and `minimax/h3-max-turbo` at 768p. Exact public-config prices are refreshed for review and checked again before POST. Unknown config/pricing blocks. Planner uses one structured `anthropic/claude-sonnet-5.5` call, with `deepseek/deepseek-v4.1-flash-1017` only after a 5xx; invalid JSON and auth/credit/rate/network failures do not trigger a fallback. Each attempt has a $0.10 heuristic preflight, not a billing cap. Planner estimated usage receipts and video quoted/pending/settled receipts are separate; missing cost never means zero.
++
++## Recovery and privacy
++Only minimal job references, quoted configuration/cost, opaque idempotency token, request hash and creating-key hash are retained in `motion-video.v1`. No prompt, API key, Authorization header or result URL is persisted there. The opaque idempotency token is not the API credential. Up to 20 references are retained; full/unreadable recovery storage fails closed. Do not clear browser recovery data while a creation may be outstanding.
++
++Double clicks are locked before awaits. A lost create response is uncertain, not free or cancelled. Retry is explicit and uses the same token and byte-identical body. After reload, re-enter the identical prompt/configuration to retry an uncertain creation; an edited body is refused, not sent under a fresh token. A known job resumes with GET only and the creating key. No automatic POST is made on reload. Auth/credit/not-found/network failures remain distinct from failed generation and failed content download. A definite create-time 401/402 is a rejected submission with no created job; it can be replaced explicitly after fixing Settings/credits. Network/5xx/ambiguous responses remain uncertain and must not be treated as uncharged. A completed job whose download fails is still charged; Retry download only never generates another job. Terminal versions stay in the job-reference selector for later authenticated re-download.
++
++Polling uses bounded backoff and a 3-minute local deadline, with bounded requests. Explicit Resume starts a new local observation interval. Closing/pagehide stops polling, not the upstream job; no cancellation/refund promise. Changing the key requires closing/reopening the flow; a key hash prevents accidentally resuming with a different key. Recovery depends on retaining the exact creating key in existing Settings. JSON edits are validated for numeric duration totals and typed in-range overlays; this does not prove creative truth or semantic model compliance.
++
++Content always uses `/v1/videos/{validated-id}/content`, authenticated fetch, and a memory-only Blob URL. Absolute gateway content URLs may validate to that exact path, but arbitrary hosts, paths, queries, fragments and redirects are rejected and never followed. Keys are never inserted into media URLs. Blob URLs are revoked on replacement/close. The proxy forwards Idempotency-Key only on POST `/v1/videos`, streams bounded chunks with a 100 MiB maximum, and does not follow media redirects. Known oversized content returns 413; unknown oversize streams are cut off within the limit (matching the documented bounded-transfer behavior).
++
++## Review and operational handoff
++No live server has been replaced. Before any later authorized deployment, back up the current runtime and exact start configuration. Extract into a new reviewed directory, compare the supplied SHA256, run the local smoke/security checks, then restart the exact owning proxy process using the owner's existing process manager. Do not launch a second listener on an occupied port. Verify root 200, legacy flows and GET/HEAD source-denial 404 after restart; rollback by restoring the prior runtime and restarting that exact service. A public source branch or ZIP is not a deployment.
++
++The ZIP contains runtime files and this README only: no private design, test Python, reports, API credentials, pricing snapshots, caches or build artifacts. `proxy.py` is required runtime Python, not private test source. Local evidence and tests stay outside the runtime ZIP. `reports/motion-video/EVIDENCE.md` in the source worktree indexes all 12 criteria, honest blocked live verification, red/green logs, regression bodies, source hashes, package CRC/byte checks and copied-package tests. Independent parent review remains required before publication.

@@ -1,0 +1,37 @@
+✔ exact catalog quote, documented body, duration release gate (2.459643ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.117792ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (64.492509ms)
+✖ reload polls bounded states then retries only safe authenticated content; blob lifecycle (1.600047ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176.504195
+
+✖ failing tests:
+
+test at tests/video.test.mjs:60:1
+✖ reload polls bounded states then retries only safe authenticated content; blob lifecycle (1.600047ms)
+  AssertionError [ERR_ASSERTION]: inline authenticated download missing
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video.test.mjs:61:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="lite">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Singular — Flows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header id="topbar">
+  <a class="brand" href="#/skills" aria-label="Singular Flows"><span class="mark">◆</span> Singular <span class="sub">/ flows</span></a>
+  <div class="top-right">
+    <div class="mode-switch" role="group" aria-label="View level — not paid plans"><button type="button" data-mode-choice="lite" aria-pressed="true">Lite</button><button type="button" data-mode-choice="pro" aria-pressed="false">Pro</button></div>
+    <span id="keychip" class="chip warn" title="API key status">no key</span>
+    <span id="routechip" class="chip pro-only" title="Active routing">auto</span>
+  </div>
+</header>
+<div id="syncbanner" hidden></div>
+<main id="layout">
+  <nav id="rail" aria-label="Main navigation">
+    <a href="#/skills" data-nav="skills">Flows</a>
+    <a href="#/chat" data-nav="chat" class="pro-only">Chat</a>
+    <a href="#/models" data-nav="models" class="pro-only">Models</a>
+    <a href="#/settings" data-nav="settings">Settings</a>
+    <div class="rail-foot">Your key. Your workflow.<br><span>Nothing sent until you run.</span></div>
+  </nav>
+  <section id="view" aria-label="Workspace"></section>
+</main>
+<nav id="tabbar" aria-label="Mobile navigation">
+  <a href="#/skills" data-nav="skills">Flows</a>
+  <a href="#/chat" data-nav="chat" class="pro-only">Chat</a>
+  <a href="#/models" data-nav="models" class="pro-only">Models</a>
+  <a href="#/settings" data-nav="settings">Settings</a>
+</nav>
+<div id="toasts" role="status"></div>
+<div id="modal-root"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+test_01_token_only_create_and_legacy_body (test_video_proxy.VideoProxy.test_01_token_only_create_and_legacy_body) ... [shell] "POST /v1/videos HTTP/1.1" 202 -
+FAIL
+test_02_streams_before_upstream_finishes (test_video_proxy.VideoProxy.test_02_streams_before_upstream_finishes) ... ERROR
+[shell] "GET /v1/videos/vid_stream/content HTTP/1.1" 200 -
+test_03_bound_and_redirect (test_video_proxy.VideoProxy.test_03_bound_and_redirect) ... [shell] code 502, message proxy: IncompleteRead(0 bytes read, 104857601 more expected)
+[shell] "GET /v1/videos/vid_huge/content HTTP/1.1" 502 -
+FAIL
+test_04_invalid_video_paths_do_not_forward (test_video_proxy.VideoProxy.test_04_invalid_video_paths_do_not_forward) ... ERROR
+[shell] "GET /v1/videos/../content HTTP/1.1" 200 -
+
+======================================================================
+ERROR: test_02_streams_before_upstream_finishes (test_video_proxy.VideoProxy.test_02_streams_before_upstream_finishes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/test_video_proxy.py", line 34, in test_02_streams_before_upstream_finishes
+    c=http.client.HTTPConnection('127.0.0.1',self.server.server_port,timeout=1);c.request('GET','/v1/videos/vid_stream/content');r=c.getresponse();self.assertEqual(r.status,200);self.assertEqual(r.read(100),b'a'*100);self.assertFalse(self.release.is_set());self.release.set();self.assertEqual(len(r.read()),131072-100);c.close()
+                                                                                                                                   ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1457, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: timed out
+
+======================================================================
+ERROR: test_04_invalid_video_paths_do_not_forward (test_video_proxy.VideoProxy.test_04_invalid_video_paths_do_not_forward)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/test_video_proxy.py", line 40, in test_04_invalid_video_paths_do_not_forward
+    self.assertEqual(self.req(path)[0],404,path)
+                     ^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/test_video_proxy.py", line 27, in req
+    c=http.client.HTTPConnection('127.0.0.1',self.server.server_port,timeout=1);c.request(method,path,body=body,headers={'Authorization':'Bearer offline-loopback','Idempotency-Key':'fixture-idempotency','Content-Type':'application/json'});r=c.getresponse();status=r.status;data=r.read();c.close();return status,data
+                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1457, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: timed out
+
+======================================================================
+FAIL: test_01_token_only_create_and_legacy_body (test_video_proxy.VideoProxy.test_01_token_only_create_and_legacy_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/test_video_proxy.py", line 30, in test_01_token_only_create_and_legacy_body
+    self.assertEqual(self.received[-1]['token'],'fixture-idempotency');self.assertEqual(self.received[-1]['body'],'{"model":"fixture"}')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'fixture-idempotency'
+
+======================================================================
+FAIL: test_03_bound_and_redirect (test_video_proxy.VideoProxy.test_03_bound_and_redirect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/test_video_proxy.py", line 36, in test_03_bound_and_redirect
+    self.assertEqual(self.req('/v1/videos/vid_huge/content')[0],413)
+AssertionError: 502 != 413
+
+----------------------------------------------------------------------
+Ran 4 tests in 3.592s
+
+FAILED (failures=2, errors=2)

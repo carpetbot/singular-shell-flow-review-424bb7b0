@@ -11,7 +11,13 @@ Authorization header on every request — the proxy never persists it.
 Run:  python3 proxy.py [port]   (default 8730)
 Then open http://localhost:8730
 """
-import http.server, urllib.request, urllib.error, json, sys, os
+import http.server, urllib.request, urllib.error, json, sys, os, re
+
+MAX_VIDEO_BYTES = 100 * 1024 * 1024
+
+class NoMediaRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
 
 GATEWAY = "https://api.impossi.build"
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +39,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def _proxy(self, method):
         path = self.path  # e.g. /v1/chat/completions or /pricing.json
+        media = path.startswith('/v1/videos')
+        if media and not (path == '/v1/videos' or (method in ('GET', 'HEAD') and re.fullmatch(r'/v1/videos/[A-Za-z0-9_-]{1,160}(?:/content)?', path))):
+            self.send_error(404)
+            return
+        content = media and path.endswith('/content')
         url = GATEWAY + path
         length = int(self.headers.get("Content-Length") or 0)
         body = self.rfile.read(length) if length else None
@@ -42,11 +53,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             req.add_header("Authorization", self.headers["Authorization"])
         if body:
             req.add_header("Content-Type", self.headers.get("Content-Type", "application/json"))
+        if method == 'POST' and path == '/v1/videos' and self.headers.get('Idempotency-Key'):
+            req.add_header('Idempotency-Key', self.headers['Idempotency-Key'])
         want_stream = "text/event-stream" in (self.headers.get("Accept") or "")
         try:
-            with urllib.request.urlopen(req, timeout=300) as r:
+            opener = urllib.request.build_opener(NoMediaRedirect()).open if media else urllib.request.urlopen
+            with opener(req, timeout=300) as r:
                 ctype = r.headers.get("Content-Type", "")
-                if want_stream and "event-stream" in ctype:
+                if content:
+                    self._stream_video(r, method)
+                elif want_stream and "event-stream" in ctype:
                     # stream SSE through chunk-by-chunk
                     self.send_response(200)
                     self.send_header("Content-Type", ctype)
@@ -61,9 +77,67 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 else:
                     self._corsless_copy(r, r.read())
         except urllib.error.HTTPError as e:
-            self._corsless_copy(e, e.read())
+            if media:
+                # Never buffer or reflect upstream diagnostics/headers (may contain secrets).
+                # Closing without draining also bounds untrusted or endless error bodies.
+                e.close()
+                status = 502 if 300 <= e.code < 400 else e.code
+                data = json.dumps({'error_message': 'Video gateway request failed', 'status': status}).encode()
+                self.send_response(status)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Cache-Control', 'private, no-store')
+                self.send_header('Content-Length', str(len(data)))
+                self.end_headers()
+                if method != 'HEAD':
+                    self.wfile.write(data)
+            else:
+                self._corsless_copy(e, e.read())
         except Exception as e:
             self.send_error(502, f"proxy: {e}")
+
+    def _stream_video(self, resp, method):
+        declared = resp.headers.get('Content-Length')
+        if declared and (not declared.isdigit() or int(declared) > MAX_VIDEO_BYTES):
+            self.send_error(413, 'Video exceeds 100 MB')
+            return
+        # Unknown lengths need explicit completion framing: a closed 200 response
+        # alone would make a truncated prefix indistinguishable from valid media.
+        chunked = not declared
+        self.protocol_version = 'HTTP/1.1'
+        self.close_connection = True
+        self.send_response(resp.status)
+        self.send_header('Connection', 'close')
+        self.send_header('Content-Type', resp.headers.get('Content-Type', 'video/mp4'))
+        self.send_header('Cache-Control', 'private, no-store')
+        if declared:
+            self.send_header('Content-Length', declared)
+        else:
+            self.send_header('Transfer-Encoding', 'chunked')
+        self.end_headers()
+        if method == 'HEAD':
+            return
+        total = 0
+        try:
+            while True:
+                chunk = resp.read(min(65536, MAX_VIDEO_BYTES - total + 1))
+                if not chunk:
+                    if chunked:
+                        self.wfile.write(b'0\r\n\r\n')
+                        self.wfile.flush()
+                    break
+                if total + len(chunk) > MAX_VIDEO_BYTES:
+                    # No terminating chunk: fetch/readers MUST reject the prefix.
+                    break
+                if chunked:
+                    self.wfile.write(('%x\r\n' % len(chunk)).encode('ascii'))
+                self.wfile.write(chunk)
+                if chunked:
+                    self.wfile.write(b'\r\n')
+                self.wfile.flush()
+                total += len(chunk)
+        except Exception:
+            # Headers are already sent. Never append a second HTTP/error body.
+            self.close_connection = True
 
     def do_POST(self):
         if self.path.startswith("/v1/"):

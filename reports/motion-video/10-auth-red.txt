@@ -1,0 +1,37 @@
+✔ exact catalog quote, documented body, duration release gate (3.136174ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.450263ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (76.115391ms)
+✔ reload polls bounded states then retries only safe authenticated content; blob lifecycle (12.785691ms)
+✔ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (11.910625ms)
+✔ video price refusals and schema boundaries are never coerced (4.569575ms)
+✔ new explicit generation changes token, retains prior job receipt; unknown completed cost is not zero (15.784969ms)
+✖ definite create auth/credit rejection is not an uncertain held job and allows explicit recovery (8.304404ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 253.219906
+
+✖ failing tests:
+
+test at tests/video.test.mjs:112:1
+✖ definite create auth/credit rejection is not an uncertain held job and allows explicit recovery (8.304404ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'uncertain'
+  - 'rejected'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video.test.mjs:115:185)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'uncertain',
+    expected: 'rejected',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

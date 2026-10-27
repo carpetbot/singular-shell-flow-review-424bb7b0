@@ -1,0 +1,13 @@
+✔ exact catalog quote, documented body, duration release gate (3.751309ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.987799ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (77.473858ms)
+✔ reload polls bounded states then retries only safe authenticated content; blob lifecycle (12.96652ms)
+✔ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (14.09827ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 214.739721

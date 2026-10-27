@@ -1,0 +1,55 @@
+✔ two already-open sessions serialize creation, refresh storage, preserve history (67.800083ms)
+✔ stale tab retries uncertain creation with persisted token and identical body only (18.390089ms)
+✔ all saved same-account pending jobs block new versions even when old completed job selected (33.173776ms)
+✔ idempotency token binds canonical logical request and persisted shared plan identity (17.153133ms)
+✖ delayed processing poll cannot regress persisted completed or its receipt (14.109956ms)
+✖ delayed processing poll cannot regress persisted failed or its receipt (9.148061ms)
+✔ creation fails closed without safe origin locks (0.549015ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 279.430291
+
+✖ failing tests:
+
+test at tests/video-cross-tab.test.mjs:65:46
+✖ delayed processing poll cannot regress persisted completed or its receipt (14.109956ms)
+  AssertionError [ERR_ASSERTION]: poll must return reconciled terminal instead of continuing stale processing
+  + actual - expected
+  
+  + undefined
+  - 'completed'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:73:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'completed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/video-cross-tab.test.mjs:65:46
+✖ delayed processing poll cannot regress persisted failed or its receipt (9.148061ms)
+  AssertionError [ERR_ASSERTION]: poll must return reconciled terminal instead of continuing stale processing
+  + actual - expected
+  
+  + undefined
+  - 'failed'
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:73:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'failed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

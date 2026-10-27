@@ -1,0 +1,15 @@
+✔ two already-open sessions serialize creation, refresh storage, preserve history (57.053286ms)
+✔ stale tab retries uncertain creation with persisted token and identical body only (17.532203ms)
+✔ all saved same-account pending jobs block new versions even when old completed job selected (34.189929ms)
+✔ idempotency token binds canonical logical request and persisted shared plan identity (17.60987ms)
+✔ delayed processing poll cannot regress persisted completed or its receipt (16.661567ms)
+✔ delayed processing poll cannot regress persisted failed or its receipt (9.092542ms)
+✔ creation fails closed without safe origin locks (0.470617ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 249.417417

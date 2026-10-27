@@ -1,0 +1,35 @@
+{
+  "runtime_source_zip_extraction_bytes": "PASS",
+  "regular_files": 40,
+  "sha256": "1eaba32de967fb23be17b806dc8802f015a58a773598dba8692f7596ccab53ad",
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/flow.test.mjs",
+        "tests/graph.test.mjs",
+        "tests/presentation.test.mjs",
+        "tests/video-cross-tab.test.mjs",
+        "tests/video.test.mjs"
+      ],
+      "exit": 0,
+      "log": "packaged-node.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit": 0,
+      "log": "packaged-python.txt"
+    }
+  ]
+}

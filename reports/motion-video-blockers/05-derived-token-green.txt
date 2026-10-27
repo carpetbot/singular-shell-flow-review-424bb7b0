@@ -1,0 +1,21 @@
+✔ two already-open sessions serialize creation, refresh storage, preserve history (57.434846ms)
+✔ stale tab retries uncertain creation with persisted token and identical body only (17.807332ms)
+✔ all saved same-account pending jobs block new versions even when old completed job selected (37.308838ms)
+✔ idempotency token binds canonical logical request and persisted shared plan identity (19.33213ms)
+✔ creation fails closed without safe origin locks (0.507327ms)
+✔ exact catalog quote, documented body, duration release gate (3.67967ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.616189ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (66.344963ms)
+✔ reload polls bounded states then retries only safe authenticated content; blob lifecycle (13.094461ms)
+✔ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (13.363514ms)
+✔ video price refusals and schema boundaries are never coerced (4.676442ms)
+✔ new explicit generation changes token, retains prior job receipt; unknown completed cost is not zero (18.305019ms)
+✔ definite create auth/credit rejection is not an uncertain held job and allows explicit recovery (17.027954ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.595776

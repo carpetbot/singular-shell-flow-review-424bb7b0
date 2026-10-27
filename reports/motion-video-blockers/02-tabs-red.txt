@@ -1,0 +1,58 @@
+✖ two already-open sessions serialize creation, refresh storage, preserve history (63.524768ms)
+✖ stale tab retries uncertain creation with persisted token and identical body only (20.916157ms)
+✖ creation fails closed without safe origin locks (12.232875ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 213.7883
+
+✖ failing tests:
+
+test at tests/video-cross-tab.test.mjs:16:1
+✖ two already-open sessions serialize creation, refresh storage, preserve history (63.524768ms)
+  AssertionError [ERR_ASSERTION]: stale tabs must not create independent paid jobs
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:19:9)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/video-cross-tab.test.mjs:26:1
+✖ stale tab retries uncertain creation with persisted token and identical body only (20.916157ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:29:2)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /identical/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/video-cross-tab.test.mjs:35:1
+✖ creation fails closed without safe origin locks (12.232875ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///home/orangepi/.hermes/profiles/slack/cache/scratch/motion-trimmer-video-build/tests/video-cross-tab.test.mjs:37:2)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /lock/i,
+    operator: 'rejects',
+    diff: 'simple'
+  }
