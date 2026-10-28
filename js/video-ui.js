@@ -32,7 +32,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
  <button class="btn ghost" id="video-new">Make another version</button>
  <video id="video-player" controls playsinline preload="metadata" style="width:100%;max-height:360px" hidden></video>
  <a id="video-download" class="btn" style="align-self:flex-start" download="motion-trimmer.mp4" hidden>Download MP4</a>
- </div><p class="note">Rendering continues when you leave and resumes after reload. No cancellation or refund is implied. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,async (modal,close)=>{
+ </div><p class="note">Rendering continues when you leave and resumes after reload. Closing this view does not cancel a submission. Planning stays locked until the existing submission finishes or is rejected, then choose Make another version. No cancellation or refund is implied. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,async (modal,close)=>{
   const el=id=>modal.querySelector('#video-'+id);let quote=null,planning=false,running=false,downloadIncomplete=false,receipts=[];
   el('plan').disabled=true;el('quote').disabled=true;
   let session,account,savedDraft;
@@ -66,7 +66,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   function render(){
    if(!modal.isConnected)return;
    renderPlan();
-   el('plan').disabled=planning||running||!session.key;el('quote').disabled=running;
+   el('plan').disabled=planning||running||!session.key||!!session.record||session.records.some(r=>!['completed','failed','rejected'].includes(r.status));el('quote').disabled=running;
    const retry=session.record&&!session.record.id;
    const pending=session.records.filter(r=>!['completed','failed','rejected'].includes(r.status));
    const otherPending=pending.some(r=>r.token!==session.record?.token);
@@ -84,7 +84,9 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   async function follow(){if(!modal.isConnected||session.stopped)return;await followVideo(session);if(session.stopped)return;if(session.record.status==='completed')await show();else if(session.record.status==='failed')say('Generation failed: '+session.record.error+' · gateway reports failed jobs uncharged. Edit and choose Make another version.');}
   const perform=fn=>async()=>{if(running)return;running=true;render();try{await fn();}catch(e){say(e.message);}finally{running=false;render();}};
   el('plan').onclick=async()=>{
-   if(planning||running)return;planning=true;render();say('Planning draft…');
+   if(planning||running)return;
+   if(session.record||session.records.some(r=>!['completed','failed','rejected'].includes(r.status))){say('Resolve the existing submission with an identical retry or Resume. After it finishes or is rejected, choose Make another version before planning. Closing this view does not cancel it.');return;}
+   planning=true;render();say('Planning draft…');
    let saved;const brief={topic:el('topic').value,context:el('context').value,platform:el('platform').value,duration:5};
    try{saved=await saveVideoPlan(brief);const catalog=await loadCatalog();account.assert();const result=await planVideo(brief,{chat,catalog,signal:AbortSignal.any([account.abort.signal,AbortSignal.timeout(60000)])});account.assert();await saveVideoPlan(brief,{id:saved.id,patch:{status:'done',outputs:{plan:result.plan},prompt:result.plan.prompt,receipts:result.receipts}});session.draftId=saved.id;session.draft={inputs:brief,receipts:result.receipts,outputs:{plan:result.plan}};receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
    catch(e){if(saved&&account.valid())await saveVideoPlan(brief,{id:saved.id,patch:{status:'failed',receipts:e.receipts||[]}}).catch(()=>{});receipts.push(...e.receipts||[]);say(e.status===401?'Planner authentication failed':e.status===402?'Planner insufficient credits':e.message);}

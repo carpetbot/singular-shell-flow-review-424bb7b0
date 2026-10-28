@@ -73,10 +73,13 @@ export async function durableVideoSession(options={}){
   }
   async create(spec,price){
    c.assert();await c.store.migrateLegacy();c.assert();
-   this.draft={...this.draft,prompt:spec.prompt,model_ids:[spec.model],outputs:{...this.draft?.outputs,request:videoBody(spec,this.fields)}};
-   if(this.draftId){
-    const saved=await c.store.get(this.draftId);c.assert();
-    if(saved&&!saved.idempotency_key&&!this.record)await c.store.update(saved.id,{prompt:spec.prompt,outputs:this.draft.outputs});
+   // Retry evidence belongs to the saved identity, never the currently edited draft.
+   if(!this.record){
+    this.draft={...this.draft,prompt:spec.prompt,model_ids:[spec.model],outputs:{...this.draft?.outputs,request:videoBody(spec,this.fields)}};
+    if(this.draftId){
+     const saved=await c.store.get(this.draftId);c.assert();
+     if(saved&&!saved.idempotency_key)await c.store.update(saved.id,{prompt:spec.prompt,outputs:this.draft.outputs});
+    }
    }
    const job=await super.create(spec,price);c.assert();if(job?.status==='completed')ready(c,job.id);return job;
   }
@@ -88,20 +91,33 @@ export async function durableVideoSession(options={}){
    const r=this.record;if(!r)return;
    // Bind the durable planner snapshot to the engine's exact identity before
    // attempting the render-row insert. An add abort must not orphan that link.
-   if(this.draftId&&this.draft?.outputs?.request&&r.status==='creating'){
+   if(insert&&this.draftId&&this.draft?.outputs?.request&&r.status==='creating'){
     const source=await c.store.get(this.draftId);c.assert();
     if(source&&!source.idempotency_key){
-     this.draft.outputs={...this.draft.outputs,render_identity:{token:r.token,plan_id:r.planId,body_hash:r.bodyHash}};
-     await c.store.update(source.id,{outputs:this.draft.outputs});c.assert();
+     const outputs={...source.outputs,render_identity:{token:r.token,plan_id:r.planId,body_hash:r.bodyHash}};
+     await c.store.update(source.id,{outputs});c.assert();
     }
    }
+   // Only the initial engine insert may bind a planner row. On every retry,
+   // recover the original token/version/body-bound snapshot independently of UI.
+   const rows=await c.store.list();c.assert();
+   const source=rows.find(row=>!row.idempotency_key&&row.outputs?.render_identity?.token===r.token&&row.outputs.render_identity.plan_id===r.planId&&row.outputs.render_identity.body_hash===r.bodyHash);
+   let draft={};
+   if(source){
+    const request=source.outputs.request;
+    const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(request))))].map(b=>b.toString(16).padStart(2,'0')).join('');
+    c.assert();if(hash!==r.bodyHash)throw new Error('Recovery evidence identity mismatch; submission blocked');
+    draft={...source,model_ids:[request.model]};
+   }else if(r.status==='creating'&&this.draft?.outputs?.plan){
+    throw new Error('Original submission evidence unavailable; retry blocked. No new version was created.');
+   }
    const patch={video_job_id:r.id??null,video_status:r.status,status:r.status==='completed'?'done':['failed','rejected'].includes(r.status)?'failed':'rendering',settled:r.settled??null,cost:r.settled??null,error:r.error??null,legacy:structuredClone(r)};
-   const existing=(await c.store.list()).find(row=>row.idempotency_key===r.token);
+   const existing=rows.find(row=>row.idempotency_key===r.token);
    if(existing){
-    if(existing.recovery_metadata_missing&&this.draft?.outputs?.request)await c.store.enrichLegacy(existing.id,{inputs:this.draft.inputs||{},outputs:this.draft.outputs,prompt:this.draft.prompt,model_ids:this.draft.model_ids,receipts:(this.draft.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote});
+    if(existing.recovery_metadata_missing&&draft.outputs?.request)await c.store.enrichLegacy(existing.id,{inputs:draft.inputs||{},outputs:draft.outputs,prompt:draft.prompt,model_ids:draft.model_ids,receipts:(draft.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote});
     await c.store.update(existing.id,patch);
    }
-   else await c.store.create({flow_id:VIDEO_FLOW,title:this.draft?.inputs?.topic?.slice(0,100)||'Video draft',inputs:this.draft?.inputs||{},outputs:this.draft?.outputs||{},prompt:this.draft?.prompt||'',model_ids:this.draft?.model_ids||[],receipts:(this.draft?.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote,...patch});
+   else await c.store.create({flow_id:VIDEO_FLOW,title:draft.inputs?.topic?.slice(0,100)||'Video draft',inputs:draft.inputs||{},outputs:draft.outputs||{},prompt:draft.prompt||'',model_ids:draft.model_ids||[],receipts:(draft.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote,...patch});
    c.assert();emit();c.kick?.();
   }
  }

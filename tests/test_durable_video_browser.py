@@ -87,6 +87,68 @@ class DurableVideoBrowser(VideoBrowser):
   submits=[c for c in self.calls if c['path']=='/v1/videos']
   self.assertEqual(row['outputs']['request'],submits[0]['body'])
   self.assertEqual([c['token'] for c in submits],[token])
+ def test_same_session_replan_after_add_abort_preserves_bound_evidence(self):
+  self.open();self.plan()
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  self.page.evaluate("""()=>{window.originalAdd=IDBObjectStore.prototype.add;IDBObjectStore.prototype.add=function(){this.transaction.abort();throw new DOMException('fixture abort','QuotaExceededError');};}""")
+  self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('fixture abort')")
+  self.assertFalse(any(c['path']=='/v1/videos' for c in self.calls))
+  self.page.evaluate("()=>{IDBObjectStore.prototype.add=window.originalAdd;}")
+  original=next(r for r in self.rows() if r['outputs'].get('render_identity'))
+  chats=len([c for c in self.calls if c['path']=='/v1/chat/completions'])
+  self.page.locator('#video-topic').fill('Completely unrelated second brief')
+  if self.page.locator('#video-plan').is_disabled():
+   # A stale/programmatic click must not bypass the UI defense either.
+   self.page.evaluate("document.querySelector('#video-plan').onclick()")
+   self.assertEqual(len([c for c in self.calls if c['path']=='/v1/chat/completions']),chats)
+   self.assertTrue(self.page.locator('#video-new').is_disabled())
+  else:
+   self.page.locator('#video-plan').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('Review and edit')")
+   self.assertEqual(self.page.locator('#video-prompt').input_value(),original['prompt'])
+  observed=[]
+  def check(r):
+   observed.extend(x for x in self.rows() if x['idempotency_key'])
+   self.route(r)
+  self.page.route('**/v1/videos',check)
+  self.page.locator('#video-generate').click();self.page.wait_for_selector('#video-player[src^="blob:"]')
+  self.assertEqual(len(observed),1);row=observed[0]
+  self.assertEqual(row['inputs'],original['inputs'])
+  self.assertEqual(row['receipts'],original['receipts'])
+  self.assertEqual(row['outputs'],original['outputs'])
+  identity=original['outputs']['render_identity']
+  self.assertEqual((row['idempotency_key'],row['plan_id'],row['body_hash']),(identity['token'],identity['plan_id'],identity['body_hash']))
+  submits=[c for c in self.calls if c['path']=='/v1/videos']
+  self.assertEqual(len(submits),1);self.assertEqual(submits[0]['token'],identity['token']);self.assertEqual(submits[0]['body'],original['outputs']['request'])
+  # Completion is recoverable only via the explicit new-version action.
+  self.assertTrue(self.page.locator('#video-plan').is_disabled())
+  self.page.locator('#video-new').click();self.page.wait_for_function("!document.querySelector('#video-plan').disabled")
+  self.page.locator('#video-plan').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('Review and edit')")
+  self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
+  self.assertEqual(self.errors,[])
+ def test_runtime_retry_ignores_new_draft_with_same_body_after_add_abort(self):
+  self.open();self.plan()
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  self.page.evaluate("""()=>{window.originalAdd=IDBObjectStore.prototype.add;IDBObjectStore.prototype.add=function(){this.transaction.abort();throw new DOMException('fixture abort','QuotaExceededError');};}""")
+  self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('fixture abort')")
+  self.page.evaluate("()=>{IDBObjectStore.prototype.add=window.originalAdd;}")
+  original=next(r for r in self.rows() if r['outputs'].get('render_identity'))
+  observed=[]
+  def check(r):
+   observed.extend(x for x in self.rows() if x['idempotency_key'])
+   self.route(r)
+  self.page.route('**/v1/videos',check)
+  # Bypass the UI entirely: a different durable draft has the identical video body.
+  result=self.page.evaluate("""async original=>{const {durableVideoSession,videoContext,saveVideoPlan}=await import('/js/video-runtime.js');const brief={...original.inputs,topic:'Runtime unrelated second brief'};const other=await saveVideoPlan(brief);await saveVideoPlan(brief,{id:other.id,patch:{status:'done',prompt:original.prompt,outputs:{plan:original.outputs.plan},receipts:[]}});const s=await durableVideoSession();s.draftId=other.id;s.draft={inputs:brief,receipts:[],outputs:{plan:original.outputs.plan}};try{await s.create({model:original.outputs.request.model,duration:5,prompt:original.prompt},s.record.quote.price);return 'submitted';}catch(e){return e.message;}finally{s.dispose();}}""",original)
+  self.assertEqual(result,'submitted')
+  self.assertEqual(len(observed),1)
+  self.assertEqual(observed[0]['inputs'],original['inputs'])
+  self.assertEqual(observed[0]['outputs'],original['outputs'])
+  self.assertEqual(observed[0]['receipts'],original['receipts'])
+  other=next(r for r in self.rows() if r['inputs'].get('topic')=='Runtime unrelated second brief')
+  self.assertNotIn('render_identity',other['outputs'])
+  submits=[c for c in self.calls if c['path']=='/v1/videos']
+  self.assertEqual(len(submits),1);self.assertEqual(submits[0]['token'],original['outputs']['render_identity']['token'])
+  self.assertEqual(self.errors,[])
  def test_wrong_retry_cannot_replace_reload_recovery_draft(self):
   self.open();self.plan();self.page.locator('#video-prompt').fill('Original edited prompt')
   self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")

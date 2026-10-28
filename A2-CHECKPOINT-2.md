@@ -144,6 +144,22 @@ and legacy references, does not retry abandoned text calls automatically, and do
 not claim live billing/inference validation. No card polish, A3, packaging, push or
 deploy was performed.
 
+## Final narrow same-session identity correction
+
+The same-document add-abort → changed brief / same planner prompt → retry path
+was still able to attach a newly planned brief to the old submission identity.
+Only initial engine insertion now binds a planner snapshot; retries independently
+resolve and hash-check the original token/version/body-bound durable evidence.
+The UI locks replanning until explicit terminal Make another version, guards the
+handler, and explains that closing is not cancellation. The runtime-only bypass
+regression proves safety does not depend on the UI lock.
+
+Both new Chromium cases reproduced RED before the fix. Final suites: **98/98 Node**,
+**87/87 Python**, zero failures/skips, including **19 durable-video** and **13
+run-store** cases. Engine, run-store, prompts and manifests are unchanged against
+`a3b2ca6078311d2fec776f07a0a060e3f95b57d6`. Commands and retained RED/GREEN evidence:
+`reports/a2/C2-NARROW-IDENTITY-FIX.md`. No live inference, packaging, push or deploy.
+
 ## Remaining authorized small A2 checkpoint 3 / later parts
 
 No card/title/poster polish, full run-detail route, bounded media cache, final
