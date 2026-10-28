@@ -40,7 +40,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def _proxy(self, method):
         path = self.path  # e.g. /v1/chat/completions or /pricing.json
         media = path.startswith('/v1/videos')
-        if media and not (path == '/v1/videos' or (method in ('GET', 'HEAD') and re.fullmatch(r'/v1/videos/[A-Za-z0-9_-]{1,160}(?:/content)?', path))):
+        list_allowed = path == '/v1/videos'
+        if method == 'GET' and path.startswith('/v1/videos?'):
+            from urllib.parse import parse_qsl
+            try:
+                pairs = parse_qsl(path.split('?', 1)[1], keep_blank_values=True, strict_parsing=True, max_num_fields=2)
+                keys = [k for k, _ in pairs]
+                list_allowed = bool(pairs) and len(keys) == len(set(keys)) and all(
+                    (k == 'limit' and re.fullmatch(r'[0-9]{1,3}', v) and 1 <= int(v) <= 100) or
+                    (k == 'cursor' and re.fullmatch(r'[A-Za-z0-9_=-]{1,200}', v))
+                    for k, v in pairs)
+            except ValueError:
+                list_allowed = False
+        if media and not (list_allowed or (method in ('GET', 'HEAD') and re.fullmatch(r'/v1/videos/[A-Za-z0-9_-]{1,160}(?:/content)?', path))):
             self.send_error(404)
             return
         content = media and path.endswith('/content')
