@@ -1139,6 +1139,17 @@ tr.off td {
     max-width:100%
   }
 }
+/* A1 recovery page: deliberately isolated from existing flow/modal styles. */
+.work-page { max-width:960px; margin:auto; padding:24px; overflow-wrap:anywhere; }
+.work-page h1 { font-family:var(--disp); }
+.work-page p { margin:8px 0; }
+.work-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:16px; margin:16px 0; }
+.work-card { min-width:0; padding:16px; background:var(--panel); border:1px solid var(--line); border-radius:var(--r); }
+.work-card h2 { font-size:16px; }
+.work-page button, #work-media a { display:inline-block; padding:10px 16px; border:1px solid var(--line2); border-radius:8px; background:var(--panel2); color:var(--ink); }
+#work-media { margin-top:24px; }
+#work-player { display:block; width:100%; max-height:65vh; margin:12px 0; }
+@media(max-width:600px) { .work-page { padding:16px; } .work-list { grid-template-columns:1fr; } }
 @media(prefers-reduced-motion:reduce) {
   *,*::before,*::after {
     animation:none!important;

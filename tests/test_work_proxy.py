@@ -1,7 +1,11 @@
 """A1 list query allowlist, tested against a real loopback upstream."""
-from test_video_proxy import VideoProxy
+import unittest
+import test_video_proxy as media_tests
 
-class WorkProxy(VideoProxy):
+class WorkProxy(unittest.TestCase):
+ setUp = media_tests.VideoProxy.setUp
+ tearDown = media_tests.VideoProxy.tearDown
+ req = media_tests.VideoProxy.req
  def test_list_query_allowlist(self):
   for path in ['/v1/videos','/v1/videos?limit=1','/v1/videos?limit=100&cursor=abc_=-','/v1/videos?cursor=abc&limit=50']:
    self.assertEqual(self.req(path)[0],200,path)

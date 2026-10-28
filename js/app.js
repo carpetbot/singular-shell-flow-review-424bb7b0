@@ -8,19 +8,24 @@ import * as chat from "./views/chat.js";
 import * as skills from "./views/skills.js";
 import * as models from "./views/models.js";
 import * as settings from "./views/settings.js";
+import * as work from "./views/work.js";
 
 export const VIEWS = [
   { id: "chat", ...chat },
   { id: "skills", ...skills },
   { id: "models", ...models },
   { id: "settings", ...settings },
+  { id: "work", ...work },
 ];
 
 let currentView = "skills";
 const viewRoot = document.getElementById("view");
+let mountedView;
 
 export function renderView(){
+  mountedView?.destroy?.();
   const def = VIEWS.find(v => v.id === currentView);
+  mountedView = def;
   viewRoot.innerHTML = def.view();
   if(def.bind) def.bind(viewRoot);
   renderNav(currentView);
