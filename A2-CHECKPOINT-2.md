@@ -56,7 +56,7 @@ node --test tests/*.test.mjs
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-Final results: **98/98 Node**, **76/76 Python**, zero failures/skips. Python includes
+Original checkpoint results: **98/98 Node**, **76/76 Python**, zero failures/skips. Python includes
 **10 new durable-video integration tests**, **11 run-store browser tests**, and
 all 15 retained video browser tests.
 
@@ -75,8 +75,10 @@ Evidence:
 - `c2-protected-and-idb-scan.log`: protected-source comparison and raw real-IDB
   credential scan after actual fixture plan/render completion.
 
-`js/video.js`, run-store, every prompt and manifest remain byte-identical to
-checkpoint 1. Frozen engine SHA256:
+At the original checkpoint, `js/video.js`, run-store, every prompt and manifest were
+byte-identical to checkpoint 1. The review correction below explicitly evolves
+run-store's migration metadata; `js/video.js`, prompts and manifests remain unchanged.
+Frozen engine SHA256:
 `71986db49b64763229a90e4d4fe10ae78ebfc45b27070f6d32e675e21a31450b`.
 
 ## Test-harness issues resolved
@@ -95,6 +97,52 @@ checkpoint 1. Frozen engine SHA256:
   against the earlier checkpoint UI in the isolated tree, then GREEN against the
   implementation. Browser clocks are installed before app timers for the timeout
   test. Initial full-suite failures are retained, not presented as final passes.
+
+## Checkpoint 2 review correction — only the two blockers
+
+Against base `74634a698bf64b60fe0546d8a456ae5118328a37`:
+
+- **Interrupted planner:** new planner rows use a separate `-plan` flow and hold a
+  per-plan browser Web Lock. Reload releases ownership; account invalidation
+  releases ownership and finalizes the old account's record before closing its
+  store. Orphans, including old checkpoint planner-only rows, become `failed` with
+  `outputs.planner_state: abandoned` and an explicit interruption explanation.
+  Account initialization surfaces the retained abandonment notice. Another tab's
+  live planner is not abandoned. Render guards still block creating/uncertain
+  submissions, including tokenless rendering rows; no tokenless-render exemption
+  was added to the store or runtime.
+- **IDB abort then identical retry:** the edited prompt/canonical request is first
+  saved with the durable planner snapshot. The engine's subsequent exact token,
+  version and body hash bind that snapshot before the render-row insert. The
+  original legacy-save ordering and engine token/body algorithms are unchanged.
+  Migration-created placeholders now carry an internal `recovery_metadata_missing`
+  marker. A dedicated one-time enrichment transaction verifies the exact body hash,
+  token, plan id and quote, commits the brief/plan/prompt/request/planner receipts,
+  then closes the metadata hole before POST. Ordinary create/update identity rules
+  are unchanged. Deterministic, untouched pre-marker import placeholders can be
+  upgraded; normal durable rows cannot opt in. Reload restoration selects the
+  token/version-bound snapshot, not an unrelated plan with the same body. A rejected
+  nonidentical retry cannot overwrite the durable recovery draft.
+
+Both review blockers were reproduced in failing real-Chromium regressions **before**
+the corresponding fix. Additional vertical RED/GREEN slices cover reload restoration,
+conflicting retries, same-body/different-brief recovery, pre-marker placeholders and
+abandonment visibility after account replacement. Evidence and commands are indexed
+in `reports/a2/C2-REVIEW-FIXES.md`.
+
+Final correction results: **98/98 Node**, **85/85 Python**, zero failures/skips.
+Python now includes **17 durable-video integration tests**, **13 run-store browser
+tests**, and all retained browser/proxy/UI cases. No key or paid inference was used;
+all gateway/model responses were offline fixtures. The full Python suite ran in an
+ignored repository-local copy, avoiding changes to earlier evidence. The first full
+run's new cross-tab fixture waited on the static `#view` shell before hydration;
+waiting for the actual settings input fixed the harness, not production boot logic.
+Its failure log is retained separately from the final passing suite.
+
+Limits: this does not reconstruct planner metadata absent from both durable snapshots
+and legacy references, does not retry abandoned text calls automatically, and does
+not claim live billing/inference validation. No card polish, A3, packaging, push or
+deploy was performed.
 
 ## Remaining authorized small A2 checkpoint 3 / later parts
 

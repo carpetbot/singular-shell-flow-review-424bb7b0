@@ -1,14 +1,30 @@
 // Durable boundary around the frozen paid engine. No request/body/quote algorithms here.
-import {VideoSession} from './video.js';
+import {VideoSession,videoBody} from './video.js';
 import {openRunStore,LEGACY_VIDEO_KEY} from './run-store.js';
 import {get,subscribe,hydrate} from './store.js';
 export const VIDEO_FLOW='claw__motion-trimmer-video';
+const PLAN_FLOW=VIDEO_FLOW+'-plan';
+const planningRow=r=>r.status==='running'&&!r.idempotency_key&&!r.video_job_id&&!r.video_status&&!r.plan_id&&!r.body_hash&&[VIDEO_FLOW,PLAN_FLOW].includes(r.flow_id);
+async function abandonPlans(c){
+ let abandoned=false;
+ for(const row of await c.store.list()){
+  if(row.outputs?.planner_state==='abandoned')abandoned=true;
+  if(!planningRow(row))continue;
+  await navigator.locks.request(row.outputs?.planner_owner||'singular-orphan-plan:'+row.id,{ifAvailable:true},async lock=>{
+   if(!lock)return;
+   const latest=await c.store.get(row.id);if(!latest||!planningRow(latest))return;
+   await c.store.update(row.id,{status:'failed',error:'Planning interrupted; no video was submitted. Plan again.',outputs:{...latest.outputs,planner_state:'abandoned'}});
+   abandoned=true;
+  });
+ }
+ if(abandoned&&c.valid())notice('Previous planning interrupted; saved as abandoned. No video was submitted.');
+}
 let context=null,epoch=0;
 const listeners=new Set();
 function emit(){window.dispatchEvent(new Event('singular:runs'));}
 function invalidate(){
  epoch++;
- if(context){context.abort.abort();for(const s of context.sessions)s.dispose();context.store?.close();}
+ if(context){const old=context;old.abort.abort();for(const release of old.plans.values())release();for(const s of old.sessions)s.dispose();if(old.store)abandonPlans(old).catch(()=>{}).finally(()=>old.store.close());}
  context=null;
  document.querySelectorAll('[data-video-notice]').forEach(el=>el.remove());
  document.documentElement.dataset.videoRendering='false';
@@ -20,13 +36,13 @@ export async function videoContext(key=get().settings.apiKey){
  if(context?.key!==key)invalidate();
  if(!key)throw new Error('Connect your Singular key in Settings.');
  if(!context){
-  const c={key,epoch,abort:new AbortController(),sessions:new Set(),store:null};context=c;
+  const c={key,epoch,abort:new AbortController(),sessions:new Set(),plans:new Map(),store:null};context=c;
   c.valid=()=>context===c&&!c.abort.signal.aborted&&get().settings.apiKey.trim()===key;
   c.assert=()=>{if(!c.valid())throw new Error('Connected key changed; reopen this video.');};
   c.ready=(async()=>{
    const store=await openRunStore({key});
    if(!c.valid()){store.close();c.assert();}
-   c.store=store;const migration=await store.migrateLegacy();c.assert();
+   c.store=store;const migration=await store.migrateLegacy();c.assert();await abandonPlans(c);c.assert();
    if(migration.unscoped)notice('Older video references have no account scope; originals retained. Recover videos using My work.');
    return c;
   })();
@@ -57,7 +73,11 @@ export async function durableVideoSession(options={}){
   }
   async create(spec,price){
    c.assert();await c.store.migrateLegacy();c.assert();
-   this.draft={...this.draft,prompt:spec.prompt,model_ids:[spec.model]};
+   this.draft={...this.draft,prompt:spec.prompt,model_ids:[spec.model],outputs:{...this.draft?.outputs,request:videoBody(spec,this.fields)}};
+   if(this.draftId){
+    const saved=await c.store.get(this.draftId);c.assert();
+    if(saved&&!saved.idempotency_key&&!this.record)await c.store.update(saved.id,{prompt:spec.prompt,outputs:this.draft.outputs});
+   }
    const job=await super.create(spec,price);c.assert();if(job?.status==='completed')ready(c,job.id);return job;
   }
   async save(underLock=false,insert=false){
@@ -66,9 +86,21 @@ export async function durableVideoSession(options={}){
    // before it can proceed from save() to POST, even if a legacy write succeeded.
    await super.save(underLock,insert);c.assert();
    const r=this.record;if(!r)return;
+   // Bind the durable planner snapshot to the engine's exact identity before
+   // attempting the render-row insert. An add abort must not orphan that link.
+   if(this.draftId&&this.draft?.outputs?.request&&r.status==='creating'){
+    const source=await c.store.get(this.draftId);c.assert();
+    if(source&&!source.idempotency_key){
+     this.draft.outputs={...this.draft.outputs,render_identity:{token:r.token,plan_id:r.planId,body_hash:r.bodyHash}};
+     await c.store.update(source.id,{outputs:this.draft.outputs});c.assert();
+    }
+   }
    const patch={video_job_id:r.id??null,video_status:r.status,status:r.status==='completed'?'done':['failed','rejected'].includes(r.status)?'failed':'rendering',settled:r.settled??null,cost:r.settled??null,error:r.error??null,legacy:structuredClone(r)};
    const existing=(await c.store.list()).find(row=>row.idempotency_key===r.token);
-   if(existing)await c.store.update(existing.id,patch);
+   if(existing){
+    if(existing.recovery_metadata_missing&&this.draft?.outputs?.request)await c.store.enrichLegacy(existing.id,{inputs:this.draft.inputs||{},outputs:this.draft.outputs,prompt:this.draft.prompt,model_ids:this.draft.model_ids,receipts:(this.draft.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote});
+    await c.store.update(existing.id,patch);
+   }
    else await c.store.create({flow_id:VIDEO_FLOW,title:this.draft?.inputs?.topic?.slice(0,100)||'Video draft',inputs:this.draft?.inputs||{},outputs:this.draft?.outputs||{},prompt:this.draft?.prompt||'',model_ids:this.draft?.model_ids||[],receipts:(this.draft?.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote,...patch});
    c.assert();emit();c.kick?.();
   }
@@ -78,9 +110,18 @@ export async function durableVideoSession(options={}){
 }
 export async function saveVideoPlan(brief,run){
  const c=await videoContext();c.assert();
- if(!run)return c.store.create({flow_id:VIDEO_FLOW,title:brief.topic.slice(0,100)||'Video plan',inputs:brief,status:'running',model_ids:['anthropic/claude-sonnet-5.5','deepseek/deepseek-v4.1-flash-1017']});
+ if(!run){
+  const owner='singular-plan:'+crypto.randomUUID();let release;
+  const held=new Promise(resolve=>{release=resolve;});
+  await new Promise((resolve,reject)=>{navigator.locks.request(owner,async()=>{resolve();await held;}).catch(reject);});
+  c.plans.set(owner,release);
+  try{c.assert();return await c.store.create({flow_id:PLAN_FLOW,title:brief.topic.slice(0,100)||'Video plan',inputs:brief,status:'running',outputs:{planner_owner:owner,planner_state:'planning'},model_ids:['anthropic/claude-sonnet-5.5','deepseek/deepseek-v4.1-flash-1017']});}
+  catch(error){release();c.plans.delete(owner);throw error;}
+ }
  const patch={...run.patch};if(patch.receipts)patch.receipts=patch.receipts.map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v])));
- await c.store.update(run.id,patch);c.assert();emit();
+ const row=await c.store.get(run.id);c.assert();
+ await c.store.update(run.id,patch);c.assert();
+ c.plans.get(row?.outputs?.planner_owner)?.();c.plans.delete(row?.outputs?.planner_owner);emit();
 }
 export function startVideoRuntime(){
  let key=get().settings.apiKey.trim();

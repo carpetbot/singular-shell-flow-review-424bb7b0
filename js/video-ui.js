@@ -40,12 +40,19 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
    session=await durableVideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>{if(session)render();}});
    account=await videoContext();const rows=await account.store.list();account.assert();
    savedDraft=session.record?rows.find(r=>r.idempotency_key===session.record.token):rows.filter(r=>r.outputs?.plan).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)))[0];
+   if(session.record&&savedDraft?.recovery_metadata_missing){
+    for(const row of rows.filter(r=>!r.idempotency_key&&r.outputs?.request&&r.outputs?.plan&&r.outputs?.render_identity?.token===session.record.token&&r.outputs.render_identity.plan_id===session.record.planId&&r.outputs.render_identity.body_hash===session.record.bodyHash)){
+     const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(row.outputs.request))))].map(b=>b.toString(16).padStart(2,'0')).join('');
+     if(hash===session.record.bodyHash){savedDraft=row;break;}
+    }
+   }
   }catch(e){if(modal.isConnected){el('message').textContent=e.message;modal.querySelectorAll('button:not(.close-modal)').forEach(b=>b.disabled=true);}return;}
   if(!modal.isConnected){session.dispose();return;}
   if(savedDraft){
    for(const field of ['topic','context','platform'])if(typeof savedDraft.inputs?.[field]==='string')el(field).value=savedDraft.inputs[field];
    const plan=savedDraft.outputs?.plan;if(plan){plan.prompt=savedDraft.prompt||plan.prompt;el('plan-json').value=JSON.stringify(plan,null,2);}
    el('prompt').value=savedDraft.prompt||'';receipts=savedDraft.receipts||[];
+   session.draftId=savedDraft.id;
    session.draft={inputs:savedDraft.inputs,receipts,outputs:savedDraft.outputs};
   }
   const offAccount=onVideoAccountChange(()=>{session.dispose();modal.querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});close();});
@@ -79,7 +86,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   el('plan').onclick=async()=>{
    if(planning||running)return;planning=true;render();say('Planning draft…');
    let saved;const brief={topic:el('topic').value,context:el('context').value,platform:el('platform').value,duration:5};
-   try{saved=await saveVideoPlan(brief);const catalog=await loadCatalog();account.assert();const result=await planVideo(brief,{chat,catalog,signal:AbortSignal.any([account.abort.signal,AbortSignal.timeout(60000)])});account.assert();await saveVideoPlan(brief,{id:saved.id,patch:{status:'done',outputs:{plan:result.plan},prompt:result.plan.prompt,receipts:result.receipts}});session.draft={inputs:brief,receipts:result.receipts,outputs:{plan:result.plan}};receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
+   try{saved=await saveVideoPlan(brief);const catalog=await loadCatalog();account.assert();const result=await planVideo(brief,{chat,catalog,signal:AbortSignal.any([account.abort.signal,AbortSignal.timeout(60000)])});account.assert();await saveVideoPlan(brief,{id:saved.id,patch:{status:'done',outputs:{plan:result.plan},prompt:result.plan.prompt,receipts:result.receipts}});session.draftId=saved.id;session.draft={inputs:brief,receipts:result.receipts,outputs:{plan:result.plan}};receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
    catch(e){if(saved&&account.valid())await saveVideoPlan(brief,{id:saved.id,patch:{status:'failed',receipts:e.receipts||[]}}).catch(()=>{});receipts.push(...e.receipts||[]);say(e.status===401?'Planner authentication failed':e.status===402?'Planner insufficient credits':e.message);}
    finally{planning=false;render();}
   };

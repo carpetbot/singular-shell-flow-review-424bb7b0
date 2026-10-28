@@ -21,6 +21,82 @@ class DurableVideoBrowser(VideoBrowser):
   render=[r for r in self.rows() if r['idempotency_key']][0]
   self.assertEqual(render['status'],'done');self.assertEqual(render['video_job_id'],'vid_offline')
   self.assertEqual(render['prompt'],'A paper boat drifts on a calm pond.')
+ def test_interrupted_planner_reload_allows_new_render(self):
+  self.open()
+  orphan=self.page.evaluate("async()=>{return await(await import('/js/video-runtime.js')).saveVideoPlan({topic:'Interrupted plan',duration:5});}")
+  self.page.reload();self.open();self.plan()
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click()
+  self.page.wait_for_timeout(700)
+  self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
+  old=next(r for r in self.rows() if r['id']==orphan['id'])
+  self.assertEqual(old['status'],'failed');self.assertEqual(old['outputs']['planner_state'],'abandoned')
+  self.assertIn('interrupted',old['error'].lower())
+ def test_interrupted_planner_account_replacement_is_abandoned(self):
+  self.open()
+  orphan=self.page.evaluate("async()=>{return await(await import('/js/video-runtime.js')).saveVideoPlan({topic:'Account interrupted plan',duration:5});}")
+  self.page.evaluate("async()=>{(await import('/js/store.js')).setSettings({apiKey:'offline-replacement-account'});}")
+  self.page.wait_for_function("!document.querySelector('.modal')")
+  self.page.wait_for_timeout(150)
+  old=next(r for r in self.rows() if r['id']==orphan['id'])
+  self.assertEqual(old['status'],'failed');self.assertEqual(old['outputs']['planner_state'],'abandoned')
+  self.open();self.page.wait_for_function("document.querySelector('#toasts').textContent.includes('saved as abandoned')");self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click();self.page.wait_for_selector('#video-player[src^="blob:"]')
+  self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
+ def test_active_cross_tab_planner_is_not_abandoned(self):
+  self.open()
+  orphan=self.page.evaluate("async()=>await(await import('/js/video-runtime.js')).saveVideoPlan({topic:'Active plan',duration:5})")
+  other=self.ctx.new_page();other.goto(self.url+'/#/settings');other.wait_for_selector('#view')
+  other.wait_for_selector('#apikey')
+  other.evaluate("async()=>{await(await import('/js/video-runtime.js')).videoContext();}")
+  self.assertEqual(next(r for r in self.rows() if r['id']==orphan['id'])['status'],'running')
+  other.close()
+ def test_old_planning_rows_abandoned_but_tokenless_render_still_blocks(self):
+  self.open()
+  ids=self.page.evaluate("""async()=>{const {videoContext,VIDEO_FLOW}=await import('/js/video-runtime.js');const c=await videoContext();const old=await c.store.create({flow_id:VIDEO_FLOW,inputs:{topic:'Old interrupted planner'},status:'running'});const render=await c.store.create({flow_id:VIDEO_FLOW,status:'rendering',video_status:'creating'});return [old.id,render.id];}""")
+  self.page.reload();self.open();self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('pending')")
+  rows={r['id']:r for r in self.rows()}
+  self.assertEqual(rows[ids[0]]['outputs']['planner_state'],'abandoned');self.assertEqual(rows[ids[1]]['status'],'rendering')
+  self.assertFalse(any(c['path']=='/v1/videos' for c in self.calls))
+ def test_storage_abort_retry_preserves_draft_before_post(self):
+  self.abort_retry(False)
+ def test_storage_abort_reload_recovers_edited_draft_before_post(self):
+  self.abort_retry(True)
+ def abort_retry(self,reload):
+  self.open();self.plan();self.page.locator('#video-prompt').fill('Edited retry boat prompt')
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  self.page.evaluate("""()=>{window.originalAdd=IDBObjectStore.prototype.add;IDBObjectStore.prototype.add=function(){this.transaction.abort();throw new DOMException('fixture abort','QuotaExceededError');};}""")
+  self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('fixture abort')")
+  self.assertFalse(any(c['path']=='/v1/videos' for c in self.calls))
+  token=self.page.evaluate("JSON.parse(localStorage.getItem('motion-video.v1'))[0].token")
+  self.page.evaluate("()=>{IDBObjectStore.prototype.add=window.originalAdd;}")
+  if reload:
+   self.page.evaluate("""async()=>{const c=await(await import('/js/video-runtime.js')).videoContext();const source=(await c.store.list()).find(r=>r.outputs?.request&&!r.idempotency_key);const decoy={...source,id:'0000-decoy',inputs:{topic:'Unrelated plan with same body'},receipts:[]};delete decoy.outputs.render_identity;const db=await new Promise(resolve=>{const r=indexedDB.open('singular-runs.v1');r.onsuccess=()=>resolve(r.result);});await new Promise((resolve,reject)=>{const t=db.transaction('runs','readwrite');t.objectStore('runs').add(decoy);t.oncomplete=resolve;t.onabort=reject;});db.close();}""")
+   self.page.reload();self.open()
+   self.assertEqual(self.page.locator('#video-prompt').input_value(),'Edited retry boat prompt')
+   self.assertIn('shotbeats',self.page.locator('#video-plan-json').input_value())
+   self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  observed=[]
+  def check(r):
+   observed.extend(x for x in self.rows() if x['idempotency_key']==token)
+   self.route(r)
+  self.page.route('**/v1/videos',check)
+  self.page.locator('#video-generate').click();self.page.wait_for_selector('#video-player[src^="blob:"]')
+  self.assertEqual(len(observed),1);row=observed[0]
+  self.assertEqual(row['prompt'],'Edited retry boat prompt')
+  self.assertEqual(row['inputs']['topic'],'An offline paper boat');self.assertTrue(row['receipts']);self.assertIn('plan',row['outputs'])
+  self.assertEqual(row['outputs']['plan']['prompt'],'Edited retry boat prompt')
+  submits=[c for c in self.calls if c['path']=='/v1/videos']
+  self.assertEqual(row['outputs']['request'],submits[0]['body'])
+  self.assertEqual([c['token'] for c in submits],[token])
+ def test_wrong_retry_cannot_replace_reload_recovery_draft(self):
+  self.open();self.plan();self.page.locator('#video-prompt').fill('Original edited prompt')
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
+  self.page.evaluate("""()=>{window.originalAdd=IDBObjectStore.prototype.add;IDBObjectStore.prototype.add=function(){this.transaction.abort();throw new DOMException('fixture abort','QuotaExceededError');};}""")
+  self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('fixture abort')")
+  self.page.evaluate("()=>{IDBObjectStore.prototype.add=window.originalAdd;}")
+  self.page.locator('#video-prompt').fill('Wrong retry prompt');self.page.locator('#video-generate').click()
+  self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('identical prompt')")
+  self.assertFalse(any(c['path']=='/v1/videos' for c in self.calls))
+  self.page.reload();self.open();self.assertEqual(self.page.locator('#video-prompt').input_value(),'Original edited prompt')
  def start_pending(self):
   self.state='processing';self.open();self.plan()
   self.page.evaluate("async()=>{const s=await import('/js/store.js');s.setSettings({apiKey:'offline-not-real-key'});}")

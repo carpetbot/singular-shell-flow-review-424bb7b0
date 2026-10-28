@@ -95,7 +95,7 @@ export async function openRunStore({key, indexedDB=globalThis.indexedDB}={}){
           if(!source.keyHash){unscoped++;continue;}
           if(source.keyHash!==account_id) continue;
           const legacy=clean(source),status=source.status==='completed'?'done':['failed','rejected'].includes(source.status)?'failed':'rendering';
-          rows.push({id:'legacy-'+await hash(JSON.stringify([account_id,source.token])),account_id,...validate({flow_id:'claw__motion-trimmer-video',title:'Recovered video',status,
+          rows.push({id:'legacy-'+await hash(JSON.stringify([account_id,source.token])),account_id,recovery_metadata_missing:true,...validate({flow_id:'claw__motion-trimmer-video',title:'Recovered video',status,
             created_at:source.created_at??null,inputs:{},outputs:{},prompt:'',model_ids:source.quote?.model?[source.quote.model]:[],receipts:[],
             cost:source.settled??null,video_job_id:source.id??null,idempotency_key:source.token,
             plan_id:source.planId??null,body_hash:source.bodyHash??null,quote:source.quote??null,settled:source.settled??null,video_status:source.status??'uncertain',error:source.error??null,legacy})});
@@ -109,6 +109,9 @@ export async function openRunStore({key, indexedDB=globalThis.indexedDB}={}){
             else{
               const patch={status:row.status,video_status:row.video_status,settled:row.settled,cost:row.cost,error:row.error,legacy:row.legacy};
               for(const field of ['video_job_id','idempotency_key','plan_id','body_hash','quote']) if(row[field]!=null) patch[field]=row[field];
+              // Upgrade only deterministic, untouched pre-marker import placeholders;
+              // never infer a metadata hole on a normal durable request row.
+              if(latest.recovery_metadata_missing===undefined&&latest.id===row.id&&latest.prompt===''&&JSON.stringify(latest.inputs)==='{}'&&JSON.stringify(latest.outputs)==='{}'&&!latest.receipts?.length)latest.recovery_metadata_missing=true;
               const next=reconcile(latest,patch);
               await request(store.put(next));
               current[current.findIndex(r=>r.id===latest.id)]=next;
@@ -140,6 +143,23 @@ export async function openRunStore({key, indexedDB=globalThis.indexedDB}={}){
           if(existing.some(r=>r.flow_id===row.flow_id&&!terminal(r.status))) throw new Error('Resolve the existing pending or unconfirmed run first.');
         }
         await request(store.add(row));return row;
+      });
+    },
+    // One-time enrichment applies only to migration-created metadata holes. Ordinary
+    // update/create identity rules remain unchanged, including after enrichment.
+    async enrichLegacy(id,data){
+      data=validate(data);
+      const fields=['inputs','outputs','prompt','model_ids','receipts','idempotency_key','plan_id','body_hash','quote'];
+      if(Object.keys(data).some(k=>!fields.includes(k))||fields.some(k=>!(k in data))) throw new Error('Complete recovery metadata required.');
+      const body=data.outputs?.request;
+      if(!body||body.prompt!==data.prompt||JSON.stringify(data.model_ids)!==JSON.stringify([body.model])||await hash(JSON.stringify(body))!==data.body_hash) throw new Error('Logical request identity mismatch.');
+      return transaction(['runs'],'readwrite',async tx=>{
+        const store=tx.objectStore('runs'),row=await request(store.get(id));
+        if(row?.account_id!==account_id) throw new Error('Run not found for this account.');
+        for(const field of ['idempotency_key','plan_id','body_hash','quote']) if(row[field]==null||JSON.stringify(row[field])!==JSON.stringify(data[field])) throw new Error('Run recovery identity mismatch.');
+        const base=row.recovery_metadata_missing===true?{...row,inputs:data.inputs,prompt:data.prompt,model_ids:data.model_ids,recovery_metadata_missing:false}:row;
+        const next=reconcile(base,data);
+        await request(store.put(next));return next;
       });
     },
     async update(id,patch){

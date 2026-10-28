@@ -29,6 +29,49 @@ class RunStoreBrowser(unittest.TestCase):
   self.browser.close(); self.pw.stop(); self.server.shutdown(); self.server.server_close()
  def runjs(self, body):
   return self.page.evaluate("async()=>{const {openRunStore}=await import('/js/run-store.js');" + body + "}")
+ def test_legacy_enrichment_is_hash_bound_atomic_and_one_time(self):
+  result=self.runjs("""
+   const a=await openRunStore({key:'offline-account-one'}),b=await openRunStore({key:'offline-account-two'});
+   const body={model:'fixture-model',prompt:'Edited boat',resolution:'720p'};
+   const bodyHash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(body))))].map(b=>b.toString(16).padStart(2,'0')).join('');
+   const source={token:'enrichment-token',planId:'version',bodyHash,keyHash:a.account_id,status:'creating',id:null,quote:{model:'fixture-model',price:1}};
+   localStorage.setItem('motion-video.v1',JSON.stringify([source]));await a.migrateLegacy();
+   const row=(await a.list())[0],data={inputs:{topic:'Boat'},outputs:{request:body,plan:{prompt:'Edited boat'}},prompt:body.prompt,model_ids:[body.model],receipts:[{model:'planner',estCost:0.01}],idempotency_key:source.token,plan_id:source.planId,body_hash:bodyHash,quote:source.quote};
+   const errors=[];
+   for(const change of [{body_hash:'wrong'},{plan_id:'wrong'},{idempotency_key:'wrong'},{quote:{price:99}},{prompt:'Wrong prompt'},{inputs:{apiKey:'unsafe'}}]){
+    try{await a.enrichLegacy(row.id,{...data,...change});errors.push(false);}catch{errors.push(true);}
+   }
+   try{await b.enrichLegacy(row.id,data);errors.push(false);}catch{errors.push(true);}
+   const put=IDBObjectStore.prototype.put;IDBObjectStore.prototype.put=function(){this.transaction.abort();throw new DOMException('fixture abort','QuotaExceededError');};
+   try{await a.enrichLegacy(row.id,data);errors.push(false);}catch{errors.push(true);}finally{IDBObjectStore.prototype.put=put;}
+   const before=await a.get(row.id);await a.enrichLegacy(row.id,data);await a.enrichLegacy(row.id,data);
+   for(const change of [{inputs:{topic:'Different'}},{model_ids:['different-model']}]){
+    try{await a.enrichLegacy(row.id,{...data,...change});errors.push(false);}catch{errors.push(true);}
+   }
+   try{await a.update(row.id,{prompt:'Changed'});errors.push(false);}catch{errors.push(true);}
+   await a.migrateLegacy();return {errors,before,row:await a.get(row.id),count:(await a.list()).length};
+  """)
+  self.assertEqual(result['errors'],[True]*11)
+  self.assertEqual(result['before']['prompt'],'');self.assertTrue(result['before']['recovery_metadata_missing'])
+  self.assertEqual(result['count'],1);self.assertFalse(result['row']['recovery_metadata_missing'])
+  self.assertEqual(result['row']['prompt'],'Edited boat');self.assertEqual(result['row']['inputs'],{'topic':'Boat'})
+  self.assertEqual(result['row']['receipts'],[{'model':'planner','estCost':0.01}])
+
+ def test_pre_fix_migration_placeholder_can_recover_metadata(self):
+  result=self.runjs("""
+   const a=await openRunStore({key:'offline-account-one'});
+   const body={model:'fixture',prompt:'Saved boat',resolution:'720p'};
+   const bodyHash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(body))))].map(b=>b.toString(16).padStart(2,'0')).join('');
+   const source={token:'old-placeholder',planId:'old-version',bodyHash,keyHash:a.account_id,status:'creating',id:null,quote:{model:'fixture',price:1}};
+   localStorage.setItem('motion-video.v1',JSON.stringify([source]));await a.migrateLegacy();
+   const row=(await a.list())[0];delete row.recovery_metadata_missing;
+   const db=await new Promise(resolve=>{const r=indexedDB.open('singular-runs.v1');r.onsuccess=()=>resolve(r.result);});
+   await new Promise((resolve,reject)=>{const t=db.transaction('runs','readwrite');t.objectStore('runs').put(row);t.oncomplete=resolve;t.onabort=reject;});db.close();
+   await a.migrateLegacy();await a.enrichLegacy(row.id,{inputs:{topic:'Recovered'},outputs:{request:body},prompt:body.prompt,model_ids:[body.model],receipts:[],idempotency_key:source.token,plan_id:source.planId,body_hash:bodyHash,quote:source.quote});
+   return await a.get(row.id);
+  """)
+  self.assertEqual(result['prompt'],'Saved boat');self.assertFalse(result['recovery_metadata_missing'])
+
  def test_create_update_reload_account_isolation(self):
   result = self.runjs("""
    const a=await openRunStore({key:'offline-account-one'});
