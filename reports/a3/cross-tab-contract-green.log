@@ -1,0 +1,6 @@
+test_reload_resumes_without_post_and_single_cross_tab_owner (test_durable_video_browser.DurableVideoBrowser.test_reload_resumes_without_post_and_single_cross_tab_owner) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 17.769s
+
+OK

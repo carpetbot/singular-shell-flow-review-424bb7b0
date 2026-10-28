@@ -1,0 +1,6 @@
+test_ready_claim_is_atomic_account_scoped_and_survives_reopen (test_a3_followups_browser.Followups.test_ready_claim_is_atomic_account_scoped_and_survives_reopen) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 2.575s
+
+OK

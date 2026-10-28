@@ -82,6 +82,17 @@ export async function openRunStore({key, indexedDB=globalThis.indexedDB}={}){
   }
   return {
     account_id, list, get,
+    // Origin/account-wide delivery claim; committed terminal truth is required.
+    async claimVideoReady(jobId){
+      if(typeof jobId!=='string'||!/^[A-Za-z0-9_-]{1,160}$/.test(jobId))return false;
+      return transaction(['runs','meta'],'readwrite',async tx=>{
+        const rows=await request(tx.objectStore('runs').index('account_id').getAll(account_id));
+        if(!rows.some(r=>r.video_job_id===jobId&&r.status==='done'))return false;
+        const meta=tx.objectStore('meta'),id='video-ready:'+account_id+':'+jobId;
+        if(await request(meta.get(id)))return false;
+        await request(meta.put(true,id));return true;
+      });
+    },
     pending:async()=> (await list()).filter(row=>!terminal(row.status)),
     async migrateLegacy({storage=localStorage,locks=navigator.locks}={}){
       if(!locks?.request) throw new Error('Safe legacy recovery lock unavailable; migration blocked.');

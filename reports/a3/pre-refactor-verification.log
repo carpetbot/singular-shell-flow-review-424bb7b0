@@ -1,0 +1,82 @@
+node exit 0 log /home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/full-node.log
+a removed job (9.753758ms)
+✔ clear finished prevents a late failed poll from resurrecting a removed job (8.245739ms)
+✔ clear finished deletes only active-account terminal refs after a locked reread (1.333834ms)
+✔ creation fails closed without safe origin locks (0.413659ms)
+✔ approved five second default mode validates exact defaults and sends only documented fields (55.465968ms)
+✔ default generation refuses missing, stale, mismatched, unroutable or nonexact catalog before POST (93.165304ms)
+✔ default audio label is backed by catalog and history capacity recovers after clearing 20 finished refs (26.805149ms)
+✔ video money always uses two decimals without rounding the numeric quote (1.769112ms)
+✔ clear finished atomically rereads all 20 refs, preserves every unresolved state and new work (25.781207ms)
+✔ video platform labels and customer copy are plain language (1.303935ms)
+✔ video test catalog lives in source fixture and all readers are location relative (5.112223ms)
+✔ exact catalog quote, documented body, duration release gate (2.904632ms)
+✔ one structured planner call; typed edits; 5xx-only backup and honest receipts (2.271879ms)
+✔ explicit fresh-priced submit deduplicates; uncertain retry and reload keep identical key/body (74.939635ms)
+✔ reload polls bounded states then retries only safe authenticated content; blob lifecycle (14.462512ms)
+✔ poll requests carry bounded abort signals; pause never cancels job; terminal and HTTP errors differ (17.397512ms)
+✔ video price refusals and schema boundaries are never coerced (5.504832ms)
+✔ new explicit generation changes token, retains prior job receipt; unknown completed cost is not zero (19.832627ms)
+✔ download byte mismatches and broken streams report exact incomplete retry message without Blob (2.191031ms)
+✔ definite create auth/credit rejection is not an uncertain held job and allows explicit recovery (17.535098ms)
+✔ list rejects malformed job identity and cursor rather than guessing fields (39.303943ms)
+✔ list uses existing settings key, fixed same-origin route, encoded cursor and no persistence (0.771839ms)
+✔ media download rejects declared oversize, streamed overflow and incomplete content before Blob (4.300004ms)
+✔ media error body is canceled without buffering and upstream URL is never followed (0.73844ms)
+ℹ tests 98
+ℹ suites 0
+ℹ pass 98
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 380.591584
+
+python exit 0 log /home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/full-python.log
+r_cache_bounds_eviction_and_validation) ... ok
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... ok
+test_list_query_allowlist (test_work_proxy.WorkProxy.test_list_query_allowlist) ... [shell] "GET /v1/videos HTTP/1.1" 200 -
+[shell] "GET /v1/videos?limit=1 HTTP/1.1" 200 -
+[shell] "GET /v1/videos?limit=100&cursor=abc_=- HTTP/1.1" 200 -
+[shell] "GET /v1/videos?cursor=abc&limit=50 HTTP/1.1" 200 -
+ok
+test_list_query_rejections_never_forward (test_work_proxy.WorkProxy.test_list_query_rejections_never_forward) ... [shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=0 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=101 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=-1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=1.0 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=+1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit= HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=1&limit=2 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor= HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor=a&cursor=b HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor=a%2Fb HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?foo=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=50&foo=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=1&&cursor=a HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "POST /v1/videos?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "POST /v1/videos?limit=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "POST /v1/videos? HTTP/1.1" 404 -
+ok
+
+----------------------------------------------------------------------
+Ran 103 tests in 400.537s
+
+OK

@@ -22,7 +22,7 @@ let cleanup=()=>{};
 export function destroy(){cleanup();cleanup=()=>{};}
 export function bind(root){
   let active=true,key=get().settings.apiKey.trim(),epoch=0,items=[],cursor=null,busy=false,objectURL=null;
-  let listAbort=null,mediaAbort=null,opened=null,frameCallback=null,posters=new Map(),posterAccount=null;
+  let listAbort=null,mediaAbort=null,opened=null,frameCallback=null,posters=new Map(),posterAccount=null,localRead=0;
   const status=root.querySelector('#work-status'),list=root.querySelector('#work-list'),more=root.querySelector('#work-more'),media=root.querySelector('#work-media'),refresh=root.querySelector('#work-refresh');
   const valid=(e)=>active && epoch===e && get().settings.apiKey.trim()===key;
   function clearMedia(){
@@ -50,10 +50,13 @@ export function bind(root){
     }
     list.replaceChildren(cards);
   }
-  async function localRows(e){
+  async function localRows(e,account=null){
+    let read;
+    const current=()=>valid(e)&&read===localRead;
     try{
-      const c=await videoContext(key),rows=await c.store.list();if(!valid(e))return;
-      if(posterAccount!==c.store.account_id){const saved=await readPosters(c.store.account_id).catch(()=>new Map());if(!valid(e))return;posters=saved;posterAccount=c.store.account_id;}
+      const c=await videoContext(key);if(!valid(e)||(account&&account!==c.store.account_id))return;
+      read=++localRead;const rows=await c.store.list();if(!current())return;
+      if(posterAccount!==c.store.account_id){const saved=await readPosters(c.store.account_id).catch(()=>new Map());if(!current())return;posters=saved;posterAccount=c.store.account_id;}
       const local=rows.filter(r=>r.idempotency_key).map(r=>({id:r.video_job_id||r.id,local_id:r.id,status:r.video_status,params:{prompt:r.prompt||undefined},model:r.model_ids[0],created_at:r.created_at,cost_usd:r.cost}));
       const merged=new Map(items.map(x=>[x.id,x]));for(const job of local)merged.set(job.id,mergeJob(merged.get(job.id)||{},job));items=[...merged.values()];draw();
       const selected=new URLSearchParams(location.hash.split('?')[1]||'').get('video');
@@ -100,7 +103,7 @@ export function bind(root){
   }
   function changed(){const next=get().settings.apiKey.trim();if(next!==key){reset();key=next;load();}}
   const unsubscribe=subscribe(changed);
-  const runsChanged=()=>{if(active&&key)localRows(epoch);};window.addEventListener('singular:runs',runsChanged);
+  const runsChanged=event=>{if(active&&key&&event.detail?.account_id)localRows(epoch,event.detail.account_id);};window.addEventListener('singular:runs',runsChanged);
   // Follow existing settings storage on cross-tab account changes too.
   const storageChanged=async(event)=>{
     // Ignore unrelated stores; clearing settings must hide prior media immediately.

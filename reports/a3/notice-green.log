@@ -1,0 +1,7 @@
+test_migrated_completion_notice (test_a3_followups_browser.Followups.test_migrated_completion_notice) ... ok
+test_migrated_legacy_completion_import_announces_once (test_a3_followups_browser.Followups.test_migrated_legacy_completion_import_announces_once) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 22.299s
+
+OK

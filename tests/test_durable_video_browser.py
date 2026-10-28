@@ -182,7 +182,12 @@ class DurableVideoBrowser(VideoBrowser):
   self.page.wait_for_timeout(800);before=self.polls
   self.page.wait_for_timeout(6000)
   self.assertLessEqual(self.polls-before,1,'one origin-wide owner, not one poller per tab')
-  self.state='completed';self.page.wait_for_selector('[data-video-ready]',timeout=40000)
+  self.state='completed'
+  # Readiness is origin/account-wide: the first valid observer may be either tab.
+  for _ in range(400):
+   if self.page.locator('[data-video-ready]').count()+other.locator('[data-video-ready]').count():break
+   self.page.wait_for_timeout(100)
+  self.assertEqual(self.page.locator('[data-video-ready]').count()+other.locator('[data-video-ready]').count(),1)
   self.assertEqual([r for r in self.rows() if r['idempotency_key']][0]['status'],'done')
   self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
  def test_uncertain_no_id_reload_never_resubmits_and_idb_blocks_without_legacy(self):

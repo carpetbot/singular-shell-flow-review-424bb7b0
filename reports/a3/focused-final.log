@@ -1,0 +1,14 @@
+test_account_change_rejects_queued_read_and_foreign_notification (test_a3_followups_browser.Followups.test_account_change_rejects_queued_read_and_foreign_notification) ... ok
+test_cross_tab_work_updates_preserve_selected_media_and_prompt (test_a3_followups_browser.Followups.test_cross_tab_work_updates_preserve_selected_media_and_prompt) ... ok
+test_foreign_notice_does_not_cancel_valid_pending_read (test_a3_followups_browser.Followups.test_foreign_notice_does_not_cancel_valid_pending_read) ... ok
+test_migrated_completion_notice (test_a3_followups_browser.Followups.test_migrated_completion_notice) ... ok
+test_migrated_legacy_completion_import_announces_once (test_a3_followups_browser.Followups.test_migrated_legacy_completion_import_announces_once) ... ok
+test_ready_claim_is_atomic_account_scoped_and_survives_reopen (test_a3_followups_browser.Followups.test_ready_claim_is_atomic_account_scoped_and_survives_reopen) ... ok
+test_route_leave_removes_notification_listener (test_a3_followups_browser.Followups.test_route_leave_removes_notification_listener) ... ok
+test_same_tab_watcher_completion_updates_local_prompt_without_refresh (test_a3_followups_browser.Followups.test_same_tab_watcher_completion_updates_local_prompt_without_refresh) ... ok
+test_work_migration_completion_updates_without_refresh (test_a3_followups_browser.Followups.test_work_migration_completion_updates_without_refresh) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 67.543s
+
+OK

@@ -1,0 +1,6 @@
+test_foreign_notice_does_not_cancel_valid_pending_read (test_a3_followups_browser.Followups.test_foreign_notice_does_not_cancel_valid_pending_read) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 3.149s
+
+OK

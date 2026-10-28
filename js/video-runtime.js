@@ -21,7 +21,7 @@ async function abandonPlans(c){
 }
 let context=null,epoch=0;
 const listeners=new Set();
-function emit(){window.dispatchEvent(new Event('singular:runs'));}
+function emit(c){if(c.valid())window.dispatchEvent(new CustomEvent('singular:runs',{detail:{account_id:c.store.account_id}}));}
 function invalidate(){
  epoch++;
  if(context){const old=context;old.abort.abort();for(const release of old.plans.values())release();for(const s of old.sessions)s.dispose();if(old.store)abandonPlans(old).catch(()=>{}).finally(()=>old.store.close());}
@@ -43,6 +43,8 @@ export async function videoContext(key=get().settings.apiKey){
    const store=await openRunStore({key});
    if(!c.valid()){store.close();c.assert();}
    c.store=store;const migration=await store.migrateLegacy();c.assert();await abandonPlans(c);c.assert();
+   // Startup terminals are history, not new completion transitions.
+   c.observed=new Map((await store.list()).map(r=>[r.id,r.status]));c.assert();
    if(migration.unscoped)notice('Older video references have no account scope; originals retained. Recover videos using My work.');
    return c;
   })();
@@ -81,7 +83,7 @@ export async function durableVideoSession(options={}){
      if(saved&&!saved.idempotency_key)await c.store.update(saved.id,{prompt:spec.prompt,outputs:this.draft.outputs});
     }
    }
-   const job=await super.create(spec,price);c.assert();if(job?.status==='completed')ready(c,job.id);return job;
+   const job=await super.create(spec,price);c.assert();if(job?.status==='completed')await ready(c,job.id);return job;
   }
   async save(underLock=false,insert=false){
    c.assert();
@@ -118,7 +120,7 @@ export async function durableVideoSession(options={}){
     await c.store.update(existing.id,patch);
    }
    else await c.store.create({flow_id:VIDEO_FLOW,title:draft.inputs?.topic?.slice(0,100)||'Video draft',inputs:draft.inputs||{},outputs:draft.outputs||{},prompt:draft.prompt||'',model_ids:draft.model_ids||[],receipts:(draft.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote,...patch});
-   c.assert();emit();c.kick?.();
+   c.assert();emit(c);c.kick?.();
   }
  }
  const s=new DurableSession({...options,key:c.key,fetcher,storage:scopedStorage(options.storage||localStorage,c.store.account_id)});
@@ -137,7 +139,7 @@ export async function saveVideoPlan(brief,run){
  const patch={...run.patch};if(patch.receipts)patch.receipts=patch.receipts.map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v])));
  const row=await c.store.get(run.id);c.assert();
  await c.store.update(run.id,patch);c.assert();
- c.plans.get(row?.outputs?.planner_owner)?.();c.plans.delete(row?.outputs?.planner_owner);emit();
+ c.plans.get(row?.outputs?.planner_owner)?.();c.plans.delete(row?.outputs?.planner_owner);emit(c);
 }
 export function startVideoRuntime(){
  let key=get().settings.apiKey.trim();
@@ -154,8 +156,8 @@ export function startVideoRuntime(){
 // A single origin-wide observer owns each job. Other tabs rediscover via IDB;
 // no view owns this loop, and the frozen engine still validates every response.
 function pause(ms,signal,context){return new Promise(resolve=>{const done=()=>{clearTimeout(timer);signal.removeEventListener('abort',done);if(context?.kick===done)context.kick=null;resolve();};const timer=setTimeout(done,ms);if(context)context.kick=done;signal.addEventListener('abort',done,{once:true});if(signal.aborted)done();});}
-function ready(c,id){
- if(!c.valid())return;
+async function ready(c,id){
+ if(!c.valid()||!await c.store.claimVideoReady(id)||!c.valid())return;
  const el=notice('Your video is ready ');el.dataset.videoReady=id;
  const open=document.createElement('button');open.textContent='Open';open.onclick=()=>{if(c.valid()){location.hash='#/work?video='+encodeURIComponent(id);el.remove();}};el.append(open);
 }
@@ -164,7 +166,16 @@ async function watch(c){
  while(c.valid()){
   try{
    await c.store.migrateLegacy();c.assert();
-   const rows=await c.store.pending();c.assert();
+   const all=await c.store.list();c.assert();
+   // Polling ownership is separate from local view observation. Re-read durable
+   // truth in every tab, including terminals imported from a legacy writer.
+   const snapshot=JSON.stringify(all);
+   if(c.snapshot!==snapshot){c.snapshot=snapshot;emit(c);}
+   for(const row of all){
+    if(c.observed.get(row.id)==='rendering'&&row.status==='done'&&row.video_job_id)await ready(c,row.video_job_id);
+    c.assert();c.observed.set(row.id,row.status);
+   }
+   const rows=all.filter(r=>!['done','failed'].includes(r.status));
    document.documentElement.dataset.videoRendering=String(rows.some(r=>r.status==='rendering'));
    for(const row of rows){
     if(row.status!=='rendering'||!row.video_job_id||active.has(row.id)||(retry.get(row.id)?.at||0)>Date.now()||row.outputs?.polling_timeout)continue;
@@ -184,7 +195,7 @@ async function watch(c){
       const request=s.request.bind(s);
       s.request=(path,opts,auth)=>{c.assert();if(Date.now()>=deadline)throw new Error('Gateway observation timeout');return request(path,opts,auth);};
       await s.resume({sleep:async()=>{await pause(Math.min(delay,Math.max(0,deadline-Date.now())),c.abort.signal);delay=Math.min(30000,Math.round(delay*1.7));}});
-      c.assert();const saved=await c.store.get(row.id);if(saved?.status==='done')ready(c,saved.video_job_id);
+      c.assert();const saved=await c.store.get(row.id);if(saved?.status==='done')await ready(c,saved.video_job_id);
       retry.delete(row.id);
      }finally{s.dispose();c.sessions.delete(s);}
     }).catch(async error=>{

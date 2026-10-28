@@ -1,0 +1,15 @@
+{
+  "base": "7efe1eddb28fd30d2bd93229103917102985be16",
+  "frozen_file_count": 21,
+  "frozen_mismatches": [],
+  "frozen_video_sha256": "71986db49b64763229a90e4d4fe10ae78ebfc45b27070f6d32e675e21a31450b",
+  "production_scan_matches": {
+    "debug diagnostic": false,
+    "dynamic eval": false,
+    "unsafe shell": false,
+    "literal credentials": false
+  },
+  "diff_check_exit": 0,
+  "diff_check_output": "",
+  "note": "Test keys are explicit offline fixture values; no live credentials were retrieved. Existing persistence and engine algorithms remain unchanged except the additive ready-claim method."
+}

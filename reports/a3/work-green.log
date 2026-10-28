@@ -1,0 +1,9 @@
+test_cross_tab_work_updates_preserve_selected_media_and_prompt (test_a3_followups_browser.Followups.test_cross_tab_work_updates_preserve_selected_media_and_prompt) ... ok
+test_migrated_completion_notice (test_a3_followups_browser.Followups.test_migrated_completion_notice) ... ok
+test_migrated_legacy_completion_import_announces_once (test_a3_followups_browser.Followups.test_migrated_legacy_completion_import_announces_once) ... ok
+test_work_migration_completion_updates_without_refresh (test_a3_followups_browser.Followups.test_work_migration_completion_updates_without_refresh) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 43.563s
+
+OK
