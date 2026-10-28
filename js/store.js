@@ -20,7 +20,7 @@ function emit(){ listeners.forEach(fn => fn()); }
 function emitView(){ viewListeners.forEach(fn => fn()); }
 export function touch(){ persist(); emit(); emitView(); }
 
-export function hydrate(){
+export function hydrate({clearMissingKey=false}={}){
   return new Promise(res => {
     setTimeout(() => {
       try{
@@ -35,7 +35,7 @@ export function hydrate(){
               catalog: snap.catalog || null,
             };
           }
-        }
+        }else if(clearMissingKey){ state.settings.apiKey = ''; }
       }catch(e){ console.warn("hydrate failed", e); }
       res(state);
     }, 200);

@@ -60,6 +60,18 @@ class WorkBrowser(unittest.TestCase):
   self.page.evaluate('''()=>{const entry=Object.entries(localStorage).find(([k,v])=>{try{return JSON.parse(v).settings?.apiKey==='offline-work-fixture';}catch{return false;}});const data=JSON.parse(entry[1]);data.settings.apiKey='';localStorage.setItem(entry[0],JSON.stringify(data));window.dispatchEvent(new StorageEvent('storage',{key:entry[0],newValue:JSON.stringify(data)}));}''')
   self.assertEqual(self.page.locator('.work-card').count(),0,'old account must disappear synchronously on account notification')
   self.page.get_by_text('Connect your Singular key in Settings to recover videos.',exact=True).wait_for()
+ def test_cross_tab_settings_removal_disconnects(self):
+  self.open();self.page.get_by_text('vid_first',exact=True).wait_for()
+  self.page.evaluate('''()=>{const entry=Object.entries(localStorage).find(([k,v])=>{try{return JSON.parse(v).settings?.apiKey==='offline-work-fixture';}catch{return false;}});localStorage.removeItem(entry[0]);window.dispatchEvent(new StorageEvent('storage',{key:entry[0],oldValue:entry[1],newValue:null}));}''')
+  self.page.get_by_text('Connect your Singular key in Settings to recover videos.',exact=True).wait_for()
+  self.assertEqual(self.page.locator('.work-card').count(),0)
+ def test_reenter_after_cross_tab_disconnect_does_not_reuse_old_key(self):
+  self.open();self.page.get_by_text('vid_first',exact=True).wait_for()
+  self.page.locator('#tabbar a[href="#/settings"]').click()
+  self.page.evaluate('''()=>{const entry=Object.entries(localStorage).find(([k,v])=>{try{return JSON.parse(v).settings?.apiKey==='offline-work-fixture';}catch{return false;}});const data=JSON.parse(entry[1]);data.settings.apiKey='';localStorage.setItem(entry[0],JSON.stringify(data));}''')
+  before=len(self.calls);self.page.locator('#tabbar a[href="#/work"]').click()
+  self.page.get_by_text('Connect your Singular key in Settings to recover videos.',exact=True).wait_for()
+  self.assertEqual(len(self.calls),before)
  def test_list_pagination_playback_download_mobile(self):
   self.open();self.page.get_by_role('heading',name='My work',exact=True).wait_for()
   self.page.get_by_text('vid_first',exact=True).wait_for()

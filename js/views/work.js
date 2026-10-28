@@ -1,5 +1,6 @@
 import { get, subscribe, hydrate } from '../store.js';
 import { listVideos, fetchVideo } from '../work-api.js';
+import { renderTopbar, syncBanner } from '../chrome.js';
 export function view(){return `<div class="work-page"><h1>My work</h1><p>Recover videos for your connected key, including jobs from other devices.</p><p><a href="#/settings">Manage key in Settings</a></p><button id="work-refresh" type="button">Refresh videos</button><p id="work-status" role="status" aria-live="polite"></p><div id="work-list" class="work-list"></div><button id="work-more" type="button" hidden>Load more</button><section id="work-media" aria-label="Selected video" hidden></section></div>`;}
 let cleanup=()=>{};
 export function destroy(){cleanup();cleanup=()=>{};}
@@ -62,13 +63,17 @@ export function bind(root){
     if(event.key!==null){
       try{const value=JSON.parse(event.newValue || event.oldValue || 'null');if(value?.v!==1 || !value.settings || !Object.hasOwn(value.settings,'apiKey')) return;}catch{return;}
     }
-    reset();status.textContent='Checking connected key…';
-    await hydrate();
-    if(active){key=get().settings.apiKey.trim();load();}
+    reset();refresh.disabled=true;status.textContent='Checking connected key…';
+    await hydrate({clearMissingKey:true});
+    if(active){key=get().settings.apiKey.trim();renderTopbar();syncBanner();load();}
   };
   window.addEventListener('storage',storageChanged);
   more.addEventListener('click',()=>load(true));
   refresh.addEventListener('click',()=>{reset();load();});
   cleanup=()=>{active=false;reset();unsubscribe();window.removeEventListener('storage',storageChanged);};
-  load();
+  // A different tab may have changed settings while this route was unmounted.
+  const startingEpoch=epoch;refresh.disabled=true;status.textContent='Checking connected key…';
+  hydrate({clearMissingKey:true}).then(()=>{
+    if(active && epoch===startingEpoch){key=get().settings.apiKey.trim();renderTopbar();syncBanner();load();}
+  });
 }

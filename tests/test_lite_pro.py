@@ -55,11 +55,11 @@ class LitePro(unittest.TestCase):
     def test_01_mode_default_persistence_and_guarded_routes(self):
         self.gallery('#/skills')
         self.assertEqual(self.page.locator('html').get_attribute('data-mode'),'lite')
-        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Flows','Settings'])
+        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Flows','My work','Settings'])
         self.assertEqual(self.page.locator('#syncbanner').evaluate('el=>getComputedStyle(el).display'),'none')
         self.assertIn('Flows',self.page.locator('h2').inner_text())
         self.mode('Pro')
-        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Flows','Chat','Models','Settings'])
+        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Flows','My work','Chat','Models','Settings'])
         self.page.reload();self.page.wait_for_selector('.skill-card')
         self.assertEqual(self.page.locator('html').get_attribute('data-mode'),'pro')
         self.mode('Lite')

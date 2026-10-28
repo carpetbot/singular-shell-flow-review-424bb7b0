@@ -3,6 +3,7 @@ import { get } from './store.js';
 export const MAX_MEDIA_BYTES = 100 * 1024 * 1024;
 const jobId = /^[A-Za-z0-9_-]{1,160}$/;
 export async function listVideos(cursor, signal){
+  signal = signal ? AbortSignal.any([signal,AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000);
   const key = get().settings.apiKey.trim();
   const q = new URLSearchParams({limit:'50'});
   if(cursor) q.set('cursor', cursor);
@@ -14,6 +15,7 @@ export async function listVideos(cursor, signal){
   return {items:data.items,next_cursor:data.next_cursor || null};
 }
 export async function fetchVideo(id, signal){
+  signal = signal ? AbortSignal.any([signal,AbortSignal.timeout(120000)]) : AbortSignal.timeout(120000);
   if(!jobId.test(id)) throw new Error('Invalid video reference.');
   const key = get().settings.apiKey.trim();
   const r = await fetch('/v1/videos/'+id+'/content', {headers:{Authorization:'Bearer '+key},signal,cache:'no-store',redirect:'error',credentials:'omit'});
