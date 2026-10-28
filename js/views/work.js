@@ -3,6 +3,13 @@ import { get, subscribe, hydrate } from '../store.js';
 import { listVideos, fetchVideo } from '../work-api.js';
 import { renderTopbar, syncBanner } from '../chrome.js';
 export function view(){return `<div class="work-page"><h1>My work</h1><p>Recover videos for your connected key, including jobs from other devices.</p><p><a href="#/settings">Manage key in Settings</a></p><button id="work-refresh" type="button">Refresh videos</button><p id="work-status" role="status" aria-live="polite"></p><div id="work-list" class="work-list"></div><button id="work-more" type="button" hidden>Load more</button><section id="work-media" aria-label="Selected video" hidden></section></div>`;}
+const terminal=status=>['completed','failed','rejected'].includes(status);
+function mergeJob(gateway,local){
+  if(!local)return gateway;
+  return {...gateway,...local,status:terminal(local.status)||!terminal(gateway.status)?local.status:gateway.status,
+    model:local.model||gateway.model,created_at:local.created_at||gateway.created_at,
+    params:{...gateway.params,...local.params,prompt:local.params?.prompt||gateway.params?.prompt}};
+}
 let cleanup=()=>{};
 export function destroy(){cleanup();cleanup=()=>{};}
 export function bind(root){
@@ -36,8 +43,8 @@ export function bind(root){
   async function localRows(e){
     try{
       const c=await videoContext(key),rows=await c.store.list();if(!valid(e))return;
-      const local=rows.filter(r=>r.idempotency_key).map(r=>({id:r.video_job_id||r.id,local_id:r.id,status:r.video_status,params:{prompt:r.prompt||'Prompt saved on another device'},model:r.model_ids[0],created_at:r.created_at,cost_usd:r.cost}));
-      const merged=new Map(items.map(x=>[x.id,x]));for(const job of local)merged.set(job.id,job);items=[...merged.values()];draw();
+      const local=rows.filter(r=>r.idempotency_key).map(r=>({id:r.video_job_id||r.id,local_id:r.id,status:r.video_status,params:{prompt:r.prompt||undefined},model:r.model_ids[0],created_at:r.created_at,cost_usd:r.cost}));
+      const merged=new Map(items.map(x=>[x.id,x]));for(const job of local)merged.set(job.id,mergeJob(merged.get(job.id)||{},job));items=[...merged.values()];draw();
       const selected=new URLSearchParams(location.hash.split('?')[1]||'').get('video');
       if(selected&&opened!==selected&&items.some(j=>j.id===selected&&j.status==='completed')){opened=selected;openMedia(selected);}
     }catch{if(valid(e))status.textContent='Local video recovery unavailable; originals retained.';}
@@ -50,7 +57,7 @@ export function bind(root){
     try{
       await localRows(e);if(!valid(e))return;
       const page=await listVideos(append?cursor:null,controller.signal);if(!valid(e)) return;
-      const merged=new Map(items.map(x=>[x.id,x]));for(const job of page.items){const local=merged.get(job.id);merged.set(job.id,{...job,...(local?.local_id?local:{}),params:{...job.params,...local?.params}});}
+      const merged=new Map(items.map(x=>[x.id,x]));for(const job of page.items){const local=merged.get(job.id);merged.set(job.id,mergeJob(job,local?.local_id?local:null));}
       items=[...merged.values()];cursor=page.next_cursor;draw();status.textContent=items.length ? `${items.length} video jobs loaded.` : 'No video jobs found for this key.';
     }catch(err){if(valid(e) && err.name!=='AbortError') status.textContent=err.message?.startsWith('Key not accepted') ? err.message : 'Could not load videos. Retry.';}
     finally{if(valid(e)){busy=false;more.hidden=!cursor;more.disabled=false;refresh.disabled=false;}}

@@ -27,6 +27,7 @@ class VideoBrowser(unittest.TestCase):
    if self.chat_status!=200:r.fulfill(status=self.chat_status,json={'error':{'message':'Offline fixture error'}});return
    d=json.loads(b['messages'][1]['content'])['duration'];plan={'shotbeats':[{'duration_s':d,'description':'Offline fixture boat drift'}],'prompt':'A paper boat drifts on a calm pond.','overlays':[{'at_s':0,'text':'Offline editor overlay'}],'dropped':['Exact logo unsupported']}
    r.fulfill(json={'model':b['model'],'choices':[{'message':{'content':json.dumps(plan)}}],'usage':{'prompt_tokens':20,'completion_tokens':60}})
+  elif path=='/v1/videos' and r.request.method=='GET':r.fulfill(json={'items':[],'next_cursor':None})
   elif path=='/v1/videos' and r.request.method=='POST':
    self.calls.append({'path':path,'body':r.request.post_data_json,'token':r.request.headers.get('idempotency-key')})
    if self.lost:r.abort();return
@@ -197,7 +198,7 @@ class VideoBrowser(unittest.TestCase):
   for page in pages:self.assertEqual(len(page.evaluate("JSON.parse(localStorage.getItem('motion-video.v1'))")),1)
 
  def test_history_selection_cannot_bypass_pending_job(self):
-  self.open(True)
+  self.state='queued';self.open(True)
   self.page.evaluate('''async()=>{const {VideoSession}=await import('/js/video.js');const s=new VideoSession({key:'offline-not-real-key',fields:{duration:'fixture_duration'}});await s.create({model:'alibaba/wan-3.0/text-to-video',duration:15,prompt:'Offline boat'},1.583334);const pending=structuredClone(s.record);const complete={...pending,token:'old-completed',id:'vid_old',status:'completed'};localStorage.setItem('motion-video.v1',JSON.stringify([complete,pending]));}''')
   self.open(True);self.page.locator('#video-history').select_option('0')
   self.assertTrue(self.page.locator('#video-new').is_disabled(),'all-history pending guard must disable new generation')

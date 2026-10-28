@@ -58,7 +58,7 @@ export async function durableVideoSession(options={}){
   async create(spec,price){
    c.assert();await c.store.migrateLegacy();c.assert();
    this.draft={...this.draft,prompt:spec.prompt,model_ids:[spec.model]};
-   return super.create(spec,price);
+   const job=await super.create(spec,price);c.assert();if(job?.status==='completed')ready(c,job.id);return job;
   }
   async save(underLock=false,insert=false){
    c.assert();
@@ -69,7 +69,7 @@ export async function durableVideoSession(options={}){
    const patch={video_job_id:r.id??null,video_status:r.status,status:r.status==='completed'?'done':['failed','rejected'].includes(r.status)?'failed':'rendering',settled:r.settled??null,cost:r.settled??null,error:r.error??null,legacy:structuredClone(r)};
    const existing=(await c.store.list()).find(row=>row.idempotency_key===r.token);
    if(existing)await c.store.update(existing.id,patch);
-   else await c.store.create({flow_id:VIDEO_FLOW,title:this.draft?.inputs?.topic?.slice(0,100)||'Video draft',inputs:this.draft?.inputs||{},prompt:this.draft?.prompt||'',model_ids:this.draft?.model_ids||[],receipts:(this.draft?.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote,...patch});
+   else await c.store.create({flow_id:VIDEO_FLOW,title:this.draft?.inputs?.topic?.slice(0,100)||'Video draft',inputs:this.draft?.inputs||{},outputs:this.draft?.outputs||{},prompt:this.draft?.prompt||'',model_ids:this.draft?.model_ids||[],receipts:(this.draft?.receipts||[]).map(r=>Object.fromEntries(Object.entries(r).map(([k,v])=>[k,v===undefined?null:v]))),idempotency_key:r.token,plan_id:r.planId,body_hash:r.bodyHash,quote:r.quote,...patch});
    c.assert();emit();c.kick?.();
   }
  }
@@ -130,7 +130,15 @@ async function watch(c){
       c.assert();const saved=await c.store.get(row.id);if(saved?.status==='done')ready(c,saved.video_job_id);
       retry.delete(row.id);
      }finally{s.dispose();c.sessions.delete(s);}
-    }).catch(()=>{if(c.valid()){const attempts=(retry.get(row.id)?.attempts||0)+1;retry.set(row.id,{attempts,at:Date.now()+Math.min(60000,5000*2**Math.min(attempts-1,4))});}}).finally(()=>active.delete(row.id));
+    }).catch(async error=>{
+     if(!c.valid())return;
+     if(error.message==='Gateway observation timeout'){
+      await c.store.update(row.id,{outputs:{...row.outputs,polling_timeout:true}}).catch(()=>{});c.assert();
+      notice('Video observation reached the gateway 24-hour timeout. Refresh My work to check its final status.');
+     }else{
+      const attempts=(retry.get(row.id)?.attempts||0)+1;retry.set(row.id,{attempts,at:Date.now()+Math.min(60000,5000*2**Math.min(attempts-1,4))});
+     }
+    }).catch(()=>{}).finally(()=>active.delete(row.id));
    }
   }catch{if(c.valid())notice('Durable video recovery unavailable; generation blocked. Retry after restoring browser storage.');}
   await pause(5000,c.abort.signal,c);

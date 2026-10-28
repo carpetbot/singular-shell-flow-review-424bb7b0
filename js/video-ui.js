@@ -25,7 +25,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
  <button class="btn" id="video-generate" disabled>Generate video · quote required</button>
  <p id="video-message" role="status" aria-live="polite"></p>
  <div id="video-receipts" class="receipt"></div>
- <label for="video-history">Saved video job references · no prompts or API keys stored here</label><select id="video-history"></select>
+ <label for="video-history">Saved video job references · current account</label><select id="video-history"></select>
  <button class="btn ghost" id="video-clear">Clear finished jobs</button>
  <button class="btn ghost" id="video-resume">Resume existing job</button>
  <button class="btn ghost" id="video-download-retry" hidden>Retry download only</button>
@@ -35,9 +35,19 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
  </div><p class="note">Rendering continues when you leave and resumes after reload. No cancellation or refund is implied. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,async (modal,close)=>{
   const el=id=>modal.querySelector('#video-'+id);let quote=null,planning=false,running=false,downloadIncomplete=false,receipts=[];
   el('plan').disabled=true;el('quote').disabled=true;
-  let session;
-  try{session=await durableVideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>{if(session)render();}});}catch(e){el('message').textContent=e.message;modal.querySelectorAll('button:not(.close-modal)').forEach(b=>b.disabled=true);return;}
-  const account=await videoContext();if(!modal.isConnected){session.dispose();return;}
+  let session,account,savedDraft;
+  try{
+   session=await durableVideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>{if(session)render();}});
+   account=await videoContext();const rows=await account.store.list();account.assert();
+   savedDraft=session.record?rows.find(r=>r.idempotency_key===session.record.token):rows.filter(r=>r.outputs?.plan).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)))[0];
+  }catch(e){if(modal.isConnected){el('message').textContent=e.message;modal.querySelectorAll('button:not(.close-modal)').forEach(b=>b.disabled=true);}return;}
+  if(!modal.isConnected){session.dispose();return;}
+  if(savedDraft){
+   for(const field of ['topic','context','platform'])if(typeof savedDraft.inputs?.[field]==='string')el(field).value=savedDraft.inputs[field];
+   const plan=savedDraft.outputs?.plan;if(plan){plan.prompt=savedDraft.prompt||plan.prompt;el('plan-json').value=JSON.stringify(plan,null,2);}
+   el('prompt').value=savedDraft.prompt||'';receipts=savedDraft.receipts||[];
+   session.draft={inputs:savedDraft.inputs,receipts,outputs:savedDraft.outputs};
+  }
   const offAccount=onVideoAccountChange(()=>{session.dispose();modal.querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});close();});
   const spec=()=>({model:el('model').value,duration:5,prompt:el('prompt').value});
   const say=s=>{if(modal.isConnected&&account.valid())el('message').textContent=s;};
@@ -56,7 +66,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
    el('generate').disabled=otherPending||running||!session.key||!quote||(!retry&&!el('plan-json').value)||(session.record?.id!=null);
    el('defaults').textContent=el('model').value===MODELS[0].id?'Audio: Wan default on. Framing: Model default / ratio not guaranteed.':'Audio: MiniMax unspecified. Framing: Model default / ratio not guaranteed.';
    el('generate').textContent=(retry?'Retry identical submission':'Generate video')+' · '+(quote?usd(quote.price):'quote required');
-   el('receipts').textContent='Planner attempts: '+(receipts.length?receipts.map(r=>(r.model||r.requested)+' · estimated '+usd(r.estCost)).join('; '):'none in this view (not retained after reload)')+'\nVideo receipts: '+(session.records.length?session.records.map(r=>(r.id||(r.status==='rejected'?'submission rejected':'video start not confirmed'))+' · '+r.status+' · quoted '+usd(r.quote?.price)+' · '+(['completed','failed','rejected'].includes(r.status)?'settled ':'pending; unsettled ')+usd(r.settled)+(r.error?' · '+r.error:'')).join('\n'):'none');
+   el('receipts').textContent='Planner attempts: '+(receipts.length?receipts.map(r=>(r.model||r.requested)+' · estimated '+usd(r.estCost)).join('; '):'none saved for this request')+'\nVideo receipts: '+(session.records.length?session.records.map(r=>(r.id||(r.status==='rejected'?'submission rejected':'video start not confirmed'))+' · '+r.status+' · quoted '+usd(r.quote?.price)+' · '+(['completed','failed','rejected'].includes(r.status)?'settled ':'pending; unsettled ')+usd(r.settled)+(r.error?' · '+r.error:'')).join('\n'):'none');
    el('receipts').style.whiteSpace='pre-wrap';
    el('history').innerHTML=session.records.map((r,i)=>`<option value="${i}"${session.record===r?' selected':''}>${esc(r.id||(r.status==='rejected'?'rejected submission':'video start not confirmed'))} · ${esc(r.status)}</option>`).join('');
    el('resume').disabled=running||!session.record?.id;el('new').disabled=running||pending.length>0||downloadIncomplete;
@@ -69,12 +79,12 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   el('plan').onclick=async()=>{
    if(planning||running)return;planning=true;render();say('Planning draft…');
    let saved;const brief={topic:el('topic').value,context:el('context').value,platform:el('platform').value,duration:5};
-   try{saved=await saveVideoPlan(brief);const catalog=await loadCatalog();account.assert();const result=await planVideo(brief,{chat,catalog,signal:AbortSignal.any([account.abort.signal,AbortSignal.timeout(60000)])});account.assert();await saveVideoPlan(brief,{id:saved.id,patch:{status:'done',outputs:{plan:result.plan},prompt:result.plan.prompt,receipts:result.receipts}});session.draft={inputs:brief,receipts:result.receipts};receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
+   try{saved=await saveVideoPlan(brief);const catalog=await loadCatalog();account.assert();const result=await planVideo(brief,{chat,catalog,signal:AbortSignal.any([account.abort.signal,AbortSignal.timeout(60000)])});account.assert();await saveVideoPlan(brief,{id:saved.id,patch:{status:'done',outputs:{plan:result.plan},prompt:result.plan.prompt,receipts:result.receipts}});session.draft={inputs:brief,receipts:result.receipts,outputs:{plan:result.plan}};receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
    catch(e){if(saved&&account.valid())await saveVideoPlan(brief,{id:saved.id,patch:{status:'failed',receipts:e.receipts||[]}}).catch(()=>{});receipts.push(...e.receipts||[]);say(e.status===401?'Planner authentication failed':e.status===402?'Planner insufficient credits':e.message);}
    finally{planning=false;render();}
   };
   el('quote').onclick=perform(async()=>{quote=null;const r=await session.request('/pricing.json',{},false);quote=(releaseReady(fields)?quoteVideo:quoteDefaultVideo)(r,spec().model,5);el('price').textContent=usd(quote.price)+' · '+quote.duration+' s / '+quote.resolution+' · catalog '+quote.as_of+' · checked again before submit. Planner excluded.';});
-  el('generate').onclick=perform(async()=>{if(!quote)throw new Error('Review fresh price first');if(!session.record){const p=JSON.parse(el('plan-json').value);p.prompt=el('prompt').value;validatePlan(p,spec().duration);}say('Creating job · quote pending, charge not settled');await session.create(spec(),quote.price);await follow();});
+  el('generate').onclick=perform(async()=>{if(!quote)throw new Error('Review fresh price first');if(!session.record){const p=JSON.parse(el('plan-json').value);p.prompt=el('prompt').value;validatePlan(p,spec().duration);session.draft={...session.draft,outputs:{plan:p}};}say('Creating job · quote pending, charge not settled');await session.create(spec(),quote.price);await follow();});
   el('clear').onclick=perform(async()=>{const selected=session.record?.token;await session.clearFinished();if(selected!==session.record?.token){downloadIncomplete=false;el('player').removeAttribute('src');el('player').hidden=true;el('download').removeAttribute('href');el('download').hidden=true;}say('Finished jobs cleared. Unfinished jobs are kept.');});
   el('resume').onclick=perform(async()=>{say('Resuming existing job, no new generation');await follow();});
   el('download-retry').onclick=perform(show);
@@ -83,7 +93,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   el('model').onchange=()=>{quote=null;el('price').textContent='Model changed; refresh price. The draft stays five seconds.';render();};
   el('plan-json').oninput=()=>{try{const p=JSON.parse(el('plan-json').value);if(typeof p.prompt==='string')el('prompt').value=p.prompt;}catch{}render();};
   el('prompt').oninput=()=>{try{const p=JSON.parse(el('plan-json').value);p.prompt=el('prompt').value;el('plan-json').value=JSON.stringify(p,null,2);}catch{}render();};
-  if(session.record){el('model').value=session.record.quote?.model||MODELS[0].id;say(session.record.status==='rejected'?'Submission rejected before job creation. Fix authentication/credits, then choose Make another version (close/reopen after changing Settings).':session.record.id?'Saved job found. Resume with the key you used to start this video.':'We couldn’t confirm whether the video started: re-enter identical prompt and configuration, refresh price, retry same submission. Prompt is not stored.');}
+  if(session.record){el('model').value=session.record.quote?.model||MODELS[0].id;say(session.record.status==='rejected'?'Submission rejected before job creation. Fix authentication/credits, then choose Make another version (close/reopen after changing Settings).':session.record.id?'Saved job found. Resume with the key you used to start this video.':'We couldn’t confirm whether the video started: re-enter identical prompt and configuration, refresh price, retry same saved submission. Any available local prompt is restored above.');}
   const syncStorage=event=>{if(event.key==='motion-video.v1'||event.key===null)session.exclusive(()=>{session.refresh();render();}).catch(e=>{say(e.message);el('generate').disabled=true;el('new').disabled=true;});};
   window.addEventListener('storage',syncStorage);
   const observer=new MutationObserver(()=>{if(!modal.isConnected){session.dispose();observer.disconnect();offAccount();window.removeEventListener('pagehide',dispose);window.removeEventListener('storage',syncStorage);}});observer.observe(modal.parentNode,{childList:true});const dispose=()=>session.dispose();window.addEventListener('pagehide',dispose,{once:true});

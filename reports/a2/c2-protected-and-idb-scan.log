@@ -1,0 +1,8 @@
+Frozen engine and 20 skill/prompt/manifest files unchanged
+js/video.js sha256 71986db49b64763229a90e4d4fe10ae78ebfc45b27070f6d32e675e21a31450b
+Real IndexedDB raw-store scan: PASS; row counts {'meta': 1, 'runs': 2}
+Planner/video durable statuses ['done', 'done']
+Uncaught browser errors: 0; all gateway endpoints intercepted offline
+Final plan-restoration implementation recheck: durable plan/render + credential scan + browser errors PASS
+Final protected-source recheck PASS: 22 files
+Final added-production-line unsafe-execution/credential-prefix scan PASS

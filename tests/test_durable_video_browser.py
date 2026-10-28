@@ -5,7 +5,7 @@ import unittest
 class DurableVideoBrowser(VideoBrowser):
  # Reuse fixture setup, not the inherited legacy acceptance cases.
  def test_durable_saved_before_post_and_plan_before_chat(self):
-  self.open();self.plan()
+  self.open();self.page.route('**/v1/chat/completions',self.check_chat);self.plan()
   rows=self.rows()
   self.assertEqual(len(rows),1)
   self.assertEqual(rows[0]['status'],'done')
@@ -77,8 +77,40 @@ class DurableVideoBrowser(VideoBrowser):
   self.assertEqual(self.polls,before);self.assertEqual(self.page.locator('[data-video-ready]').count(),0)
   rows=self.page.evaluate("async()=>{const c=await(await import('/js/video-runtime.js')).videoContext();return c.store.list();}")
   self.assertEqual(rows,[])
+ def test_immediate_completed_create_announces_ready(self):
+  self.open();self.plan()
+  self.page.route('**/v1/videos',lambda r:r.fulfill(status=200,json={'id':'vid_offline','status':'completed'}))
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click()
+  self.page.wait_for_selector('[data-video-ready]',timeout=4000)
+  self.assertEqual(self.polls,0)
+ def test_gateway_timeout_stops_observing_without_resubmission(self):
+  self.page.clock.install();self.start_pending();self.page.clock.fast_forward(86400000)
+  self.page.clock.run_for(60000);self.page.wait_for_timeout(200)
+  row=[r for r in self.rows() if r['idempotency_key']][0]
+  self.assertTrue(row['outputs'].get('polling_timeout'));before=self.polls
+  self.page.clock.run_for(60000);self.page.wait_for_timeout(100)
+  self.assertEqual(self.polls,before);self.assertEqual(row['status'],'rendering')
+  self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
+ def test_reopen_restores_durable_plan_prompt_and_receipts(self):
+  self.open();self.plan();self.page.locator('#video-prompt').fill('Edited prompt before approval')
+  self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.page.locator('#video-generate').click();self.page.wait_for_selector('#video-player[src^="blob:"]')
+  self.page.reload();self.open()
+  self.page.wait_for_function("document.querySelector('#video-prompt')?.value==='Edited prompt before approval'")
+  self.assertIn('shotbeats',self.page.locator('#video-plan-json').input_value())
+  self.assertEqual(self.page.locator('#video-topic').input_value(),'An offline paper boat')
+  self.assertIn('anthropic/claude-sonnet-5.5',self.page.locator('#video-receipts').inner_text())
  def rows(self):
   return self.page.evaluate("async()=>{const a=await(await import('/js/run-store.js')).openRunStore({key:'offline-not-real-key'});try{return await a.list();}finally{a.close();}}")
+ def check_chat(self,r):
+  rows=self.rows();self.assertEqual(len(rows),1);self.assertEqual(rows[0]['status'],'running')
+  self.assertEqual(rows[0]['inputs']['topic'],'An offline paper boat');self.route(r)
+ def test_my_work_merges_fresh_gateway_terminal_and_local_prompt(self):
+  self.start_pending();self.page.locator('.close-modal').click()
+  self.page.route('**/v1/videos?*',lambda r:r.fulfill(json={'items':[{'id':'vid_offline','status':'completed','params':{'prompt':'Gateway prompt'}},{'id':'vid_elsewhere','status':'completed','params':{'prompt':'Other device'}}],'next_cursor':None}))
+  self.page.evaluate("location.hash='#/work'");self.page.wait_for_function("document.querySelectorAll('.work-card').length===2")
+  card=self.page.locator('.work-card').filter(has_text='vid_offline')
+  self.assertIn('completed',card.inner_text());self.assertIn('A paper boat drifts on a calm pond.',card.inner_text())
+  self.assertIn('Other device',self.page.locator('#work-list').inner_text())
  def check_post(self,r):
   rows=self.rows();row=[x for x in rows if x['idempotency_key']==r.request.headers.get('idempotency-key')][0]
   self.assertEqual(row['video_status'],'creating');self.assertEqual(row['status'],'rendering')

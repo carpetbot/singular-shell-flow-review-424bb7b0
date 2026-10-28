@@ -1,0 +1,130 @@
+test_immediate_completed_create_announces_ready (test_durable_video_browser.DurableVideoBrowser.test_immediate_completed_create_announces_ready) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+ERROR
+test_gateway_timeout_stops_observing_without_resubmission (test_durable_video_browser.DurableVideoBrowser.test_gateway_timeout_stops_observing_without_resubmission) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+FAIL
+
+======================================================================
+ERROR: test_immediate_completed_create_announces_ready (test_durable_video_browser.DurableVideoBrowser.test_immediate_completed_create_announces_ready)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_durable_video_browser.py", line 84, in test_immediate_completed_create_announces_ready
+    self.page.wait_for_selector('[data-video-ready]',timeout=4000)
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 4000ms exceeded.
+Call log:
+  - waiting for locator("[data-video-ready]") to be visible
+
+
+======================================================================
+FAIL: test_gateway_timeout_stops_observing_without_resubmission (test_durable_video_browser.DurableVideoBrowser.test_gateway_timeout_stops_observing_without_resubmission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_durable_video_browser.py", line 90, in test_gateway_timeout_stops_observing_without_resubmission
+    self.assertTrue(row['outputs'].get('polling_timeout'));before=self.polls
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 11.042s
+
+FAILED (failures=1, errors=1)
