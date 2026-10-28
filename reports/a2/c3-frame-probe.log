@@ -1,0 +1,24 @@
+[
+  {
+    "name": "loadeddata",
+    "state": 4,
+    "time": 0,
+    "pixel": [
+      1,
+      1,
+      127,
+      255
+    ]
+  },
+  {
+    "name": "compositor",
+    "state": 4,
+    "time": 0,
+    "pixel": [
+      1,
+      1,
+      127,
+      255
+    ]
+  }
+]

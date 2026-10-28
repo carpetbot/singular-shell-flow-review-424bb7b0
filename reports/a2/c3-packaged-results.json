@@ -1,0 +1,12 @@
+[
+  {
+    "suite": "node",
+    "exit": 0,
+    "log": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/reports/a2/c3-packaged-node.log"
+  },
+  {
+    "suite": "python",
+    "exit": 0,
+    "log": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/reports/a2/c3-packaged-python.log"
+  }
+]

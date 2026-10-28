@@ -1,0 +1,34 @@
+test_canvas_security_failure_leaves_video_and_download_usable (test_work_cards_browser.WorkCards.test_canvas_security_failure_leaves_video_and_download_usable) ... ERROR
+test_failed_decode_keeps_normal_video_without_invented_poster (test_work_cards_browser.WorkCards.test_failed_decode_keeps_normal_video_without_invented_poster) ... ok
+test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped) ... ok
+test_prompt_titles_plain_statuses_and_safe_truncation (test_work_cards_browser.WorkCards.test_prompt_titles_plain_statuses_and_safe_truncation) ... ok
+test_real_poster_cache_bounds_eviction_and_validation (test_work_cards_browser.WorkCards.test_real_poster_cache_bounds_eviction_and_validation) ... ok
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... ok
+
+======================================================================
+ERROR: test_canvas_security_failure_leaves_video_and_download_usable (test_work_cards_browser.WorkCards.test_canvas_security_failure_leaves_video_and_download_usable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_work_cards_browser.py", line 28, in test_canvas_security_failure_leaves_video_and_download_usable
+    self.page.evaluate("HTMLCanvasElement.prototype.toDataURL=function(){window.captureAttempted=true;throw new DOMException('fixture taint','SecurityError');}")
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8566, in evaluate
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 464, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 320, in evaluate
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: SecurityError: fixture taint
+
+----------------------------------------------------------------------
+Ran 6 tests in 19.426s
+
+FAILED (errors=1)

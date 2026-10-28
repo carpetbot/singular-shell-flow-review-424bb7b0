@@ -1,0 +1,16 @@
+test_account_change_revokes_media_ignores_stale_list_and_media (test_work_browser.WorkBrowser.test_account_change_revokes_media_ignores_stale_list_and_media) ... ok
+test_cross_tab_account_change_clears_immediately (test_work_browser.WorkBrowser.test_cross_tab_account_change_clears_immediately) ... ok
+test_cross_tab_settings_removal_disconnects (test_work_browser.WorkBrowser.test_cross_tab_settings_removal_disconnects) ... ok
+test_empty_error_retry_and_disconnect (test_work_browser.WorkBrowser.test_empty_error_retry_and_disconnect) ... ok
+test_list_pagination_playback_download_mobile (test_work_browser.WorkBrowser.test_list_pagination_playback_download_mobile) ... ok
+test_malformed_optional_metadata_uses_safe_fallbacks (test_work_browser.WorkBrowser.test_malformed_optional_metadata_uses_safe_fallbacks) ... ok
+test_reenter_after_cross_tab_disconnect_does_not_reuse_old_key (test_work_browser.WorkBrowser.test_reenter_after_cross_tab_disconnect_does_not_reuse_old_key) ... ok
+test_render_failure_reports_error_and_allows_retry (test_work_browser.WorkBrowser.test_render_failure_reports_error_and_allows_retry) ... ok
+test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped) ... ok
+test_prompt_titles_plain_statuses_and_safe_truncation (test_work_cards_browser.WorkCards.test_prompt_titles_plain_statuses_and_safe_truncation) ... ok
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 34.923s
+
+OK

@@ -1,4 +1,5 @@
 """Offline fake inference only. All non-loopback traffic is aborted."""
+from offline_browser import offline_server, close_browser
 import http.server, importlib.util, json, os, threading, unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,7 +11,7 @@ EVIDENCE=Path(os.environ.get('VIDEO_EVIDENCE',str(ROOT/'reports/motion-video')))
 class VideoBrowser(unittest.TestCase):
  def setUp(self):
   spec=importlib.util.spec_from_file_location('video_proxy',APP/'proxy.py');p=importlib.util.module_from_spec(spec);spec.loader.exec_module(p)
-  self.server=http.server.ThreadingHTTPServer(('127.0.0.1',0),p.Handler);threading.Thread(target=self.server.serve_forever,daemon=True).start()
+  self.server=offline_server(p.Handler);threading.Thread(target=self.server.serve_forever,daemon=True).start()
   self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);self.ctx=self.browser.new_context(accept_downloads=True)
   self.calls=[];self.errors=[];self.content_fail=False;self.polls=0;self.state='completed';self.chat_status=200;self.video_status=202;self.lost=False
   self.catalog=json.loads(Path(ROOT/'tests/fixtures/video-pricing.json').read_text())
@@ -18,7 +19,8 @@ class VideoBrowser(unittest.TestCase):
   self.ctx.route('**/*',self.route);self.page=self.ctx.new_page();self.page.on('pageerror',lambda e:self.errors.append(str(e)));self.page.set_default_timeout(4000)
   self.url='http://127.0.0.1:'+str(self.server.server_port)
  def tearDown(self):
-  self.browser.close();self.pw.stop();self.server.shutdown();self.server.server_close()
+  close_browser(self.browser);self.pw.stop();self.server.shutdown();self.server.server_close()
+  self.assertEqual(self.server.unexpected_upstream,[])
  def route(self,r):
   path=urlsplit(r.request.url).path
   if path=='/pricing.json':r.fulfill(json=self.catalog)

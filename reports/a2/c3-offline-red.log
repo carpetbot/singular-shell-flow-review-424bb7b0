@@ -1,0 +1,16 @@
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... [shell] code 502, message proxy: network forbidden
+[shell] "GET /pricing.json HTTP/1.1" 502 -
+FAIL
+
+======================================================================
+FAIL: test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_work_cards_browser.py", line 33, in test_server_fixture_blocks_upstream_even_without_browser_routes
+    self.assertEqual(r.status,503)
+AssertionError: 502 != 503
+
+----------------------------------------------------------------------
+Ran 1 test in 1.314s
+
+FAILED (failures=1)

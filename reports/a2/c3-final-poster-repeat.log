@@ -1,0 +1,27 @@
+0 PASS
+1 FAIL {"trace": [{"event": "registered"}, {"event": "callback", "state": 1, "w": 320, "h": 180, "rect": {"x": 36, "y": 735.375, "width": 318, "height": 178.875, "top": 735.375, "right": 354, "bottom": 914.25, "left": 36}}], "video": {"state": 4, "rect": {"x": 36, "y": 735.375, "width": 318, "height": 178.875, "top": 735.375, "right": 354, "bottom": 914.25, "left": 36}}, "status": "1 video jobs loaded."}
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/reports/a2/c3_poster_repeat.py", line 17, in <module>
+    case.test_poster_only_after_open_persists_and_is_account_scoped();print(i,'PASS',flush=True)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_work_cards_browser.py", line 88, in test_poster_only_after_open_persists_and_is_account_scoped
+    self.page.wait_for_selector('.work-poster')
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator(".work-poster") to be visible
+

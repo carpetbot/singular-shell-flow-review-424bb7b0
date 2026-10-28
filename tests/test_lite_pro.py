@@ -1,4 +1,5 @@
 """Offline real-Chromium acceptance tests. Never contacts a gateway."""
+from offline_browser import offline_server, close_browser
 import http.server
 import importlib.util
 import json
@@ -18,7 +19,7 @@ spec.loader.exec_module(proxy)
 
 class LitePro(unittest.TestCase):
     def setUp(self):
-        self.server = http.server.ThreadingHTTPServer(('127.0.0.1',0), proxy.Handler)
+        self.server = offline_server(proxy.Handler)
         self.thread = threading.Thread(target=self.server.serve_forever,daemon=True)
         self.thread.start()
         self.pw = sync_playwright().start()
@@ -33,8 +34,9 @@ class LitePro(unittest.TestCase):
         self.page.on('pageerror',lambda e:self.errors.append(str(e)))
         self.url=f'http://127.0.0.1:{self.server.server_port}'
     def tearDown(self):
-        self.browser.close();self.pw.stop()
+        close_browser(self.browser);self.pw.stop()
         self.server.shutdown();self.server.server_close();self.thread.join()
+        self.assertEqual(self.server.unexpected_upstream,[])
     def route(self,r):
         path=urlsplit(r.request.url).path
         if path=='/pricing.json': r.fulfill(json=self.catalog)

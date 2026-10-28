@@ -1,0 +1,78 @@
+{
+  "sha256": "4d43c5fc72c2071dc79a7aa5bddbd1b3cc2bc635fee8d83e1e56df57d7874c04",
+  "runtime_files": 44,
+  "frozen_files": 21,
+  "static_GET_HEAD_checks": 96,
+  "suite_results": {
+    "c3-source": {
+      "node": {
+        "tests": 98,
+        "pass": 98,
+        "fail": 0,
+        "skipped": 0
+      },
+      "python": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "skipped": 0,
+        "classes": {
+          "DurableVideoBrowser": 19,
+          "LitePro": 9,
+          "ModelJury": 10,
+          "OfflineHarness": 1,
+          "StaticSecurity": 2,
+          "RunStoreBrowser": 13,
+          "BrowserSmoke": 1,
+          "VideoBrowser": 15,
+          "VideoProxy": 8,
+          "WorkBrowser": 8,
+          "WorkCards": 7,
+          "WorkProxy": 2
+        }
+      },
+      "no_teardown_tracebacks": true
+    },
+    "c3-packaged": {
+      "node": {
+        "tests": 98,
+        "pass": 98,
+        "fail": 0,
+        "skipped": 0
+      },
+      "python": {
+        "tests": 95,
+        "pass": 95,
+        "fail": 0,
+        "skipped": 0,
+        "classes": {
+          "DurableVideoBrowser": 19,
+          "LitePro": 9,
+          "ModelJury": 10,
+          "OfflineHarness": 1,
+          "StaticSecurity": 2,
+          "RunStoreBrowser": 13,
+          "BrowserSmoke": 1,
+          "VideoBrowser": 15,
+          "VideoProxy": 8,
+          "WorkBrowser": 8,
+          "WorkCards": 7,
+          "WorkProxy": 2
+        }
+      },
+      "no_teardown_tracebacks": true
+    }
+  },
+  "all_source_extracted_and_tested_runtime_hashes_match": true,
+  "protected_engine_store_runtime_equal_reviewed_start": true,
+  "new_runtime_static_scan": {
+    "dynamic_execution": [],
+    "raw_html": [],
+    "credential_literal": []
+  },
+  "baseline_literal_prefix_files": [
+    "js/views/chat.js",
+    "js/views/settings.js",
+    "js/views/skills.js"
+  ]
+}

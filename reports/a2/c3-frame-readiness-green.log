@@ -1,0 +1,12 @@
+test_canvas_security_failure_leaves_video_and_download_usable (test_work_cards_browser.WorkCards.test_canvas_security_failure_leaves_video_and_download_usable) ... ok
+test_failed_decode_keeps_normal_video_without_invented_poster (test_work_cards_browser.WorkCards.test_failed_decode_keeps_normal_video_without_invented_poster) ... ok
+test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped) ... ok
+test_presented_frame_before_loadeddata_still_caches_poster (test_work_cards_browser.WorkCards.test_presented_frame_before_loadeddata_still_caches_poster) ... ok
+test_prompt_titles_plain_statuses_and_safe_truncation (test_work_cards_browser.WorkCards.test_prompt_titles_plain_statuses_and_safe_truncation) ... ok
+test_real_poster_cache_bounds_eviction_and_validation (test_work_cards_browser.WorkCards.test_real_poster_cache_bounds_eviction_and_validation) ... ok
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 22.635s
+
+OK

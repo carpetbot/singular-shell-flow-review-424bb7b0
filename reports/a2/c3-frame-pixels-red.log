@@ -1,0 +1,14 @@
+test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped) ... FAIL
+
+======================================================================
+FAIL: test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_work_cards_browser.py", line 85, in test_poster_only_after_open_persists_and_is_account_scoped
+    self.assertGreater(pixel[2],80,'poster must contain the decoded blue fixture frame, not an unpainted black surface')
+AssertionError: 1 not greater than 80 : poster must contain the decoded blue fixture frame, not an unpainted black surface
+
+----------------------------------------------------------------------
+Ran 1 test in 3.103s
+
+FAILED (failures=1)

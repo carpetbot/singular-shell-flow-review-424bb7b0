@@ -1,0 +1,14 @@
+test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped) ... FAIL
+
+======================================================================
+FAIL: test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_work_cards_browser.py", line 87, in test_poster_only_after_open_persists_and_is_account_scoped
+    self.assertTrue(self.page.evaluate('window.posterRegistrationBeforeSource'),'register before src so a fast paused first frame cannot be missed')
+AssertionError: False is not true : register before src so a fast paused first frame cannot be missed
+
+----------------------------------------------------------------------
+Ran 1 test in 3.027s
+
+FAILED (failures=1)

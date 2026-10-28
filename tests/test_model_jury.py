@@ -1,4 +1,5 @@
 """Model Jury real Chromium tests: explicit offline fixtures, no paid calls."""
+from offline_browser import offline_server, close_browser
 import http.server
 import importlib.util
 import json
@@ -18,7 +19,7 @@ proxy=importlib.util.module_from_spec(spec);spec.loader.exec_module(proxy)
 
 class ModelJury(unittest.TestCase):
  def setUp(self):
-  self.server=http.server.ThreadingHTTPServer(('127.0.0.1',0),proxy.Handler)
+  self.server=offline_server(proxy.Handler)
   self.thread=threading.Thread(target=self.server.serve_forever,daemon=True);self.thread.start()
   self.pw=sync_playwright().start();self.browser=self.pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox'])
   self.context=self.browser.new_context(viewport={'width':1440,'height':1000})
@@ -36,7 +37,8 @@ class ModelJury(unittest.TestCase):
   self.page.on('pageerror',lambda e:self.errors.append(str(e)))
   self.url=f'http://127.0.0.1:{self.server.server_port}'
  def tearDown(self):
-  self.browser.close();self.pw.stop();self.server.shutdown();self.server.server_close();self.thread.join()
+  close_browser(self.browser);self.pw.stop();self.server.shutdown();self.server.server_close();self.thread.join()
+  self.assertEqual(self.server.unexpected_upstream,[])
  def route(self,r):
   u=urlsplit(r.request.url)
   if u.path=='/pricing.json':r.fulfill(json=self.catalog)

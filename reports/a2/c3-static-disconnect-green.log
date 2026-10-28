@@ -1,0 +1,6 @@
+test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK

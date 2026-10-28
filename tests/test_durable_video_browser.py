@@ -246,8 +246,8 @@ class DurableVideoBrowser(VideoBrowser):
   self.start_pending();self.page.locator('.close-modal').click()
   self.page.route('**/v1/videos?*',lambda r:r.fulfill(json={'items':[{'id':'vid_offline','status':'completed','params':{'prompt':'Gateway prompt'}},{'id':'vid_elsewhere','status':'completed','params':{'prompt':'Other device'}}],'next_cursor':None}))
   self.page.evaluate("location.hash='#/work'");self.page.wait_for_function("document.querySelectorAll('.work-card').length===2")
-  card=self.page.locator('.work-card').filter(has_text='vid_offline')
-  self.assertIn('completed',card.inner_text());self.assertIn('A paper boat drifts on a calm pond.',card.inner_text())
+  card=self.page.locator('.work-card').filter(has=self.page.get_by_role('button',name='Open video vid_offline',exact=True))
+  self.assertIn('Ready',card.inner_text());self.assertIn('A paper boat drifts on a calm pond.',card.inner_text())
   self.assertIn('Other device',self.page.locator('#work-list').inner_text())
  def check_post(self,r):
   rows=self.rows();row=[x for x in rows if x['idempotency_key']==r.request.headers.get('idempotency-key')][0]

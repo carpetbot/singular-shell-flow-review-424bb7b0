@@ -1158,6 +1158,8 @@ tr.off td {
 .work-page h1 { font-family:var(--disp); }
 .work-page p { margin:8px 0; }
 .work-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:16px; margin:16px 0; }
+.work-card h2 {overflow-wrap:anywhere;}
+.work-poster {display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;}
 .work-card { min-width:0; padding:16px; background:var(--panel); border:1px solid var(--line); border-radius:var(--r); }
 .work-card h2 { font-size:16px; }
 .work-page button, #work-media a { display:inline-block; padding:10px 16px; border:1px solid var(--line2); border-radius:8px; background:var(--panel2); color:var(--ink); }

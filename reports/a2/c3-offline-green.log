@@ -1,0 +1,6 @@
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.330s
+
+OK

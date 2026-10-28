@@ -1,0 +1,32 @@
+test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) ... 
+  test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) (error='BrokenPipeError') ... ERROR
+  test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) (error='ConnectionResetError') ... ERROR
+
+======================================================================
+ERROR: test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) (error='BrokenPipeError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_offline_browser.py", line 16, in test_disconnected_static_response_is_quiet_but_real_errors_surface
+    else:handler.handle()
+         ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_offline_browser.py", line 10, in handle
+    def handle(self):raise error('fixture static write')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: fixture static write
+
+======================================================================
+ERROR: test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) (error='ConnectionResetError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_offline_browser.py", line 16, in test_disconnected_static_response_is_quiet_but_real_errors_surface
+    else:handler.handle()
+         ^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_offline_browser.py", line 10, in handle
+    def handle(self):raise error('fixture static write')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: fixture static write
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=2)

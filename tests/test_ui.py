@@ -1,4 +1,5 @@
 """Real Chromium UI smoke; every gateway call is an offline route fixture."""
+from offline_browser import offline_server, close_browser
 import http.server
 import importlib.util
 import json
@@ -17,7 +18,7 @@ spec.loader.exec_module(proxy)
 
 class BrowserSmoke(unittest.TestCase):
     def test_flow_and_legacy_panels_with_offline_gateway(self):
-        server = http.server.ThreadingHTTPServer(('127.0.0.1',0),proxy.Handler)
+        server = offline_server(proxy.Handler)
         thread = threading.Thread(target=server.serve_forever,daemon=True); thread.start()
         calls=[]; errors=[]; blocked=[]
         # Recorded public prices, not a network fetch or low-price stand-in.
@@ -94,8 +95,9 @@ class BrowserSmoke(unittest.TestCase):
                 self.assertNotIn('response_format',calls[-1])
                 self.assertEqual(errors,[])
                 print('Chromium UI: flow preview, four chained steps, copy, escaping, raw outputs, legacy preview/run PASS; external requests blocked:',len(blocked))
-                browser.close()
+                close_browser(browser)
         finally:
             server.shutdown();server.server_close();thread.join()
+            self.assertEqual(server.unexpected_upstream,[])
 
 if __name__=='__main__':unittest.main()

@@ -4,4 +4,6 @@ __pycache__/
 .venv/
 node_modules/
 /reports/a2/c2-regression-app/
+/reports/a2/c3-*-app/
+/reports/a2/c3-package-check/
 
