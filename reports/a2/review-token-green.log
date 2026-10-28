@@ -1,0 +1,6 @@
+test_update_token_assignment_is_account_unique_and_transactional (test_run_store_browser.RunStoreBrowser.test_update_token_assignment_is_account_unique_and_transactional) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.544s
+
+OK

@@ -95,10 +95,10 @@ export async function openRunStore({key, indexedDB=globalThis.indexedDB}={}){
           if(!source.keyHash){unscoped++;continue;}
           if(source.keyHash!==account_id) continue;
           const legacy=clean(source),status=source.status==='completed'?'done':['failed','rejected'].includes(source.status)?'failed':'rendering';
-          rows.push({id:'legacy-'+await hash(JSON.stringify([account_id,source.token])),account_id,flow_id:'claw__motion-trimmer-video',title:'Recovered video',status,
+          rows.push({id:'legacy-'+await hash(JSON.stringify([account_id,source.token])),account_id,...validate({flow_id:'claw__motion-trimmer-video',title:'Recovered video',status,
             created_at:source.created_at??null,inputs:{},outputs:{},prompt:'',model_ids:source.quote?.model?[source.quote.model]:[],receipts:[],
             cost:source.settled??null,video_job_id:source.id??null,idempotency_key:source.token,
-            plan_id:source.planId??null,body_hash:source.bodyHash??null,quote:source.quote??null,settled:source.settled??null,video_status:source.status??'uncertain',error:source.error??null,legacy});
+            plan_id:source.planId??null,body_hash:source.bodyHash??null,quote:source.quote??null,settled:source.settled??null,video_status:source.status??'uncertain',error:source.error??null,legacy})});
         }
         const imported=await transaction(['runs'],'readwrite',async tx=>{
           const store=tx.objectStore('runs');let count=0;
@@ -148,6 +148,10 @@ export async function openRunStore({key, indexedDB=globalThis.indexedDB}={}){
         const store=tx.objectStore('runs'),row=await request(store.get(id));
         if(row?.account_id!==account_id) throw new Error('Run not found for this account.');
         const next=reconcile(row,patch);
+        if(next.idempotency_key){
+          const existing=await request(store.index('account_id').getAll(account_id));
+          if(existing.some(r=>r.id!==id&&r.idempotency_key===next.idempotency_key)) throw new Error('Run idempotency key already assigned.');
+        }
         await request(store.put(next));return next;
       });
     },

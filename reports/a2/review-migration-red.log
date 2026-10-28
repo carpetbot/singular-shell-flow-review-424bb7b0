@@ -1,0 +1,90 @@
+test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) ...
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'planId': 42, 'bodyHash': [], 'settled': -3}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'planId': 42}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'planId': ''}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'bodyHash': []}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'bodyHash': ''}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'settled': -3}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'settled': '1.5'}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'settled': {}}) ... FAIL
+  test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'id': 42}) ... FAIL
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'planId': 42, 'bodyHash': [], 'settled': -3})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 246, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['refused'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'planId': 42})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 246, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['refused'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'planId': ''})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 247, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['unchanged']); self.assertTrue(case['retained'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'bodyHash': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 246, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['refused'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'bodyHash': ''})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 247, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['unchanged']); self.assertTrue(case['retained'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'settled': -3})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 246, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['refused'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'settled': '1.5'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 246, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['refused'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'settled': {}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 246, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['refused'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) (invalid={'id': 42})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 247, in test_migration_validates_normalized_fields_before_atomic_import
+    self.assertTrue(case['unchanged']); self.assertTrue(case['retained'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 1.422s
+
+FAILED (failures=9)

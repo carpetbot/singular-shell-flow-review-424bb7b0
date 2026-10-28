@@ -1,0 +1,14 @@
+test_update_token_assignment_is_account_unique_and_transactional (test_run_store_browser.RunStoreBrowser.test_update_token_assignment_is_account_unique_and_transactional) ... FAIL
+
+======================================================================
+FAIL: test_update_token_assignment_is_account_unique_and_transactional (test_run_store_browser.RunStoreBrowser.test_update_token_assignment_is_account_unique_and_transactional)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 139, in test_update_token_assignment_is_account_unique_and_transactional
+    self.assertTrue(result['refused'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 1.399s
+
+FAILED (failures=1)

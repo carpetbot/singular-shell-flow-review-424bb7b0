@@ -1,0 +1,18 @@
+Isolated runtime: /home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/reports/a2/review-regression-app
+Command: python3 -m unittest discover -s tests -p test_run_store_browser.py -v
+test_concurrent_migration_tabs_and_reload_pending_discovery (test_run_store_browser.RunStoreBrowser.test_concurrent_migration_tabs_and_reload_pending_discovery) ... ok
+test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically (test_run_store_browser.RunStoreBrowser.test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically) ... ok
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ok
+test_database_scan_has_no_credentials_and_other_account_cannot_write (test_run_store_browser.RunStoreBrowser.test_database_scan_has_no_credentials_and_other_account_cannot_write) ... ok
+test_invalid_records_fail_without_corrupting_recovery (test_run_store_browser.RunStoreBrowser.test_invalid_records_fail_without_corrupting_recovery) ... ok
+test_legacy_migration_preserves_versions_pending_receipts_and_unscoped (test_run_store_browser.RunStoreBrowser.test_legacy_migration_preserves_versions_pending_receipts_and_unscoped) ... ok
+test_migration_merges_existing_durable_identity_without_duplicate (test_run_store_browser.RunStoreBrowser.test_migration_merges_existing_durable_identity_without_duplicate) ... ok
+test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) ... ok
+test_missing_key_credentials_failure_and_atomic_rollback (test_run_store_browser.RunStoreBrowser.test_missing_key_credentials_failure_and_atomic_rollback) ... ok
+test_two_tabs_merge_monotonically_and_reimport_progress (test_run_store_browser.RunStoreBrowser.test_two_tabs_merge_monotonically_and_reimport_progress) ... ok
+test_update_token_assignment_is_account_unique_and_transactional (test_run_store_browser.RunStoreBrowser.test_update_token_assignment_is_account_unique_and_transactional) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 15.761s
+
+OK

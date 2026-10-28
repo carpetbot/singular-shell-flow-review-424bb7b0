@@ -111,6 +111,32 @@ execute a runtime/tests copy beneath ignored `reports/a2/regression-app/` so
 baseline A1 screenshots/reports remain untouched. `python-full.log` records the
 final suite. Parent performs independent review before pushing WIP.
 
+## Review blockers resolved
+
+- `update` now checks the effective non-null token against other same-account
+  records inside its existing read/write transaction before writing. Rejected
+  assignment rolls back all patch fields; reuse by another account remains allowed,
+  and two real tabs competing to assign a token produce exactly one winner.
+  Existing immutable identities and create-time deduplication remain unchanged.
+- Migration now runs normalized fields (including the preserved `legacy` snapshot)
+  through the shared validator before opening the batch write transaction. Invalid
+  plan/body identities, job-id types, and negative or nonnumeric settlements reject
+  the whole batch without adding records, updating existing records, or changing
+  legacy localStorage. Valid historical extras, zero and unknown settlements survive.
+- Both regressions were observed RED in real Chromium before their respective
+  fixes, then GREEN. Evidence: `review-token-{red,green}.log` and
+  `review-migration-{red,green}.log` under `reports/a2/`.
+- Full verification after fixes: **98/98 Node**, **66/66 Python**, including
+  **11/11 real-Chromium run-store tests**, zero failures/skips. Evidence:
+  `review-{browser,node,python}-full.log`. Runs use the isolated
+  `reports/a2/review-regression-app/` runtime; baseline screenshots are untouched.
+- Initial isolated full-suite setup omitted the existing `reports/catalog-live.json`
+  fixture, causing Node ENOENT and cascading Python Playwright setup errors. The
+  fixture was copied unchanged, both full suites reran cleanly, and the initial
+  logs are retained as `review-{node,python}-setup-failure.log`.
+- Production changes are confined to `js/run-store.js`; no watcher/card/UI changes,
+  frozen engine/prompt changes, paid requests, push or deployment.
+
 ## Next checkpoint
 
 Wire scoped initialization + migration/error display to startup/settings; build

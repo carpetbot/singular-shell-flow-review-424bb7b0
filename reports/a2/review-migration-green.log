@@ -1,0 +1,6 @@
+test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.325s
+
+OK

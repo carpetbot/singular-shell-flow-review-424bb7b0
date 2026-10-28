@@ -122,6 +122,34 @@ class RunStoreBrowser(unittest.TestCase):
   self.assertTrue(result['same']); self.assertEqual(result['errors'], [True,True])
   self.assertEqual(result['count'], 2); self.assertTrue(result['next'])
 
+ def test_update_token_assignment_is_account_unique_and_transactional(self):
+  result = self.runjs("""
+   const a=await openRunStore({key:'offline-account-one'});
+   const owner=await a.create({flow_id:'video',idempotency_key:'shared-token'});
+   const candidate=await a.create({flow_id:'video'});
+   let refused=false;
+   try{await a.update(candidate.id,{idempotency_key:'shared-token',title:'Must roll back'});}catch{refused=true;}
+   const b=await openRunStore({key:'offline-account-two'});
+   const foreign=await b.create({flow_id:'video'});
+   await b.update(foreign.id,{idempotency_key:'shared-token'});
+   window.a=a;
+   window.candidates=[await a.create({flow_id:'race-one'}),await a.create({flow_id:'race-two'})];
+   return {refused,candidate:await a.get(candidate.id),foreign:await b.get(foreign.id)};
+  """)
+  self.assertTrue(result['refused'])
+  self.assertIsNone(result['candidate']['idempotency_key'])
+  self.assertEqual(result['candidate']['title'], 'Untitled run')
+  self.assertEqual(result['foreign']['idempotency_key'], 'shared-token')
+  other = self.ctx.new_page(); other.goto(self.url + '/probe')
+  other.evaluate("async()=>{window.b=await (await import('/js/run-store.js')).openRunStore({key:'offline-account-one'});}")
+  ids = self.page.evaluate("()=>candidates.map(r=>r.id)")
+  self.page.evaluate("id=>{window.assign=a.update(id,{idempotency_key:'race-token'}).then(()=>true,()=>false);}", ids[0])
+  second = other.evaluate("async id=>{try{await b.update(id,{idempotency_key:'race-token'});return true;}catch{return false;}}", ids[1])
+  first = self.page.evaluate("async()=>await assign")
+  self.assertEqual(sorted([first,second]), [False,True])
+  rows = self.page.evaluate("async()=>await a.list()")
+  self.assertEqual(len([r for r in rows if r['idempotency_key']=='race-token']), 1)
+
  def test_missing_key_credentials_failure_and_atomic_rollback(self):
   result = self.runjs("""
    const errors=[];let network=0;
@@ -184,6 +212,46 @@ class RunStoreBrowser(unittest.TestCase):
    return {refused,count:(await a.list()).length};
   """)
   self.assertEqual(result['refused'], [True]*6); self.assertEqual(result['count'], 0)
+
+ def test_migration_validates_normalized_fields_before_atomic_import(self):
+  result = self.runjs("""
+   const a=await openRunStore({key:'offline-account-one'}),cases=[];
+   const existing=await a.create({flow_id:'claw__motion-trimmer-video',idempotency_key:'existing-token',status:'rendering'});
+   const before=await a.list();
+   for(const invalid of [
+    {planId:42,bodyHash:[],settled:-3},
+    {planId:42},{planId:''},{bodyHash:[]},{bodyHash:''},
+    {settled:-3},{settled:'1.5'},{settled:{}},{id:42}
+   ]){
+    const source=[
+     {token:'existing-token',keyHash:a.account_id,id:'vid_existing',status:'completed',settled:1},
+     {token:'valid-token',keyHash:a.account_id,id:'vid_valid',status:'completed',settled:0},
+     {token:'legacy-bad',keyHash:a.account_id,id:'vid_bad',status:'completed',...invalid}
+    ];
+    const raw=JSON.stringify(source);localStorage.setItem('motion-video.v1',raw);
+    let refused=false;try{await a.migrateLegacy();}catch{refused=true;}
+    cases.push({invalid,refused,unchanged:JSON.stringify(await a.list())===JSON.stringify(before),retained:localStorage.getItem('motion-video.v1')===raw});
+   }
+   const valid=[
+    {token:'historical',keyHash:a.account_id,id:'vid_history',status:'completed',planId:'v1',bodyHash:'b1',quote:{price:2},settled:0,extra:{historical:true}},
+    {token:'unknown',keyHash:a.account_id,id:null,status:'uncertain'},
+    {token:'null-settlement',keyHash:a.account_id,id:null,status:'queued',planId:null,bodyHash:null,settled:null}
+   ];
+   localStorage.setItem('motion-video.v1',JSON.stringify(valid));
+   const migration=await a.migrateLegacy();
+   return {cases,migration,rows:(await a.list()).filter(r=>r.id!==existing.id),valid};
+  """)
+  for case in result['cases']:
+   with self.subTest(invalid=case['invalid']):
+    self.assertTrue(case['refused'])
+    self.assertTrue(case['unchanged']); self.assertTrue(case['retained'])
+  self.assertEqual(result['migration'], {'imported':3,'unscoped':0})
+  by_token = {r['idempotency_key']:r for r in result['rows']}
+  for source in result['valid']:
+   self.assertEqual(by_token[source['token']]['legacy'], source)
+  self.assertEqual(by_token['historical']['cost'], 0)
+  self.assertIsNone(by_token['unknown']['cost']); self.assertIsNone(by_token['unknown']['settled'])
+  self.assertIsNone(by_token['null-settlement']['cost'])
 
  def test_concurrent_migration_tabs_and_reload_pending_discovery(self):
   self.runjs("""
