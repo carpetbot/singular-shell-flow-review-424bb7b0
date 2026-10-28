@@ -3,6 +3,7 @@ import { hydrate, get, subscribe, touch } from "./store.js";
 import { loadCatalog } from "./api.js";
 import { syncBanner, renderTopbar, renderNav } from "./chrome.js";
 
+import {startVideoRuntime} from './video-runtime.js';
 import { bindMode } from './presentation.js';
 import * as chat from "./views/chat.js";
 import * as skills from "./views/skills.js";
@@ -41,6 +42,7 @@ window.addEventListener("hashchange", route);
 
 async function boot(){
   await hydrate();
+  startVideoRuntime();
   bindMode();
   window.addEventListener('singular:mode',()=>{
     if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) route();

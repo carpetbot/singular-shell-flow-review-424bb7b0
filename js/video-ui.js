@@ -1,4 +1,5 @@
 import {get} from './store.js';
+import {durableVideoSession,saveVideoPlan,videoContext,onVideoAccountChange} from './video-runtime.js';
 import {chatOnce,loadCatalog} from './api.js';
 import {openModal,esc} from './ui.js';
 import {MODELS,FIELDS,releaseReady,quoteVideo,quoteDefaultVideo,planVideo,validatePlan,VideoSession} from './video.js';
@@ -31,11 +32,15 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
  <button class="btn ghost" id="video-new">Make another version</button>
  <video id="video-player" controls playsinline preload="metadata" style="width:100%;max-height:360px" hidden></video>
  <a id="video-download" class="btn" style="align-self:flex-start" download="motion-trimmer.mp4" hidden>Download MP4</a>
- </div><p class="note">Closing stops polling, not the upstream job. No cancellation or refund is implied. Reload requires explicit Resume with the key you used to start this video. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,modal=>{
+ </div><p class="note">Rendering continues when you leave and resumes after reload. No cancellation or refund is implied. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,async modal=>{
   const el=id=>modal.querySelector('#video-'+id);let quote=null,planning=false,running=false,downloadIncomplete=false,receipts=[];
-  const session=new VideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>render()});
+  el('plan').disabled=true;el('quote').disabled=true;
+  let session;
+  try{session=await durableVideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>{if(session)render();}});}catch(e){el('message').textContent=e.message;modal.querySelectorAll('button:not(.close-modal)').forEach(b=>b.disabled=true);return;}
+  const account=await videoContext();
+  const offAccount=onVideoAccountChange(()=>{session.dispose();modal.querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});modal.remove();});
   const spec=()=>({model:el('model').value,duration:5,prompt:el('prompt').value});
-  const say=s=>{if(modal.isConnected)el('message').textContent=s;};
+  const say=s=>{if(modal.isConnected&&account.valid())el('message').textContent=s;};
   function renderPlan(){
    try{const p=validatePlan(JSON.parse(el('plan-json').value),5);let at=0;
     el('shot-list').innerHTML='<h4>Shot list</h4><ol>'+p.shotbeats.map(b=>{const start=at;at+=b.duration_s;return `<li><strong>${esc(start)}–${esc(at)} s</strong> · ${esc(b.description)}</li>`;}).join('')+'</ol><h4>Overlay text · add in your editor</h4><ul>'+p.overlays.map(o=>`<li>${esc(o.at_s)} s · ${esc(o.text)}</li>`).join('')+'</ul><h4>Dropped items</h4><ul>'+p.dropped.map(d=>`<li>${esc(d)}</li>`).join('')+'</ul>';
@@ -44,7 +49,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   function render(){
    if(!modal.isConnected)return;
    renderPlan();
-   el('plan').disabled=planning||running||!session.key;
+   el('plan').disabled=planning||running||!session.key;el('quote').disabled=running;
    const retry=session.record&&!session.record.id;
    const pending=session.records.filter(r=>!['completed','failed','rejected'].includes(r.status));
    const otherPending=pending.some(r=>r.token!==session.record?.token);
@@ -63,8 +68,9 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   const perform=fn=>async()=>{if(running)return;running=true;render();try{await fn();}catch(e){say(e.message);}finally{running=false;render();}};
   el('plan').onclick=async()=>{
    if(planning||running)return;planning=true;render();say('Planning draft…');
-   try{const catalog=await loadCatalog();const result=await planVideo({topic:el('topic').value,context:el('context').value,platform:el('platform').value,duration:5},{chat,catalog,signal:AbortSignal.timeout(60000)});receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
-   catch(e){receipts.push(...e.receipts||[]);say(e.status===401?'Planner authentication failed':e.status===402?'Planner insufficient credits':e.message);}
+   let saved;const brief={topic:el('topic').value,context:el('context').value,platform:el('platform').value,duration:5};
+   try{saved=await saveVideoPlan(brief);const catalog=await loadCatalog();account.assert();const result=await planVideo(brief,{chat,catalog,signal:AbortSignal.any([account.abort.signal,AbortSignal.timeout(60000)])});account.assert();await saveVideoPlan(brief,{id:saved.id,patch:{status:'done',outputs:{plan:result.plan},prompt:result.plan.prompt,receipts:result.receipts}});session.draft={inputs:brief,receipts:result.receipts};receipts.push(...result.receipts);el('plan-json').value=JSON.stringify(result.plan,null,2);el('prompt').value=result.plan.prompt;say('Review and edit the plan and prompt. Video has not been submitted.');}
+   catch(e){if(saved&&account.valid())await saveVideoPlan(brief,{id:saved.id,patch:{status:'failed',receipts:e.receipts||[]}}).catch(()=>{});receipts.push(...e.receipts||[]);say(e.status===401?'Planner authentication failed':e.status===402?'Planner insufficient credits':e.message);}
    finally{planning=false;render();}
   };
   el('quote').onclick=perform(async()=>{quote=null;const r=await session.request('/pricing.json',{},false);quote=(releaseReady(fields)?quoteVideo:quoteDefaultVideo)(r,spec().model,5);el('price').textContent=usd(quote.price)+' · '+quote.duration+' s / '+quote.resolution+' · catalog '+quote.as_of+' · checked again before submit. Planner excluded.';});
@@ -77,10 +83,10 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
   el('model').onchange=()=>{quote=null;el('price').textContent='Model changed; refresh price. The draft stays five seconds.';render();};
   el('plan-json').oninput=()=>{try{const p=JSON.parse(el('plan-json').value);if(typeof p.prompt==='string')el('prompt').value=p.prompt;}catch{}render();};
   el('prompt').oninput=()=>{try{const p=JSON.parse(el('plan-json').value);p.prompt=el('prompt').value;el('plan-json').value=JSON.stringify(p,null,2);}catch{}render();};
-  if(session.record){el('model').value=session.record.quote.model;say(session.record.status==='rejected'?'Submission rejected before job creation. Fix authentication/credits, then choose Make another version (close/reopen after changing Settings).':session.record.id?'Saved job found. Resume with the key you used to start this video.':'We couldn’t confirm whether the video started: re-enter identical prompt and configuration, refresh price, retry same submission. Prompt is not stored.');}
+  if(session.record){el('model').value=session.record.quote?.model||MODELS[0].id;say(session.record.status==='rejected'?'Submission rejected before job creation. Fix authentication/credits, then choose Make another version (close/reopen after changing Settings).':session.record.id?'Saved job found. Resume with the key you used to start this video.':'We couldn’t confirm whether the video started: re-enter identical prompt and configuration, refresh price, retry same submission. Prompt is not stored.');}
   const syncStorage=event=>{if(event.key==='motion-video.v1'||event.key===null)session.exclusive(()=>{session.refresh();render();}).catch(e=>{say(e.message);el('generate').disabled=true;el('new').disabled=true;});};
   window.addEventListener('storage',syncStorage);
-  const observer=new MutationObserver(()=>{if(!modal.isConnected){session.dispose();observer.disconnect();window.removeEventListener('pagehide',dispose);window.removeEventListener('storage',syncStorage);}});observer.observe(modal.parentNode,{childList:true});const dispose=()=>session.dispose();window.addEventListener('pagehide',dispose,{once:true});
+  const observer=new MutationObserver(()=>{if(!modal.isConnected){session.dispose();observer.disconnect();offAccount();window.removeEventListener('pagehide',dispose);window.removeEventListener('storage',syncStorage);}});observer.observe(modal.parentNode,{childList:true});const dispose=()=>session.dispose();window.addEventListener('pagehide',dispose,{once:true});
   render();
  });
 }
