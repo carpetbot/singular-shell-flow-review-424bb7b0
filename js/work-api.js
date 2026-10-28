@@ -12,7 +12,16 @@ export async function listVideos(cursor, signal){
   const data = await r.json();
   if(!data || !Array.isArray(data.items) || data.items.length>100 || data.items.some(x=>!x || typeof x.id!=='string' || !jobId.test(x.id)) ||
     (data.next_cursor != null && data.next_cursor !== '' && (typeof data.next_cursor!=='string' || !/^[A-Za-z0-9_=-]{1,200}$/.test(data.next_cursor)))) throw new Error('Video list unavailable: unexpected response.');
-  return {items:data.items,next_cursor:data.next_cursor || null};
+  // Optional gateway metadata is untrusted: never coerce objects into UI text/dates.
+  const string = value => typeof value==='string' ? value : '';
+  const items = data.items.map(job=>({
+    id:job.id,
+    status:string(job.status) || 'unknown',
+    model:string(job.model) || string(job.params?.model) || 'Model not provided',
+    params:{prompt:string(job.params?.prompt) || 'Prompt saved on another device'},
+    created_at:typeof job.created_at==='string' || (typeof job.created_at==='number' && Number.isFinite(job.created_at)) ? job.created_at : null,
+  }));
+  return {items,next_cursor:data.next_cursor || null};
 }
 export async function fetchVideo(id, signal){
   signal = signal ? AbortSignal.any([signal,AbortSignal.timeout(120000)]) : AbortSignal.timeout(120000);

@@ -17,8 +17,8 @@ No A2/A3 changes: no IndexedDB, watcher, create/menu redesign or flow-page conve
 | Check | Result |
 | --- | --- |
 | `node --test tests/*.test.mjs` | **98 passed**, 0 failed |
-| `python3 -m unittest discover -s tests -p 'test_*.py' -v` | **53 passed**, 0 failed |
-| Packaged A1 proxy/browser acceptance (`test_work*.py`) | **8 passed**, 0 failed |
+| `python3 -m unittest discover -s tests -p 'test_*.py' -v` | **55 passed**, 0 failed |
+| Packaged A1 proxy/browser acceptance (`test_work*.py`) | **10 passed**, 0 failed |
 | Packaged existing video proxy suite | **8 passed**, 0 failed |
 | Packaged static GET/HEAD allow/deny checks | **14 passed** |
 | ZIP integrity, runtime file set and source equality | **41 runtime files**, all byte-equal |
@@ -28,13 +28,15 @@ A1 tests cover fake authenticated list + media, pagination without media prefetc
 
 The existing store's `hydrate` has a backward-compatible optional `clearMissingKey` flag, used only by recovery. Legacy callers retain their default behavior. Recovery rehydrates existing settings before listing and clears removed keys instead of retaining stale in-memory credentials.
 
+Review blocker regression: optional model/status/prompt metadata is normalized to primitive strings with existing fallbacks; dates accept only strings or finite numeric seconds (including epoch zero), with invalid dates omitted. Chromium first reproduced the review payload (`model: {toString: null, valueOf: null}`): zero cards despite a loaded status. The new metadata test failed before the fix and now renders all five mixed-metadata fixtures without page errors. A second browser test injected a one-shot card-render exception and initially timed out waiting for a recoverable error. Rendering now occurs inside the load error boundary, cards are committed atomically, and control recovery runs in `finally` without rendering. The test verifies the honest retry status, enabled refresh, no uncaught errors, and a successful subsequent refresh. RED logs: `metadata-red.log`, `render-failure-red.log`; GREEN: `metadata-green.log`, `work-browser-final.log` (8 browser tests), plus full and extracted-package suites.
+
 TDD observations: list pagination initially returned 404; the browser initially could not find My work navigation. Cross-tab immediate-clear and settings-removal tests subsequently failed before their fixes; malformed list identity and missing deadline tests also failed before fixes. Final suites are green. The first full Python run failed only because the legacy exact navigation assertion omitted the newly required link. Both exact Lite/Pro expectations were updated to require My work; no assertions or tests were removed or relaxed.
 
 ## Artifact
 
 - `dist/shell-ux-v1-a1.zip`
 - `dist/shell-ux-v1-a1.zip.sha256`
-- SHA256: `3f4652fc35e4a9d9dbf4727ef6d09af6d8f514aca51464f6e8f8435097b044ff`
+- SHA256: `a13cc007f383eb49741f517ac2b8f010ad81a36876d1ddcdbb24848b335a2404`
 - Production runtime only: no tests, fixtures, reports, docs or repository metadata.
 - Rebuild/check: `python3 tests/package_a1.py`.
 - Extracted verification copy: sibling `a1-package-check/`.

@@ -34,6 +34,36 @@ class WorkBrowser(unittest.TestCase):
   self.page.goto(self.url+'/#/skills');self.page.wait_for_selector('.skill-card')
   self.page.evaluate("async()=>{const s=await import('/js/store.js');s.setSettings({apiKey:'offline-work-fixture'});}")
   self.page.locator('#tabbar a[href="#/work"]').click()
+ def test_malformed_optional_metadata_uses_safe_fallbacks(self):
+  self.ctx.route('**/v1/videos?*',lambda r:r.fulfill(json={'items':[
+   {'id':'vid_badmetadata','status':'completed','model':{'toString':None,'valueOf':None}},
+   {'id':'vid_badstatus','status':{'toString':None,'valueOf':None},'created_at':{'toString':None,'valueOf':None},'params':{'model':[],'prompt':{}}},
+   {'id':'vid_badtypes','status':42,'model':True,'created_at':[]},
+   {'id':'vid_nested','status':'queued','params':{'model':'nested-model','prompt':'Safe prompt'},'created_at':'not-a-date'},
+   {'id':'vid_epoch','status':'completed','created_at':0},
+  ],'next_cursor':None}))
+  self.open();self.page.get_by_text('5 video jobs loaded.',exact=True).wait_for()
+  self.assertEqual(self.page.locator('.work-card').count(),5)
+  self.assertFalse(self.page.locator('#work-refresh').is_disabled())
+  self.assertEqual(self.page.locator('.work-card').nth(0).locator('p').nth(2).inner_text(),'Model not provided')
+  for index in (1,2):
+   self.assertEqual(self.page.locator('.work-card').nth(index).locator('p').all_inner_texts(),['unknown','Prompt saved on another device','Model not provided'])
+  self.assertIn('nested-model',self.page.locator('.work-card').nth(3).inner_text())
+  self.assertEqual(self.page.locator('.work-card').nth(4).locator('p').count(),4)
+  self.assertEqual(self.errors,[])
+  self.ctx.unroute('**/v1/videos?*');self.page.get_by_role('button',name='Refresh videos').click()
+  self.page.get_by_text('vid_first',exact=True).wait_for()
+ def test_render_failure_reports_error_and_allows_retry(self):
+  self.open();self.page.get_by_text('vid_first',exact=True).wait_for()
+  self.page.evaluate('''()=>{const create=document.createElement.bind(document);document.createElement=(tag,...args)=>{if(tag==='article'){document.createElement=create;throw new Error('synthetic render failure');}return create(tag,...args);};}''')
+  self.page.get_by_role('button',name='Refresh videos').click()
+  self.page.get_by_text('Could not load videos. Retry.',exact=True).wait_for()
+  self.assertFalse(self.page.locator('#work-refresh').is_disabled())
+  self.assertEqual(self.page.locator('.work-card').count(),0)
+  self.assertEqual(self.errors,[])
+  self.page.get_by_role('button',name='Refresh videos').click()
+  self.page.get_by_text('vid_first',exact=True).wait_for()
+  self.assertFalse(self.page.locator('#work-refresh').is_disabled())
  def test_empty_error_retry_and_disconnect(self):
   self.mode='empty';self.open();self.page.get_by_text('No video jobs found for this key.',exact=True).wait_for()
   self.mode='error';self.page.get_by_role('button',name='Refresh videos').click();self.page.get_by_text('Key not accepted. Check Settings and retry.',exact=True).wait_for()

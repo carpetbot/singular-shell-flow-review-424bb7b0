@@ -18,19 +18,19 @@ export function bind(root){
   function reset(){epoch++;listAbort?.abort();listAbort=null;clearMedia();items=[];cursor=null;busy=false;list.replaceChildren();more.hidden=true;refresh.disabled=false;}
   function text(tag,value){const e=document.createElement(tag);e.textContent=value;return e;}
   function draw(){
-    list.replaceChildren();
+    const cards=document.createDocumentFragment();
     for(const job of items){
       const card=document.createElement('article');card.className='work-card';
       card.append(text('h2',job.id),text('p',String(job.status || 'unknown')));
       const prompt=typeof job.params?.prompt==='string' ? job.params.prompt : 'Prompt saved on another device';
       card.append(text('p',prompt),text('p',String(job.model || job.params?.model || 'Model not provided')));
-      if(job.created_at){const date=new Date(typeof job.created_at==='number' ? job.created_at*1000 : job.created_at);if(!isNaN(date)) card.append(text('p',date.toLocaleString()));}
+      if(job.created_at!=null){const date=new Date(typeof job.created_at==='number' ? job.created_at*1000 : job.created_at);if(!isNaN(date)) card.append(text('p',date.toLocaleString()));}
       if(job.status==='completed'){
         const open=text('button','Open video');open.type='button';open.setAttribute('aria-label','Open video '+job.id);open.addEventListener('click',()=>openMedia(job.id));card.append(open);
       }
-      list.append(card);
+      cards.append(card);
     }
-    more.hidden=!cursor;more.disabled=busy;refresh.disabled=busy;
+    list.replaceChildren(cards);
   }
   async function load(append=false){
     if(busy || !active) return;
@@ -40,9 +40,9 @@ export function bind(root){
     try{
       const page=await listVideos(append?cursor:null,controller.signal);if(!valid(e)) return;
       const merged=new Map((append?items:[]).map(x=>[x.id,x]));for(const job of page.items) merged.set(job.id,job);
-      items=[...merged.values()];cursor=page.next_cursor;status.textContent=items.length ? `${items.length} video jobs loaded.` : 'No video jobs found for this key.';
+      items=[...merged.values()];cursor=page.next_cursor;draw();status.textContent=items.length ? `${items.length} video jobs loaded.` : 'No video jobs found for this key.';
     }catch(err){if(valid(e) && err.name!=='AbortError') status.textContent=err.message?.startsWith('Key not accepted') ? err.message : 'Could not load videos. Retry.';}
-    finally{if(valid(e)){busy=false;draw();}}
+    finally{if(valid(e)){busy=false;more.hidden=!cursor;more.disabled=false;refresh.disabled=false;}}
   }
   async function openMedia(id){
     clearMedia();const e=epoch,controller=new AbortController();mediaAbort=controller;
