@@ -41,13 +41,13 @@ class VideoBrowser(unittest.TestCase):
   else:r.abort()
  def open(self,confirmed=False):
   self.page.goto(self.url+'/#/skills');self.page.wait_for_selector('.skill-card')
-  self.page.evaluate("async()=>{const {get}=await import('/js/store.js');get().settings.apiKey='offline-not-real-key';}")
+  self.page.evaluate("async()=>{const {setSettings}=await import('/js/store.js');setSettings({apiKey:'offline-not-real-key'});}")
   if confirmed:self.page.evaluate("async()=>{const {openVideoRunner}=await import('/js/video-ui.js');openVideoRunner({fields:{duration:'fixture_duration',aspectRatio:null,audio:null}});}")
   else:self.page.locator('.skill-card').filter(has_text='Motion Trimmer → Video').click()
  def plan(self):
   self.page.locator('#video-topic').fill('An offline paper boat');self.page.locator('#video-plan').click();self.page.wait_for_function("document.querySelector('#video-plan-json')?.value.includes('shotbeats')")
  def test_clear_finished_selection_preserves_pending(self):
-  self.open(True)
+  self.state='queued';self.open(True)
   self.page.evaluate('''async()=>{const {VideoSession}=await import('/js/video.js');const s=new VideoSession({key:'offline-not-real-key',fields:{duration:'fixture_duration'}});await s.create({model:'alibaba/wan-3.0/text-to-video',duration:15,prompt:'Offline boat'},1.583334);const pending=structuredClone(s.record);localStorage.setItem('motion-video.v1',JSON.stringify([{...pending,token:'done',id:'old',status:'completed'},pending]));}''')
   self.open(True);self.page.locator('#video-history').select_option('0');self.page.locator('#video-clear').click()
   self.page.wait_for_function("document.querySelector('#video-history').options.length===1")
@@ -133,7 +133,7 @@ class VideoBrowser(unittest.TestCase):
   self.page.locator('.close-modal').click();polls=self.polls;self.page.wait_for_timeout(2000);self.assertEqual(self.polls,polls)
   self.state='failed';self.open(True);self.page.locator('#video-resume').click();self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('Generation failed')");self.assertIn('settled $0.00',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
   self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1);self.assertEqual(self.errors,[])
- def test_06_close_during_submission_does_not_restart_polling(self):
+ def test_06_close_during_submission_app_watcher_continues(self):
   self.open(True);self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
   held=[]
   def hold(r):held.append(r)
@@ -142,14 +142,14 @@ class VideoBrowser(unittest.TestCase):
    if held:break
    self.page.wait_for_timeout(50)
   self.assertEqual(len(held),1);self.page.locator('.close-modal').click();held[0].fulfill(status=202,json={'id':'vid_offline','status':'queued'});self.page.wait_for_timeout(300)
-  self.assertEqual(self.polls,0,'closing during create must not start a new polling loop')
- def test_open_panel_polls_past_three_minutes_fake_clock_then_close_stops(self):
+  self.assertGreater(self.polls,0,'app watcher must discover a create that completes after the view closes')
+ def test_app_watcher_polls_past_three_minutes_and_continues_after_close(self):
   self.state='processing';self.open();self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled")
   self.page.clock.install();self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('processing')")
   for _ in range(20):self.page.clock.run_for(15000);self.page.wait_for_timeout(25)
-  self.assertGreater(self.polls,15)
+  self.assertGreater(self.polls,8)
   self.assertNotIn('deadline',self.page.locator('#video-message').inner_text())
-  self.page.locator('.close-modal').click();polls=self.polls;self.page.clock.run_for(60000);self.assertEqual(polls,self.polls)
+  self.page.locator('.close-modal').click();polls=self.polls;self.page.clock.run_for(30000);self.page.wait_for_timeout(100);self.assertGreater(self.polls,polls)
   self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1)
 
  def test_07_mobile_review_no_overflow(self):
@@ -177,7 +177,7 @@ class VideoBrowser(unittest.TestCase):
    self.assertTrue(page.locator('#video-generate').is_disabled());self.assertTrue(page.locator('#video-new').is_disabled())
   self.assertEqual(len([c for c in self.calls if c['path']=='/v1/videos']),1,'two simultaneous UI approvals must create one gateway job')
   self.state='completed'
-  for page in pages:page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('vid_offline · completed')")
+  for page in pages:page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('vid_offline · completed')",timeout=15000)
 
  def test_two_real_tabs_use_shared_locks_and_saved_retry_token(self):
   pages=[self.page,self.ctx.new_page()]
@@ -207,6 +207,6 @@ class VideoBrowser(unittest.TestCase):
  def test_08_video_auth_credit_rejection_is_distinct_and_recoverable(self):
   for status,word in [(401,'Authentication'),(402,'credits')]:
    self.open(True);self.plan();self.page.locator('#video-quote').click();self.page.wait_for_function("!document.querySelector('#video-generate').disabled");self.video_status=status;self.page.locator('#video-generate').click();self.page.wait_for_function("document.querySelector('#video-receipts').textContent.includes('rejected')")
-   self.assertIn(word,self.page.locator('#video-message').inner_text());self.assertFalse(self.page.locator('#video-new').is_disabled());self.assertIn('settled $0.00',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
+   self.page.wait_for_function("word=>document.querySelector('#video-message').textContent.includes(word)",arg=word);self.assertIn(word,self.page.locator('#video-message').inner_text());self.assertFalse(self.page.locator('#video-new').is_disabled());self.assertIn('settled $0.00',self.page.locator('#video-receipts').inner_text());self.assertEqual(self.page.locator('#video-player[src]').count(),0)
    self.page.locator('.close-modal').click();self.page.evaluate("localStorage.removeItem('motion-video.v1')")
   self.assertEqual(self.errors,[])

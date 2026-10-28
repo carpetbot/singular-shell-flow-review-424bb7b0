@@ -1,0 +1,464 @@
+test_durable_saved_before_post_and_plan_before_chat (test_durable_video_browser.DurableVideoBrowser.test_durable_saved_before_post_and_plan_before_chat) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+ok
+test_key_change_discards_modal_and_stale_ready_notice (test_durable_video_browser.DurableVideoBrowser.test_key_change_discards_modal_and_stale_ready_notice) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+FAIL
+test_reload_resumes_without_post_and_single_cross_tab_owner (test_durable_video_browser.DurableVideoBrowser.test_reload_resumes_without_post_and_single_cross_tab_owner) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+ok
+test_route_independent_ready_notice_and_open (test_durable_video_browser.DurableVideoBrowser.test_route_independent_ready_notice_and_open) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+ok
+test_storage_abort_blocks_paid_plan_and_render (test_durable_video_browser.DurableVideoBrowser.test_storage_abort_blocks_paid_plan_and_render) ... [shell] "GET /v1/videos?limit=50 HTTP/1.1" 401 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51232)
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/proxy.py", line 73, in _proxy
+    with opener(req, timeout=300) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 401: Unauthorized
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/proxy.py", line 28, in __init__
+    super().__init__(*a, directory=ROOT, **kw)
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/proxy.py", line 162, in do_GET
+    self._proxy("GET")
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/proxy.py", line 104, in _proxy
+    self.wfile.write(data)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+[shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+ERROR
+test_uncertain_no_id_reload_never_resubmits_and_idb_blocks_without_legacy (test_durable_video_browser.DurableVideoBrowser.test_uncertain_no_id_reload_never_resubmits_and_idb_blocks_without_legacy) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+ok
+
+======================================================================
+ERROR: test_storage_abort_blocks_paid_plan_and_render (test_durable_video_browser.DurableVideoBrowser.test_storage_abort_blocks_paid_plan_and_render)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_durable_video_browser.py", line 63, in test_storage_abort_blocks_paid_plan_and_render
+    self.page.wait_for_function("document.querySelector('#video-message').textContent.includes('storage unavailable')")
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 11599, in wait_for_function
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 1110, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 878, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 4000ms exceeded.
+
+======================================================================
+FAIL: test_key_change_discards_modal_and_stale_ready_notice (test_durable_video_browser.DurableVideoBrowser.test_key_change_discards_modal_and_stale_ready_notice)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_durable_video_browser.py", line 75, in test_key_change_discards_modal_and_stale_ready_notice
+    self.assertEqual(self.page.locator('#layout[inert]').count(),0)
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 6 tests in 53.662s
+
+FAILED (failures=1, errors=1)

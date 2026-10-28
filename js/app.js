@@ -33,7 +33,7 @@ export function renderView(){
 }
 
 function route(){
-  const hash = location.hash.replace(/^#\//, "") || "skills";
+  const hash = location.hash.replace(/^#\//, "").split('?')[0] || "skills";
   currentView = VIEWS.some(v => v.id === hash) ? hash : "skills";
   if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) currentView='skills';
   renderView();

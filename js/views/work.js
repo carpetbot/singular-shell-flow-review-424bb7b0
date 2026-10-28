@@ -1,3 +1,4 @@
+import {videoContext} from '../video-runtime.js';
 import { get, subscribe, hydrate } from '../store.js';
 import { listVideos, fetchVideo } from '../work-api.js';
 import { renderTopbar, syncBanner } from '../chrome.js';
@@ -6,7 +7,7 @@ let cleanup=()=>{};
 export function destroy(){cleanup();cleanup=()=>{};}
 export function bind(root){
   let active=true,key=get().settings.apiKey.trim(),epoch=0,items=[],cursor=null,busy=false,objectURL=null;
-  let listAbort=null,mediaAbort=null;
+  let listAbort=null,mediaAbort=null,opened=null;
   const status=root.querySelector('#work-status'),list=root.querySelector('#work-list'),more=root.querySelector('#work-more'),media=root.querySelector('#work-media'),refresh=root.querySelector('#work-refresh');
   const valid=(e)=>active && epoch===e && get().settings.apiKey.trim()===key;
   function clearMedia(){
@@ -15,7 +16,7 @@ export function bind(root){
     media.replaceChildren();media.hidden=true;
     if(objectURL) URL.revokeObjectURL(objectURL);objectURL=null;
   }
-  function reset(){epoch++;listAbort?.abort();listAbort=null;clearMedia();items=[];cursor=null;busy=false;list.replaceChildren();more.hidden=true;refresh.disabled=false;}
+  function reset(){opened=null;epoch++;listAbort?.abort();listAbort=null;clearMedia();items=[];cursor=null;busy=false;list.replaceChildren();more.hidden=true;refresh.disabled=false;}
   function text(tag,value){const e=document.createElement(tag);e.textContent=value;return e;}
   function draw(){
     const cards=document.createDocumentFragment();
@@ -32,14 +33,24 @@ export function bind(root){
     }
     list.replaceChildren(cards);
   }
+  async function localRows(e){
+    try{
+      const c=await videoContext(key),rows=await c.store.list();if(!valid(e))return;
+      const local=rows.filter(r=>r.idempotency_key).map(r=>({id:r.video_job_id||r.id,local_id:r.id,status:r.video_status,params:{prompt:r.prompt||'Prompt saved on another device'},model:r.model_ids[0],created_at:r.created_at,cost_usd:r.cost}));
+      const merged=new Map(items.map(x=>[x.id,x]));for(const job of local)merged.set(job.id,job);items=[...merged.values()];draw();
+      const selected=new URLSearchParams(location.hash.split('?')[1]||'').get('video');
+      if(selected&&opened!==selected&&items.some(j=>j.id===selected&&j.status==='completed')){opened=selected;openMedia(selected);}
+    }catch{if(valid(e))status.textContent='Local video recovery unavailable; originals retained.';}
+  }
   async function load(append=false){
     if(busy || !active) return;
     if(!key){status.textContent='Connect your Singular key in Settings to recover videos.';refresh.disabled=true;return;}
     const e=epoch;busy=true;more.disabled=true;refresh.disabled=true;status.textContent='Loading videos…';
     const controller=new AbortController();listAbort=controller;
     try{
+      await localRows(e);if(!valid(e))return;
       const page=await listVideos(append?cursor:null,controller.signal);if(!valid(e)) return;
-      const merged=new Map((append?items:[]).map(x=>[x.id,x]));for(const job of page.items) merged.set(job.id,job);
+      const merged=new Map(items.map(x=>[x.id,x]));for(const job of page.items){const local=merged.get(job.id);merged.set(job.id,{...job,...(local?.local_id?local:{}),params:{...job.params,...local?.params}});}
       items=[...merged.values()];cursor=page.next_cursor;draw();status.textContent=items.length ? `${items.length} video jobs loaded.` : 'No video jobs found for this key.';
     }catch(err){if(valid(e) && err.name!=='AbortError') status.textContent=err.message?.startsWith('Key not accepted') ? err.message : 'Could not load videos. Retry.';}
     finally{if(valid(e)){busy=false;more.hidden=!cursor;more.disabled=false;refresh.disabled=false;}}
@@ -57,6 +68,7 @@ export function bind(root){
   }
   function changed(){const next=get().settings.apiKey.trim();if(next!==key){reset();key=next;load();}}
   const unsubscribe=subscribe(changed);
+  const runsChanged=()=>{if(active&&key)localRows(epoch);};window.addEventListener('singular:runs',runsChanged);
   // Follow existing settings storage on cross-tab account changes too.
   const storageChanged=async(event)=>{
     // Ignore unrelated stores; clearing settings must hide prior media immediately.
@@ -70,7 +82,7 @@ export function bind(root){
   window.addEventListener('storage',storageChanged);
   more.addEventListener('click',()=>load(true));
   refresh.addEventListener('click',()=>{reset();load();});
-  cleanup=()=>{active=false;reset();unsubscribe();window.removeEventListener('storage',storageChanged);};
+  cleanup=()=>{active=false;reset();unsubscribe();window.removeEventListener('singular:runs',runsChanged);window.removeEventListener('storage',storageChanged);};
   // A different tab may have changed settings while this route was unmounted.
   const startingEpoch=epoch;refresh.disabled=true;status.textContent='Checking connected key…';
   hydrate({clearMissingKey:true}).then(()=>{

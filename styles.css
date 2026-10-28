@@ -473,6 +473,20 @@ details pre {
   margin-top:12px;
   color:var(--dim)
 }
+html[data-video-rendering="true"] [data-nav="work"]::after {
+  content:"";
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin-left:6px;
+  border-radius:50%;
+  background:var(--blue);
+  animation:video-watch-pulse 1.5s ease-in-out infinite;
+}
+@keyframes video-watch-pulse { 50% { opacity:.3; } }
+@media (prefers-reduced-motion:reduce) {
+  html[data-video-rendering="true"] [data-nav="work"]::after { animation:none; }
+}
 #toasts {
   position:fixed;
   bottom:20px;

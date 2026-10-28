@@ -1,8 +1,8 @@
 import {get} from './store.js';
-import {durableVideoSession,saveVideoPlan,videoContext,onVideoAccountChange} from './video-runtime.js';
+import {durableVideoSession,saveVideoPlan,videoContext,onVideoAccountChange,followVideo} from './video-runtime.js';
 import {chatOnce,loadCatalog} from './api.js';
 import {openModal,esc} from './ui.js';
-import {MODELS,FIELDS,releaseReady,quoteVideo,quoteDefaultVideo,planVideo,validatePlan,VideoSession} from './video.js';
+import {MODELS,FIELDS,releaseReady,quoteVideo,quoteDefaultVideo,planVideo,validatePlan} from './video.js';
 export const videoMoney=n=>typeof n==='number'&&Number.isFinite(n)?'$'+n.toFixed(2):'unknown / unsettled';
 const usd=videoMoney;
 export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorage,chat=chatOnce}={}){
@@ -32,13 +32,13 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
  <button class="btn ghost" id="video-new">Make another version</button>
  <video id="video-player" controls playsinline preload="metadata" style="width:100%;max-height:360px" hidden></video>
  <a id="video-download" class="btn" style="align-self:flex-start" download="motion-trimmer.mp4" hidden>Download MP4</a>
- </div><p class="note">Rendering continues when you leave and resumes after reload. No cancellation or refund is implied. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,async modal=>{
+ </div><p class="note">Rendering continues when you leave and resumes after reload. No cancellation or refund is implied. If the video start is not confirmed, use the identical prompt/configuration; never submit a fresh version to recover it.</p>`,async (modal,close)=>{
   const el=id=>modal.querySelector('#video-'+id);let quote=null,planning=false,running=false,downloadIncomplete=false,receipts=[];
   el('plan').disabled=true;el('quote').disabled=true;
   let session;
   try{session=await durableVideoSession({key:get().settings.apiKey||'',fetcher,storage,fields,onChange:()=>{if(session)render();}});}catch(e){el('message').textContent=e.message;modal.querySelectorAll('button:not(.close-modal)').forEach(b=>b.disabled=true);return;}
-  const account=await videoContext();
-  const offAccount=onVideoAccountChange(()=>{session.dispose();modal.querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});modal.remove();});
+  const account=await videoContext();if(!modal.isConnected){session.dispose();return;}
+  const offAccount=onVideoAccountChange(()=>{session.dispose();modal.querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});close();});
   const spec=()=>({model:el('model').value,duration:5,prompt:el('prompt').value});
   const say=s=>{if(modal.isConnected&&account.valid())el('message').textContent=s;};
   function renderPlan(){
@@ -64,7 +64,7 @@ export function openVideoRunner({fields=FIELDS,fetcher=fetch,storage=localStorag
    el('download-retry').hidden=session.record?.status!=='completed';
   }
   const show=async()=>{let url;try{url=await session.download();downloadIncomplete=false;}catch(e){if(e.message==='Download incomplete, retry download')downloadIncomplete=true;throw e;}if(!modal.isConnected)return;el('player').src=url;el('player').hidden=false;el('download').href=url;el('download').hidden=false;say('Ready · generated draft. Download does not create another job.');};
-  async function follow(){if(!modal.isConnected||session.stopped)return;await session.resume();if(session.stopped)return;if(session.record.status==='completed')await show();else if(session.record.status==='failed')say('Generation failed: '+session.record.error+' · gateway reports failed jobs uncharged. Edit and choose Make another version.');}
+  async function follow(){if(!modal.isConnected||session.stopped)return;await followVideo(session);if(session.stopped)return;if(session.record.status==='completed')await show();else if(session.record.status==='failed')say('Generation failed: '+session.record.error+' · gateway reports failed jobs uncharged. Edit and choose Make another version.');}
   const perform=fn=>async()=>{if(running)return;running=true;render();try{await fn();}catch(e){say(e.message);}finally{running=false;render();}};
   el('plan').onclick=async()=>{
    if(planning||running)return;planning=true;render();say('Planning draft…');
