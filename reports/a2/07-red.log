@@ -1,0 +1,29 @@
+test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically (test_run_store_browser.RunStoreBrowser.test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically) ... ok
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ok
+test_database_scan_has_no_credentials_and_other_account_cannot_write (test_run_store_browser.RunStoreBrowser.test_database_scan_has_no_credentials_and_other_account_cannot_write) ... ok
+test_invalid_records_fail_without_corrupting_recovery (test_run_store_browser.RunStoreBrowser.test_invalid_records_fail_without_corrupting_recovery) ... FAIL
+test_legacy_migration_preserves_versions_pending_receipts_and_unscoped (test_run_store_browser.RunStoreBrowser.test_legacy_migration_preserves_versions_pending_receipts_and_unscoped) ... ok
+test_migration_merges_existing_durable_identity_without_duplicate (test_run_store_browser.RunStoreBrowser.test_migration_merges_existing_durable_identity_without_duplicate) ... ok
+test_missing_key_credentials_failure_and_atomic_rollback (test_run_store_browser.RunStoreBrowser.test_missing_key_credentials_failure_and_atomic_rollback) ... ok
+test_two_tabs_merge_monotonically_and_reimport_progress (test_run_store_browser.RunStoreBrowser.test_two_tabs_merge_monotonically_and_reimport_progress) ... ok
+
+======================================================================
+FAIL: test_invalid_records_fail_without_corrupting_recovery (test_run_store_browser.RunStoreBrowser.test_invalid_records_fail_without_corrupting_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 186, in test_invalid_records_fail_without_corrupting_recovery
+    self.assertEqual(result['refused'], [True]*6); self.assertEqual(result['count'], 0)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [False, False, False, True, False, True] != [True, True, True, True, True, True]
+
+First differing element 0:
+False
+True
+
+- [False, False, False, True, False, True]
++ [True, True, True, True, True, True]
+
+----------------------------------------------------------------------
+Ran 8 tests in 11.407s
+
+FAILED (failures=1)

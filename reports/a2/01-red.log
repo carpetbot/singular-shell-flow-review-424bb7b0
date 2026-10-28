@@ -1,0 +1,33 @@
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ERROR
+
+======================================================================
+ERROR: test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 33, in test_create_update_reload_account_isolation
+    result = self.runjs("""
+             ^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 31, in runjs
+    return self.page.evaluate("async()=>{const {openRunStore}=await import('/js/run-store.js');" + body + "}")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8566, in evaluate
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 464, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 320, in evaluate
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:44003/js/run-store.js
+
+----------------------------------------------------------------------
+Ran 1 test in 1.365s
+
+FAILED (errors=1)

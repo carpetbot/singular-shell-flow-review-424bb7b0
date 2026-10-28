@@ -1,0 +1,6 @@
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.489s
+
+OK

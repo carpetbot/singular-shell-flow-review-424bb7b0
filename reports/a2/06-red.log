@@ -1,0 +1,21 @@
+test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically (test_run_store_browser.RunStoreBrowser.test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically) ... ok
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ok
+test_database_scan_has_no_credentials_and_other_account_cannot_write (test_run_store_browser.RunStoreBrowser.test_database_scan_has_no_credentials_and_other_account_cannot_write) ... ok
+test_legacy_migration_preserves_versions_pending_receipts_and_unscoped (test_run_store_browser.RunStoreBrowser.test_legacy_migration_preserves_versions_pending_receipts_and_unscoped) ... ok
+test_migration_merges_existing_durable_identity_without_duplicate (test_run_store_browser.RunStoreBrowser.test_migration_merges_existing_durable_identity_without_duplicate) ... FAIL
+test_missing_key_credentials_failure_and_atomic_rollback (test_run_store_browser.RunStoreBrowser.test_missing_key_credentials_failure_and_atomic_rollback) ... ok
+test_two_tabs_merge_monotonically_and_reimport_progress (test_run_store_browser.RunStoreBrowser.test_two_tabs_merge_monotonically_and_reimport_progress) ... ok
+
+======================================================================
+FAIL: test_migration_merges_existing_durable_identity_without_duplicate (test_run_store_browser.RunStoreBrowser.test_migration_merges_existing_durable_identity_without_duplicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a2/tests/test_run_store_browser.py", line 172, in test_migration_merges_existing_durable_identity_without_duplicate
+    self.assertEqual(len(result['rows']), 1); self.assertTrue(result['refused'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 7 tests in 9.997s
+
+FAILED (failures=1)

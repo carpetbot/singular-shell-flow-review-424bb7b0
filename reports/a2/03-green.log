@@ -1,0 +1,8 @@
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ok
+test_legacy_migration_preserves_versions_pending_receipts_and_unscoped (test_run_store_browser.RunStoreBrowser.test_legacy_migration_preserves_versions_pending_receipts_and_unscoped) ... ok
+test_two_tabs_merge_monotonically_and_reimport_progress (test_run_store_browser.RunStoreBrowser.test_two_tabs_merge_monotonically_and_reimport_progress) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.431s
+
+OK
