@@ -1,0 +1,9 @@
+test_catalog_prices_change_and_unknown_is_not_zero (test_a3_create_browser.CreateBrowser.test_catalog_prices_change_and_unknown_is_not_zero) ... ok
+test_default_navigation_refresh_back_and_modes (test_a3_create_browser.CreateBrowser.test_default_navigation_refresh_back_and_modes) ... ok
+test_mobile_reference_no_overflow (test_a3_create_browser.CreateBrowser.test_mobile_reference_no_overflow) ... ok
+test_pickups_scoped_limit_and_account_removal (test_a3_create_browser.CreateBrowser.test_pickups_scoped_limit_and_account_removal) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 13.384s
+
+OK

@@ -1,0 +1,14 @@
+test_mobile_reference_no_overflow (test_a3_create_browser.CreateBrowser.test_mobile_reference_no_overflow) ... FAIL
+
+======================================================================
+FAIL: test_mobile_reference_no_overflow (test_a3_create_browser.CreateBrowser.test_mobile_reference_no_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/regression-c2-publish-app/tests/test_a3_create_browser.py", line 40, in test_mobile_reference_no_overflow
+    self.assertTrue(self.page.locator('#create-grid').evaluate("e=>e.scrollWidth<=e.clientWidth"),'Create must not hide outcomes in an internal horizontal carousel')
+AssertionError: False is not true : Create must not hide outcomes in an internal horizontal carousel
+
+----------------------------------------------------------------------
+Ran 1 test in 2.558s
+
+FAILED (failures=1)

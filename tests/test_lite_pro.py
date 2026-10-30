@@ -49,7 +49,8 @@ class LitePro(unittest.TestCase):
             r.fulfill(json={'model':body['model'],'choices':[{'message':{'content':json.dumps(output)}}],'usage':{'prompt_tokens':15,'completion_tokens':20,'total_tokens':35}})
         elif urlsplit(r.request.url).hostname=='127.0.0.1':r.continue_()
         else:self.blocked.append(r.request.url);r.abort()
-    def gallery(self,route=''):
+    # Retain legacy flow-modal coverage explicitly; A3 Create has its own tests.
+    def gallery(self,route='#/skills'):
         self.page.goto(self.url+'/'+route)
         self.page.wait_for_selector('.skill-card')
     def mode(self,value):
@@ -57,11 +58,11 @@ class LitePro(unittest.TestCase):
     def test_01_mode_default_persistence_and_guarded_routes(self):
         self.gallery('#/skills')
         self.assertEqual(self.page.locator('html').get_attribute('data-mode'),'lite')
-        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Flows','My work','Settings'])
+        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Create','My work','Settings'])
         self.assertEqual(self.page.locator('#syncbanner').evaluate('el=>getComputedStyle(el).display'),'none')
         self.assertIn('Flows',self.page.locator('h2').inner_text())
         self.mode('Pro')
-        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Flows','My work','Chat','Models','Settings'])
+        self.assertEqual(self.page.locator('#rail a:visible').all_text_contents(),['Create','My work','Chat','Models','Settings'])
         self.page.reload();self.page.wait_for_selector('.skill-card')
         self.assertEqual(self.page.locator('html').get_attribute('data-mode'),'pro')
         self.mode('Lite')

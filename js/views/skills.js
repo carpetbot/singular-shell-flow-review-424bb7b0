@@ -119,7 +119,7 @@ export async function bind(root){
     el.onclick = () => openRunner(cards[Number(el.dataset.i)]));
 }
 
-function openRunner({ id, manifest }){
+export function openRunner({ id, manifest }){
   if(manifest.runtime?.video)return openVideoRunner();
   if(manifest.runtime?.graph)return openGraphRunner({id,manifest},renderField);
   const fields = (manifest.ui?.fields || []).map(normField);

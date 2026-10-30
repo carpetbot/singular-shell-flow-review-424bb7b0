@@ -5,6 +5,7 @@ import { syncBanner, renderTopbar, renderNav } from "./chrome.js";
 
 import {startVideoRuntime} from './video-runtime.js';
 import { bindMode } from './presentation.js';
+import * as create from './views/create.js';
 import * as chat from "./views/chat.js";
 import * as skills from "./views/skills.js";
 import * as models from "./views/models.js";
@@ -12,6 +13,7 @@ import * as settings from "./views/settings.js";
 import * as work from "./views/work.js";
 
 export const VIEWS = [
+  { id: "create", ...create },
   { id: "chat", ...chat },
   { id: "skills", ...skills },
   { id: "models", ...models },
@@ -19,7 +21,7 @@ export const VIEWS = [
   { id: "work", ...work },
 ];
 
-let currentView = "skills";
+let currentView = "create";
 const viewRoot = document.getElementById("view");
 let mountedView;
 
@@ -33,9 +35,10 @@ export function renderView(){
 }
 
 function route(){
-  const hash = location.hash.replace(/^#\//, "").split('?')[0] || "skills";
-  currentView = VIEWS.some(v => v.id === hash) ? hash : "skills";
-  if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) currentView='skills';
+  const hash = location.hash.replace(/^#\//, "").split('?')[0] || "create";
+  currentView = VIEWS.some(v => v.id === hash) ? hash : "create";
+  if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) currentView='create';
+  if(!location.hash)history.replaceState(null,'','#/create');
   renderView();
 }
 window.addEventListener("hashchange", route);

@@ -1173,3 +1173,13 @@ tr.off td {
     scroll-behavior:auto!important
   }
 }
+
+/* Create uses the existing shell tokens and gallery cards. */
+.create-page h1{font-family:var(--disp);font-size:32px;letter-spacing:-1px}
+.create-page .skill-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;scroll-snap-type:none}
+.create-page .skill-card{min-width:0;max-width:100%;overflow-wrap:anywhere}
+@media(max-width:700px){.create-page .skill-grid{grid-template-columns:minmax(0,1fr)}}
+#create-pickups{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+#create-pickups h2{width:100%;font-size:16px}
+.pickup-card{display:flex;flex:1 1 220px;gap:12px;justify-content:space-between;min-width:0;overflow-wrap:anywhere}
+.pickup-card span{color:var(--dim)}
