@@ -1,0 +1,23 @@
+test_no_old_video_draft_reappears_during_cross_tab_hydration_window (test_a3_part_a_browser.PartA.test_no_old_video_draft_reappears_during_cross_tab_hydration_window) ... FAIL
+test_no_old_work_reappears_during_cross_tab_hydration_window (test_a3_part_a_browser.PartA.test_no_old_work_reappears_during_cross_tab_hydration_window) ... FAIL
+
+======================================================================
+FAIL: test_no_old_video_draft_reappears_during_cross_tab_hydration_window (test_a3_part_a_browser.PartA.test_no_old_video_draft_reappears_during_cross_tab_hydration_window)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 61, in test_no_old_video_draft_reappears_during_cross_tab_hydration_window
+    self.assertFalse(self.page.evaluate("document.querySelector('#video-prompt')?.value.includes('paper boat')||false"),'Old-account draft must stay removed during hydration')
+AssertionError: True is not false : Old-account draft must stay removed during hydration
+
+======================================================================
+FAIL: test_no_old_work_reappears_during_cross_tab_hydration_window (test_a3_part_a_browser.PartA.test_no_old_work_reappears_during_cross_tab_hydration_window)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 57, in test_no_old_work_reappears_during_cross_tab_hydration_window
+    self.assertEqual(self.page.locator('.work-card').count(),0,'Old-account event must not redisplay old work while settings hydrate')
+AssertionError: 1 != 0 : Old-account event must not redisplay old work while settings hydrate
+
+----------------------------------------------------------------------
+Ran 2 tests in 5.011s
+
+FAILED (failures=2)

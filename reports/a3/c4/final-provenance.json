@@ -1,0 +1,39 @@
+{
+  "archive": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/dist/shell-ux-v1-a3.zip",
+  "sha256": "1d8dc68a5563fb8f7d5e40b0d4d61d8e444f4dff87da4d971f25aca9a59288e9",
+  "runtime_files": 49,
+  "all_runtime_bytes_match_source_archive_relocated_and_both_tested_copies": true,
+  "suites": {
+    "a3-final-source": {
+      "node": 101,
+      "python": 156,
+      "results": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/a3-final-source-results.json"
+    },
+    "a3-final-packaged": {
+      "node": 101,
+      "python": 156,
+      "results": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/a3-final-packaged-results.json"
+    }
+  },
+  "changed_runtime_since_A2": [
+    "index.html",
+    "js/app.js",
+    "js/key-connect.js",
+    "js/media-cache.js",
+    "js/poster-cache.js",
+    "js/run-store.js",
+    "js/video-runtime.js",
+    "js/video-ui.js",
+    "js/views/create.js",
+    "js/views/skills.js",
+    "js/views/video-flow.js",
+    "js/views/work-detail.js",
+    "js/views/work.js",
+    "js/work-api.js",
+    "proxy.py",
+    "styles.css"
+  ],
+  "frozen_files": 21,
+  "static_GET_HEAD_checks": 118,
+  "no_deployment": true
+}

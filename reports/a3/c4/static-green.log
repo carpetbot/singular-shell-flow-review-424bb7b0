@@ -1,0 +1,6 @@
+test_unknown_javascript_and_source_denied_get_and_head (test_a3_static_allowlist.StaticAllowlist.test_unknown_javascript_and_source_denied_get_and_head) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.604s
+
+OK

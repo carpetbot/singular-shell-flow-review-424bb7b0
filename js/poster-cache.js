@@ -5,10 +5,12 @@ const safeJob=id=>typeof id==='string'&&/^[A-Za-z0-9_-]{1,160}$/.test(id);
 const safeImage=s=>typeof s==='string'&&s.length<=MAX_POSTER_BYTES&&/^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(s);
 async function database(){
   return new Promise((resolve,reject)=>{
-    const r=indexedDB.open('singular-posters.v1',1);
+    const r=indexedDB.open('singular-posters.v1',1);let expired=false;
+    const fail=()=>{expired=true;clearTimeout(timer);reject(new Error('Poster cache unavailable'));};
+    const timer=setTimeout(fail,1500);
     r.onupgradeneeded=()=>r.result.createObjectStore('posters',{keyPath:'id'});
-    r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);
-    r.onblocked=()=>reject(new Error('Poster cache unavailable'));
+    r.onsuccess=()=>{clearTimeout(timer);if(expired){r.result.close();return;}r.result.onversionchange=()=>r.result.close();resolve(r.result);};
+    r.onerror=r.onblocked=fail;
   });
 }
 export async function readPosters(account){

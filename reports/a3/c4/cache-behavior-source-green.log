@@ -1,0 +1,6 @@
+test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch (__main__.CacheBehavior.test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 3.177s
+
+OK

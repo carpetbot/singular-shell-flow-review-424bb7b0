@@ -1,0 +1,58 @@
+test_single_status_metadata_known_cost_and_no_unrelated_refetch (test_a3_gateway_detail_browser.GatewayDetail.test_single_status_metadata_known_cost_and_no_unrelated_refetch) ... ERROR
+test_status_identity_mismatch_and_unknown_cost_fail_honestly (test_a3_gateway_detail_browser.GatewayDetail.test_status_identity_mismatch_and_unknown_cost_fail_honestly) ... ERROR
+
+======================================================================
+ERROR: test_single_status_metadata_known_cost_and_no_unrelated_refetch (test_a3_gateway_detail_browser.GatewayDetail.test_single_status_metadata_known_cost_and_no_unrelated_refetch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_gateway_detail_browser.py", line 17, in test_single_status_metadata_known_cost_and_no_unrelated_refetch
+    self.mount(identity='gateway:gateway_metadata');self.page.wait_for_selector('#work-player')
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 4000ms exceeded.
+Call log:
+  - waiting for locator("#work-player") to be visible
+
+
+======================================================================
+ERROR: test_status_identity_mismatch_and_unknown_cost_fail_honestly (test_a3_gateway_detail_browser.GatewayDetail.test_status_identity_mismatch_and_unknown_cost_fail_honestly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_gateway_detail_browser.py", line 24, in test_status_identity_mismatch_and_unknown_cost_fail_honestly
+    self.mount(identity='gateway:wrong_identity');self.page.wait_for_function("document.querySelector('#detail-status').textContent.includes('Could not load')")
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 11599, in wait_for_function
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 1110, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 878, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 4000ms exceeded.
+
+----------------------------------------------------------------------
+Ran 2 tests in 12.647s
+
+FAILED (errors=2)

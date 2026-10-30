@@ -2,7 +2,7 @@
 import argparse,json,os,shutil,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--label',default='full');p.add_argument('--runtime',type=Path);p.add_argument('--checkpoint2',action='store_true');p.add_argument('--checkpoint3',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--label',default='full');p.add_argument('--runtime',type=Path);p.add_argument('--checkpoint2',action='store_true');p.add_argument('--checkpoint3',action='store_true');p.add_argument('--python-pattern',default='test_*.py');a=p.parse_args()
 if not a.label.replace('-','').replace('_','').isalnum():p.error('simple evidence label required')
 evidence=ROOT/'reports/a3';evidence.mkdir(exist_ok=True)
 copy=evidence/('regression-'+a.label+'-app')
@@ -23,8 +23,10 @@ else:
  (copy/'reports').mkdir(exist_ok=True);shutil.copy2(ROOT/'reports/catalog-live.json',copy/'reports/catalog-live.json')
 env=os.environ.copy()
 for k in ['VIDEO_APP_ROOT','SINGULAR_UI_APP_ROOT','JURY_APP_ROOT','VIDEO_EVIDENCE','VIDEO_JURY_EVIDENCE']:env.pop(k,None)
+if a.runtime:
+ for k in ['VIDEO_APP_ROOT','SINGULAR_UI_APP_ROOT','JURY_APP_ROOT']:env[k]=str(runtime.resolve())
 results=[]
-for kind,cmd in [('node',['node','--test',*[str(p.relative_to(copy)) for p in sorted((copy/'tests').glob('*.test.mjs'))]]),('python',[sys.executable,'-m','unittest','discover','-s','tests','-p','test_*.py','-v'])]:
+for kind,cmd in [('node',['node','--test',*[str(p.relative_to(copy)) for p in sorted((copy/'tests').glob('*.test.mjs'))]]),('python',[sys.executable,'-m','unittest','discover','-s','tests','-p',a.python_pattern,'-v'])]:
  log=evidence/(a.label+'-'+kind+'.log')
  if log.exists():raise RuntimeError('Evidence already exists: '+str(log))
  with log.open('w') as f:r=subprocess.run(cmd,cwd=copy,env=env,stdout=f,stderr=subprocess.STDOUT)

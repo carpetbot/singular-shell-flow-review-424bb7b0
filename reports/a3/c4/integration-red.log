@@ -1,0 +1,112 @@
+test_canonical_detail_reload_back_and_prefill_no_paid_identity (test_a3_part_a_browser.PartA.test_canonical_detail_reload_back_and_prefill_no_paid_identity) ... ERROR
+test_foreign_or_credential_prefill_is_discarded_without_form_or_network (test_a3_part_a_browser.PartA.test_foreign_or_credential_prefill_is_discarded_without_form_or_network) ... FAIL
+test_optional_poster_store_unavailable_does_not_block_work_or_playback (test_a3_part_a_browser.PartA.test_optional_poster_store_unavailable_does_not_block_work_or_playback) ... ERROR
+test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch (test_a3_part_a_browser.PartA.test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch) ... FAIL
+test_ready_notice_open_is_canonical_detail_not_job_as_run_id (test_a3_part_a_browser.PartA.test_ready_notice_open_is_canonical_detail_not_job_as_run_id) ... ERROR
+
+======================================================================
+ERROR: test_canonical_detail_reload_back_and_prefill_no_paid_identity (test_a3_part_a_browser.PartA.test_canonical_detail_reload_back_and_prefill_no_paid_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 13, in test_canonical_detail_reload_back_and_prefill_no_paid_identity
+    identity=self.seed();self.page.goto(self.url+'/#/work/'+identity);self.page.wait_for_selector('#work-detail');self.page.wait_for_selector('#work-player')
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 4000ms exceeded.
+Call log:
+  - waiting for locator("#work-detail") to be visible
+
+
+======================================================================
+ERROR: test_optional_poster_store_unavailable_does_not_block_work_or_playback (test_a3_part_a_browser.PartA.test_optional_poster_store_unavailable_does_not_block_work_or_playback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 37, in test_optional_poster_store_unavailable_does_not_block_work_or_playback
+    self.page.evaluate("location.hash='#/work'");self.page.wait_for_selector('.work-card',timeout=5000);self.page.locator('.work-card a').first.click();self.page.wait_for_selector('#work-player',timeout=5000)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator(".work-card") to be visible
+
+
+======================================================================
+ERROR: test_ready_notice_open_is_canonical_detail_not_job_as_run_id (test_a3_part_a_browser.PartA.test_ready_notice_open_is_canonical_detail_not_job_as_run_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 29, in test_ready_notice_open_is_canonical_detail_not_job_as_run_id
+    self.page.locator('#rail [data-nav=create]').click();self.state='completed';self.page.wait_for_selector('[data-video-ready]',timeout=18000);self.page.locator('[data-video-ready] button').click();self.page.wait_for_selector('#work-detail');self.page.wait_for_selector('#work-player')
+                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.local/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 4000ms exceeded.
+Call log:
+  - waiting for locator("#work-detail") to be visible
+
+
+======================================================================
+FAIL: test_foreign_or_credential_prefill_is_discarded_without_form_or_network (test_a3_part_a_browser.PartA.test_foreign_or_credential_prefill_is_discarded_without_form_or_network)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 33, in test_foreign_or_credential_prefill_is_discarded_without_form_or_network
+    self.page.goto(self.url+'/#/flow/claw__motion-trimmer-video');self.page.wait_for_selector('#video-topic');self.assertEqual(self.page.locator('#video-topic').input_value(),'');self.assertIsNone(self.page.evaluate("sessionStorage.getItem('singular:run-again.v1')"))
+                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '{"v":1,"account_id":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","flow_id":"claw__motion-trimmer-video","inputs":{"topic":"Foreign account draft"},"created_at":1793348199266}' is not None
+
+======================================================================
+FAIL: test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch (test_a3_part_a_browser.PartA.test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_part_a_browser.py", line 21, in test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch
+    identity=self.seed();self.page.goto(self.url+'/#/create');self.page.wait_for_selector('.pickup-card');self.assertEqual(self.page.locator('.pickup-card').first.get_attribute('href'),'#/work/'+identity)
+                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '#/work?video=vid_offline' != '#/work/182575d3-9a56-466e-a7a4-c1178d083c40'
+- #/work?video=vid_offline
++ #/work/182575d3-9a56-466e-a7a4-c1178d083c40
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 32.270s
+
+FAILED (failures=2, errors=3)

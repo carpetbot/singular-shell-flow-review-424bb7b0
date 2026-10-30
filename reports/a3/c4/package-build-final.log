@@ -1,0 +1,18 @@
+{
+  "archive": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/dist/shell-ux-v1-a3.zip",
+  "sha256": "1d8dc68a5563fb8f7d5e40b0d4d61d8e444f4dff87da4d971f25aca9a59288e9",
+  "runtime_files": 49,
+  "frozen_files": 21,
+  "base": "d95c15323d435f19d2ff634d92484c4b9503b3f5",
+  "all_zip_and_relocated_bytes_equal_source": true,
+  "deterministic_rebuild_equal": true,
+  "static_GET_HEAD_checks": 118,
+  "relocated_runtime": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/package-a3/relocated/runtime",
+  "unexpected_upstream": [],
+  "credential_pattern_hits": [],
+  "unchanged_baseline_literal_prefix_lines": {
+    "js/views/chat.js": 2,
+    "js/views/settings.js": 2,
+    "js/views/skills.js": 1
+  }
+}

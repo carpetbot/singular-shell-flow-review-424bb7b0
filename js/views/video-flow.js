@@ -1,5 +1,6 @@
 import {get,subscribe,hydrate} from '../store.js';
 import {keyConnectMarkup,bindKeyConnect} from '../key-connect.js';
+import {videoContext} from '../video-runtime.js';
 import {videoRunnerMarkup,bindVideoRunner} from '../video-ui.js';
 
 export const FLOW_ID='claw__motion-trimmer-video';
@@ -48,25 +49,34 @@ export function view(){
 export function destroy(){cleanup();cleanup=()=>{};}
 export async function bind(root,{inputs=pendingInputs}={}){
  destroy();pendingInputs=null;
- let active=true,release=()=>{},disconnect=()=>{},key=get().settings.apiKey.trim(),epoch=0,controller;
+ let active=true,release=()=>{},disconnect=()=>{},key=get().settings.apiKey.trim(),epoch=0,checking=false,controller;
  function clear(){epoch++;controller?.abort();release();release=()=>{};disconnect();disconnect=()=>{};}
  async function mount(){
-  if(!active)return;clear();const e=epoch;
+  if(!active||checking)return;clear();const e=epoch;
   const page=root.querySelector('[data-video-page]');if(!page)return;
   disconnect=bindKeyConnect(page);
   if(!key){page.querySelectorAll('button:not(#inline-connect),select,textarea').forEach(el=>el.disabled=true);return;}
+  let rerun=null;
+  try{const raw=sessionStorage.getItem('singular:run-again.v1');sessionStorage.removeItem('singular:run-again.v1');if(raw&&raw.length<24000)rerun=JSON.parse(raw);}catch{}
+  if(rerun){
+   try{
+    const c=await videoContext(key);if(!active||epoch!==e||get().settings.apiKey.trim()!==key)return;
+    const age=Date.now()-rerun.created_at,values=rerun.inputs;
+    if(rerun.v===1&&rerun.account_id===c.store.account_id&&rerun.flow_id===FLOW_ID&&Number.isFinite(age)&&age>=0&&age<=1800000&&values&&Object.keys(values).every(k=>['topic','context','platform'].includes(k))&&Object.values(values).every(v=>typeof v==='string'&&v.length<=4000&&!v.includes(key))){inputs=values;}
+   }catch{/* Invalid or unavailable optional prefill is never a submission. */}
+  }
   controller=new AbortController();
   const dispose=await bindVideoRunner(page,{inputs,signal:controller.signal,autoQuote:true,onAccountChange:()=>{
    // Runtime invalidation must remove old account data before any asynchronous hydration.
-   if(active){clear();root.replaceChildren();queueMicrotask(()=>{if(active){key=get().settings.apiKey.trim();root.innerHTML=view();mount();}});}
+   if(active){clear();root.replaceChildren();queueMicrotask(()=>{if(active&&!checking){key=get().settings.apiKey.trim();root.innerHTML=view();mount();}});}
   }});
   if(!active||epoch!==e){dispose?.();return;}release=dispose||(()=>{});inputs=null;
  }
- function changed(){const next=get().settings.apiKey.trim();if(next!==key){clear();key=next;root.innerHTML=view();mount();}}
+ function changed(){const next=get().settings.apiKey.trim();if(next!==key){clear();checking=false;key=next;root.innerHTML=view();mount();}}
  const unsub=subscribe(changed);
  const storage=async event=>{
   if(event.key!==null){try{const v=JSON.parse(event.newValue||event.oldValue||'null');if(v?.v!==1||!v.settings||!Object.hasOwn(v.settings,'apiKey'))return;}catch{return;}}
-  clear();root.replaceChildren();const e=epoch;await hydrate({clearMissingKey:true});if(active&&epoch===e){key=get().settings.apiKey.trim();root.innerHTML=view();mount();}
+  checking=true;clear();root.replaceChildren();const e=epoch;await hydrate({clearMissingKey:true});if(active&&epoch===e){checking=false;key=get().settings.apiKey.trim();root.innerHTML=view();mount();}
  };
  window.addEventListener('storage',storage);
  cleanup=()=>{active=false;clear();unsub();window.removeEventListener('storage',storage);};

@@ -1,0 +1,14 @@
+test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch (__main__.CacheBehavior.test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch) ... FAIL
+
+======================================================================
+FAIL: test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch (__main__.CacheBehavior.test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/cache_behavior_probe.py", line 16, in test_reopen_completed_media_reuses_bytes_without_another_authenticated_fetch
+    self.assertEqual(len([c for c in self.calls if '/content' in c[0]]),1,'Reopening the completed video must reuse optional cached bytes')
+AssertionError: 2 != 1 : Reopening the completed video must reuse optional cached bytes
+
+----------------------------------------------------------------------
+Ran 1 test in 3.178s
+
+FAILED (failures=1)

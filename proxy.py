@@ -23,6 +23,58 @@ GATEWAY = "https://api.impossi.build"
 ROOT = os.path.dirname(os.path.abspath(__file__))
 UA = {"User-Agent": "singular-shell/0.1"}
 
+# Explicit runtime-only static allowlist. Python, tests and arbitrary modules stay private.
+STATIC_ASSETS = frozenset({
+    'index.html',
+    'styles.css',
+    'js/api.js',
+    'js/app.js',
+    'js/chrome.js',
+    'js/flow-ui.js',
+    'js/flow.js',
+    'js/graph-ui.js',
+    'js/graph.js',
+    'js/key-connect.js',
+    'js/media-cache.js',
+    'js/poster-cache.js',
+    'js/presentation.js',
+    'js/run-store.js',
+    'js/store.js',
+    'js/ui.js',
+    'js/video-runtime.js',
+    'js/video-ui.js',
+    'js/video.js',
+    'js/views/chat.js',
+    'js/views/create.js',
+    'js/views/models.js',
+    'js/views/settings.js',
+    'js/views/skills.js',
+    'js/views/video-flow.js',
+    'js/views/work-detail.js',
+    'js/views/work.js',
+    'js/work-api.js',
+    'skills/claw__motion-trimmer/prompts/user.md',
+    'skills/claw__motion-trimmer/singular.skill.json',
+    'skills/claw__motion-trimmer-video/singular.flow.json',
+    'skills/impossibuild__model-jury/prompts/1-rubric.system.md',
+    'skills/impossibuild__model-jury/prompts/1-rubric.user.md',
+    'skills/impossibuild__model-jury/prompts/2-answer.system.md',
+    'skills/impossibuild__model-jury/prompts/2-answer.user.md',
+    'skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md',
+    'skills/impossibuild__model-jury/prompts/3-judge.system.md',
+    'skills/impossibuild__model-jury/prompts/3-judge.user.md',
+    'skills/impossibuild__model-jury/singular.flow.json',
+    'skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md',
+    'skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md',
+    'skills/impossibuild__prospect-to-cold-email/singular.flow.json',
+})
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=ROOT, **kw)
@@ -187,10 +239,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return False
         if target.suffix.lower() == '.py':
             return False
-        return (rel in ('index.html', 'styles.css') or
-                (rel.startswith('js/') and target.suffix == '.js') or
-                (rel.startswith('skills/') and (target.name in ('singular.flow.json', 'singular.skill.json') or
-                                               ('/prompts/' in rel and target.suffix == '.md'))))
+        return rel in STATIC_ASSETS
 
     def send_head(self):
         if not self._static_allowed():

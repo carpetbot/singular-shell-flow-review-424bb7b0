@@ -1,0 +1,7 @@
+test_single_status_metadata_known_cost_and_no_unrelated_refetch (test_a3_gateway_detail_browser.GatewayDetail.test_single_status_metadata_known_cost_and_no_unrelated_refetch) ... ok
+test_status_identity_mismatch_and_unknown_cost_fail_honestly (test_a3_gateway_detail_browser.GatewayDetail.test_status_identity_mismatch_and_unknown_cost_fail_honestly) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 5.583s
+
+OK

@@ -1,0 +1,13 @@
+test_canonical_detail_reload_back_and_prefill_no_paid_identity (test_a3_part_a_browser.PartA.test_canonical_detail_reload_back_and_prefill_no_paid_identity) ... ok
+test_foreign_or_credential_prefill_is_discarded_without_form_or_network (test_a3_part_a_browser.PartA.test_foreign_or_credential_prefill_is_discarded_without_form_or_network) ... ok
+test_no_old_video_draft_reappears_during_cross_tab_hydration_window (test_a3_part_a_browser.PartA.test_no_old_video_draft_reappears_during_cross_tab_hydration_window) ... ok
+test_no_old_work_reappears_during_cross_tab_hydration_window (test_a3_part_a_browser.PartA.test_no_old_work_reappears_during_cross_tab_hydration_window) ... ok
+test_optional_poster_store_unavailable_does_not_block_work_or_playback (test_a3_part_a_browser.PartA.test_optional_poster_store_unavailable_does_not_block_work_or_playback) ... ok
+test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch (test_a3_part_a_browser.PartA.test_pickup_and_mywork_links_reach_same_durable_identity_without_prefetch) ... ok
+test_ready_notice_open_is_canonical_detail_not_job_as_run_id (test_a3_part_a_browser.PartA.test_ready_notice_open_is_canonical_detail_not_job_as_run_id) ... ok
+test_work_and_detail_actual_routes_desktop_phone_screenshots (test_a3_part_a_browser.PartA.test_work_and_detail_actual_routes_desktop_phone_screenshots) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 32.135s
+
+OK

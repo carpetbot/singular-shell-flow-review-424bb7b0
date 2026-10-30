@@ -157,9 +157,12 @@ export function startVideoRuntime(){
 // no view owns this loop, and the frozen engine still validates every response.
 function pause(ms,signal,context){return new Promise(resolve=>{const done=()=>{clearTimeout(timer);signal.removeEventListener('abort',done);if(context?.kick===done)context.kick=null;resolve();};const timer=setTimeout(done,ms);if(context)context.kick=done;signal.addEventListener('abort',done,{once:true});if(signal.aborted)done();});}
 async function ready(c,id){
- if(!c.valid()||!await c.store.claimVideoReady(id)||!c.valid())return;
+ if(!c.valid())return;
+ const rows=await c.store.list();
+ const row=rows.filter(r=>r.video_job_id===id&&r.status==='done').sort((a,b)=>Number(!!b.idempotency_key)-Number(!!a.idempotency_key)||String(b.created_at).localeCompare(String(a.created_at)))[0];
+ if(!row||!c.valid()||!await c.store.claimVideoReady(id)||!c.valid())return;
  const el=notice('Your video is ready ');el.dataset.videoReady=id;
- const open=document.createElement('button');open.textContent='Open';open.onclick=()=>{if(c.valid()){location.hash='#/work?video='+encodeURIComponent(id);el.remove();}};el.append(open);
+ const open=document.createElement('button');open.textContent='Open';open.onclick=()=>{if(c.valid()){location.hash='#/work/'+encodeURIComponent(row.id);el.remove();}};el.append(open);
 }
 async function watch(c){
  const active=new Set(),retry=new Map();

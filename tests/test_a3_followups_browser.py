@@ -146,7 +146,7 @@ class Followups(VideoBrowser):
   self.page.wait_for_function("notices.length===1",timeout=15000)
   self.assertEqual(self.page.evaluate('notices'),['vid_offline'])
   self.page.locator('[data-video-ready] button').click();self.page.wait_for_selector('#work-player[src^="blob:"]')
-  self.page.reload();self.page.wait_for_selector('#work-list');self.page.wait_for_timeout(5500)
+  self.page.reload();self.page.wait_for_selector('#work-detail');self.page.wait_for_timeout(5500)
   self.assertEqual(self.page.locator('[data-video-ready]').count(),0)
   self.assertFalse(any(c['path']=='/v1/videos' for c in self.calls))
   self.assertEqual(self.errors,[])

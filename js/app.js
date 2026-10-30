@@ -11,6 +11,7 @@ import * as chat from "./views/chat.js";
 import * as skills from "./views/skills.js";
 import * as models from "./views/models.js";
 import * as settings from "./views/settings.js";
+import * as workDetail from './views/work-detail.js';
 import * as work from "./views/work.js";
 
 export const VIEWS = [
@@ -20,6 +21,7 @@ export const VIEWS = [
   { id: "skills", ...skills },
   { id: "models", ...models },
   { id: "settings", ...settings },
+  { id: "work-detail", ...workDetail },
   { id: "work", ...work },
 ];
 
@@ -33,12 +35,12 @@ export function renderView(){
   mountedView = def;
   viewRoot.innerHTML = def.view();
   if(def.bind) def.bind(viewRoot);
-  renderNav(['video-flow','skills'].includes(currentView)?'create':currentView);
+  renderNav(currentView==='work-detail'?'work':['video-flow','skills'].includes(currentView)?'create':currentView);
 }
 
 function route(){
   const hash = location.hash.replace(/^#\//, "").split('?')[0] || "create";
-  currentView = hash==='flow/claw__motion-trimmer-video'?'video-flow':VIEWS.some(v => v.id === hash) ? hash : "create";
+  currentView = hash.startsWith('work/')?'work-detail':hash==='flow/claw__motion-trimmer-video'?'video-flow':VIEWS.some(v => v.id === hash) ? hash : "create";
   if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) currentView='create';
   if(!location.hash)history.replaceState(null,'','#/create');
   renderView();

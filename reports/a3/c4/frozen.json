@@ -1,0 +1,28 @@
+{
+  "base": "d95c15323d435f19d2ff634d92484c4b9503b3f5",
+  "frozen_count": 21,
+  "frozen_sha256": {
+    "js/video.js": "71986db49b64763229a90e4d4fe10ae78ebfc45b27070f6d32e675e21a31450b",
+    "skills/claw__motion-trimmer/prompts/user.md": "0166619a137b3a4e413485edc996f0cdbdcc485ee01338ca8a1f8a20f2d040f3",
+    "skills/claw__motion-trimmer/singular.skill.json": "34f9be9f576703556c84c4a8e489f3664ade7dbd7bb8aff8b98208c538317fbb",
+    "skills/claw__motion-trimmer-video/singular.flow.json": "50fd7f320eca3a261496ba060d4eda06f945ad28b9b0cb0ac3d89b3a2591e9c7",
+    "skills/impossibuild__model-jury/prompts/1-rubric.system.md": "04bf84b7a236e73efcd0e76e258c1a781b89ce89a73b13896d4c4eee33831202",
+    "skills/impossibuild__model-jury/prompts/1-rubric.user.md": "4cab372f1b7ed9af322f675eae9d4601a2911298a47d7545a87ebf69357e8f20",
+    "skills/impossibuild__model-jury/prompts/2-answer.system.md": "d17923ad1281238a759f39dfcf2951d75b3893a494646b1164f7b903f840f56f",
+    "skills/impossibuild__model-jury/prompts/2-answer.user.md": "b264690eb943f91a8b3405ed9150f8f59a5f460b027693fe8e8f8800ee00cf25",
+    "skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md": "eea0fba118227bfcf92da91a064bc4a7e809152485412c7896a0598fe0dcf86f",
+    "skills/impossibuild__model-jury/prompts/3-judge.system.md": "c2172d23a1f4a5b6252218d5cf7a08bc04e294d2dd4eee3cf2abf69f5e214f6e",
+    "skills/impossibuild__model-jury/prompts/3-judge.user.md": "f2ece9501daa7c7eb2202b7bdf5acd926a2f69d8ecb0dbcfe66f097cde8072ad",
+    "skills/impossibuild__model-jury/singular.flow.json": "63000701cdfe22b0fbe4e5e9b126317b659c3c2a18ad15a60410024ca622e0ae",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md": "84c829532db343b18baaf617be96713f83178ca46eb6b0fa742c32f3ecc8e889",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md": "db7cfb71fbb9d2b21290b2902f40e67ab5dabc089a5930d8f75d2dec6ff361a1",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md": "6e1d1f6b35656b9227b86b2ba8b89557f98add06964b96051fe4b74cfca1d8cd",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md": "8b424362f031e41cb7a82623af4597e9e6eecade20fd8690d82c32e036ec3ea1",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md": "980fd44daec70f8bc6b88384dcd0ad2ad5dfad1e6a1179ab935509f1d84c2107",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md": "dbe1f4a4838d5a9926bcfd20fc3f022db23bad696ce5d31ab94e5b059e56cc74",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md": "24d97205ecac97739c6e52f84a08156462d2b7945b57d2b3fd16cf86d2a45fd3",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md": "10cd3b3a74c8793e2646e53d76dd0572dbada494205fdaf8e1cf0a61ede826bc",
+    "skills/impossibuild__prospect-to-cold-email/singular.flow.json": "3d6a46beeb5a146253fa932fc8a5bf082460f2c4ace62e1eb16fadb0c47a2033"
+  },
+  "credential_pattern_hits": []
+}

@@ -1,0 +1,661 @@
+{
+  "archive": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/dist/shell-ux-v1-a3.zip",
+  "sha256": "1d8dc68a5563fb8f7d5e40b0d4d61d8e444f4dff87da4d971f25aca9a59288e9",
+  "runtime_files": 49,
+  "frozen_files": 21,
+  "base": "d95c15323d435f19d2ff634d92484c4b9503b3f5",
+  "all_zip_and_relocated_bytes_equal_source": true,
+  "deterministic_rebuild_equal": true,
+  "static_GET_HEAD_checks": 118,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/api.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/app.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/chrome.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/flow-ui.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/flow.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/graph-ui.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/graph.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/key-connect.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/media-cache.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/poster-cache.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/presentation.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/run-store.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/store.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/ui.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/video-runtime.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/video-ui.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/video.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/chat.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/create.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/models.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/settings.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/skills.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/video-flow.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/work-detail.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/views/work.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/js/work-api.js",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/claw__motion-trimmer-video/singular.flow.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/claw__motion-trimmer/prompts/user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/claw__motion-trimmer/singular.skill.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/1-rubric.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/1-rubric.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/2-answer.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/2-answer.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/3-judge.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/prompts/3-judge.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__model-jury/singular.flow.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/skills/impossibuild__prospect-to-cold-email/singular.flow.json",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/proxy.py",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/%70roxy.py?x=1",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/%2570roxy%252epy",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/js/",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/tests/private.js",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/reports/private.js",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/js/unapproved.js",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/js/%75napproved.js?download=1",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/.env",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/../proxy.py",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/index.html",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/styles.css",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/api.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/app.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/chrome.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/flow-ui.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/flow.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/graph-ui.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/graph.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/key-connect.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/media-cache.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/poster-cache.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/presentation.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/run-store.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/store.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/ui.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/video-runtime.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/video-ui.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/video.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/chat.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/create.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/models.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/settings.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/skills.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/video-flow.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/work-detail.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/views/work.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/work-api.js",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/claw__motion-trimmer-video/singular.flow.json",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/claw__motion-trimmer/prompts/user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/claw__motion-trimmer/singular.skill.json",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/1-rubric.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/1-rubric.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/2-answer.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/2-answer.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/3-judge.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/prompts/3-judge.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__model-jury/singular.flow.json",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/skills/impossibuild__prospect-to-cold-email/singular.flow.json",
+      "status": 200
+    },
+    {
+      "method": "HEAD",
+      "path": "/proxy.py",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/%70roxy.py?x=1",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/%2570roxy%252epy",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/tests/private.js",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/reports/private.js",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/unapproved.js",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/js/%75napproved.js?download=1",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/.env",
+      "status": 404
+    },
+    {
+      "method": "HEAD",
+      "path": "/../proxy.py",
+      "status": 404
+    }
+  ],
+  "relocated_runtime": "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/package-a3/relocated/runtime",
+  "unexpected_upstream": [],
+  "credential_pattern_hits": [],
+  "unchanged_baseline_literal_prefix_lines": {
+    "js/views/chat.js": 2,
+    "js/views/settings.js": 2,
+    "js/views/skills.js": 1
+  },
+  "manifest": {
+    "index.html": "397c6c405767a62fad133fe133b6db1d14e698e65c645a950380c736573b3e9f",
+    "styles.css": "86b4152f2b1e737e51f00fa24ba30be4b5e2737710171b8f6d794546b8784b43",
+    "proxy.py": "b47614c512f5952340373e7069285791fdb094d0ae99666846b21bd15996f3d6",
+    "js/api.js": "a1d25bd8b0b23d2a0c2715f0de0f045b0273993aed831789271c546375f7a20c",
+    "js/app.js": "45d53afb1916eb1d2e2c560019288c56301652aceec0d5a02a91fbe26b211e20",
+    "js/chrome.js": "4267611fe3b0e87a952f9396db611ede13ba722390645121192f4b3bd246bf5e",
+    "js/flow-ui.js": "1300320e7a2ea5dd041667357d97d5112b62230c947333226c5cf7252fdeb6b2",
+    "js/flow.js": "c375f7158c3dfe7c24528aaae456399e3293c2de5352b68e54290f81b8328615",
+    "js/graph-ui.js": "3dbf43e656b82d441e32fb063e779c316bf0adf8e75acc862bc228e39215a5a6",
+    "js/graph.js": "18786c0a83ddbf450cce54c9a725ac31543fa0f13621c4f563276a06612ecbb7",
+    "js/key-connect.js": "c372455516d77b0fb5efd190bee738d2b0efe18d54bbb574ed5061a10158904e",
+    "js/media-cache.js": "96f0c4c9e0f63c0e4b66f3e34380b4c0e532740ad904349f6af9d4ee194a13fe",
+    "js/poster-cache.js": "d6c7221e678ffae26777fca69097bd304caea75fb1590cca0847ac4a9cb27eee",
+    "js/presentation.js": "69c0fe6ebf5bf01b85e044136591402aa15d5c393833bbd872fe7a2991c2192d",
+    "js/run-store.js": "d7f50896c270f4852b4b9466c9a1722ef829d91994b7c56c30a6a02a575785e7",
+    "js/store.js": "4bc122d11ef8ce8027f00de8a8994a65e3ec287fd81a7273ff9eca4e5a4ec14b",
+    "js/ui.js": "b2885c27f0e9fb6d8d2369a2c583bb494a2ab74a05eab9146efae5e9339cee18",
+    "js/video-runtime.js": "b751ca2acc1be75ac73bd4f388c4556674c6e78c49be74f426356eb6a88f6924",
+    "js/video-ui.js": "2102bc30c87ba64723761e5a18a0f3943837ec0c882f9cb1f667d731b77a8b94",
+    "js/video.js": "71986db49b64763229a90e4d4fe10ae78ebfc45b27070f6d32e675e21a31450b",
+    "js/views/chat.js": "ad0fe9ae05db443a9864e62659017c36fc7dfa1feb640f9e2fc45a0ec68b42c0",
+    "js/views/create.js": "2de1adcbf30aeece4b53daf752483cb62f9eb7978e9b29585d36107ecf968428",
+    "js/views/models.js": "537bb1670b75cbf238e001db57ea59ff8e2a334453e9e6ef3a4c868f0001e218",
+    "js/views/settings.js": "1e9aace286ccd6167117e91825dadf624ddd38fd54c9ac0f72eda4e8bb666215",
+    "js/views/skills.js": "a917c7c2370462c026431ea62d37815d45e8c6e8525cd8e5826aba32ad56987a",
+    "js/views/video-flow.js": "07194b8152a9ce0b9e7bc186c3d570ba7b303de9815bfd7feba2e2be2a9b75ec",
+    "js/views/work-detail.js": "de34a58305e2d412004f4988c212b9da21c7ecfe6a5c9d2e8140f896fed84d9e",
+    "js/views/work.js": "b95c2b2f8e7c5bcc4492552073f11b794f3570bb4caba58671499f8c38c2c6a8",
+    "js/work-api.js": "1b3cc6154421c226345b14bb827f7141d0edd52f885f65fa38066a6b1d03300f",
+    "skills/claw__motion-trimmer/prompts/user.md": "0166619a137b3a4e413485edc996f0cdbdcc485ee01338ca8a1f8a20f2d040f3",
+    "skills/claw__motion-trimmer/singular.skill.json": "34f9be9f576703556c84c4a8e489f3664ade7dbd7bb8aff8b98208c538317fbb",
+    "skills/claw__motion-trimmer-video/singular.flow.json": "50fd7f320eca3a261496ba060d4eda06f945ad28b9b0cb0ac3d89b3a2591e9c7",
+    "skills/impossibuild__model-jury/prompts/1-rubric.system.md": "04bf84b7a236e73efcd0e76e258c1a781b89ce89a73b13896d4c4eee33831202",
+    "skills/impossibuild__model-jury/prompts/1-rubric.user.md": "4cab372f1b7ed9af322f675eae9d4601a2911298a47d7545a87ebf69357e8f20",
+    "skills/impossibuild__model-jury/prompts/2-answer.system.md": "d17923ad1281238a759f39dfcf2951d75b3893a494646b1164f7b903f840f56f",
+    "skills/impossibuild__model-jury/prompts/2-answer.user.md": "b264690eb943f91a8b3405ed9150f8f59a5f460b027693fe8e8f8800ee00cf25",
+    "skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md": "eea0fba118227bfcf92da91a064bc4a7e809152485412c7896a0598fe0dcf86f",
+    "skills/impossibuild__model-jury/prompts/3-judge.system.md": "c2172d23a1f4a5b6252218d5cf7a08bc04e294d2dd4eee3cf2abf69f5e214f6e",
+    "skills/impossibuild__model-jury/prompts/3-judge.user.md": "f2ece9501daa7c7eb2202b7bdf5acd926a2f69d8ecb0dbcfe66f097cde8072ad",
+    "skills/impossibuild__model-jury/singular.flow.json": "63000701cdfe22b0fbe4e5e9b126317b659c3c2a18ad15a60410024ca622e0ae",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md": "84c829532db343b18baaf617be96713f83178ca46eb6b0fa742c32f3ecc8e889",
+    "skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md": "db7cfb71fbb9d2b21290b2902f40e67ab5dabc089a5930d8f75d2dec6ff361a1",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md": "6e1d1f6b35656b9227b86b2ba8b89557f98add06964b96051fe4b74cfca1d8cd",
+    "skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md": "8b424362f031e41cb7a82623af4597e9e6eecade20fd8690d82c32e036ec3ea1",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md": "980fd44daec70f8bc6b88384dcd0ad2ad5dfad1e6a1179ab935509f1d84c2107",
+    "skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md": "dbe1f4a4838d5a9926bcfd20fc3f022db23bad696ce5d31ab94e5b059e56cc74",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md": "24d97205ecac97739c6e52f84a08156462d2b7945b57d2b3fd16cf86d2a45fd3",
+    "skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md": "10cd3b3a74c8793e2646e53d76dd0572dbada494205fdaf8e1cf0a61ede826bc",
+    "skills/impossibuild__prospect-to-cold-email/singular.flow.json": "3d6a46beeb5a146253fa932fc8a5bf082460f2c4ace62e1eb16fadb0c47a2033"
+  }
+}
