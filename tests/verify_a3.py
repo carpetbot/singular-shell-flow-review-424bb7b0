@@ -2,17 +2,19 @@
 import argparse,json,os,shutil,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--label',default='full');p.add_argument('--runtime',type=Path);p.add_argument('--checkpoint2',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--label',default='full');p.add_argument('--runtime',type=Path);p.add_argument('--checkpoint2',action='store_true');p.add_argument('--checkpoint3',action='store_true');a=p.parse_args()
 if not a.label.replace('-','').replace('_','').isalnum():p.error('simple evidence label required')
 evidence=ROOT/'reports/a3';evidence.mkdir(exist_ok=True)
 copy=evidence/('regression-'+a.label+'-app')
 if copy.exists():shutil.rmtree(copy)
 copy.mkdir();runtime=a.runtime or ROOT
-if a.checkpoint2:
+if a.checkpoint2 or a.checkpoint3:
  for rel in subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD'],cwd=ROOT,text=True).splitlines():
   if rel in ['index.html','styles.css','proxy.py','reports/catalog-live.json'] or rel.startswith(('js/','skills/','tests/')):
    dest=copy/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(subprocess.check_output(['git','show','HEAD:'+rel],cwd=ROOT))
- for rel in ['index.html','styles.css','proxy.py','js/app.js','js/views/skills.js','js/views/create.js','tests/test_a3_create_browser.py','tests/test_lite_pro.py']:
+ overrides=['index.html','styles.css','proxy.py','js/app.js','js/views/skills.js','js/views/create.js','tests/test_a3_create_browser.py','tests/test_lite_pro.py']
+ if a.checkpoint3:overrides+=['js/video-ui.js','js/views/video-flow.js','js/key-connect.js','tests/test_video_browser.py','tests/test_a3_video_page_browser.py','tests/test_a3_video_routes_browser.py','tests/test_a3_clarifications_browser.py']
+ for rel in overrides:
   shutil.copy2(ROOT/rel,copy/rel)
 else:
  for name in ['index.html','styles.css','proxy.py']:shutil.copy2(runtime/name,copy/name)

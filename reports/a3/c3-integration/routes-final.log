@@ -1,0 +1,8 @@
+test_direct_refresh_back_and_gallery_entry (test_a3_video_routes_browser.VideoRoutes.test_direct_refresh_back_and_gallery_entry) ... ok
+test_inline_cross_tab_remove_and_replace_clears_immediately (test_a3_video_routes_browser.VideoRoutes.test_inline_cross_tab_remove_and_replace_clears_immediately) ... ok
+test_real_page_lite_pro_desktop_phone_screenshots (test_a3_video_routes_browser.VideoRoutes.test_real_page_lite_pro_desktop_phone_screenshots) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 12.557s
+
+OK

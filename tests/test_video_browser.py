@@ -46,7 +46,8 @@ class VideoBrowser(unittest.TestCase):
   self.page.goto(self.url+'/#/skills');self.page.wait_for_selector('.skill-card')
   self.page.evaluate("async()=>{const {setSettings}=await import('/js/store.js');setSettings({apiKey:'offline-not-real-key'});}")
   if confirmed:self.page.evaluate("async()=>{const {openVideoRunner}=await import('/js/video-ui.js');openVideoRunner({fields:{duration:'fixture_duration',aspectRatio:null,audio:null}});}")
-  else:self.page.locator('.skill-card').filter(has_text='Motion Trimmer → Video').click()
+  else:self.page.evaluate("async()=>{(await import('/js/video-ui.js')).openVideoRunner();}") # Legacy binding regression; public entry is covered by A3 route tests.
+  self.page.wait_for_function("document.querySelector('#video-quote')?.disabled===false || !!document.querySelector('#video-message')?.textContent")
  def plan(self):
   self.page.locator('#video-topic').fill('An offline paper boat');self.page.locator('#video-plan').click();self.page.wait_for_function("document.querySelector('#video-plan-json')?.value.includes('shotbeats')")
  def test_clear_finished_selection_preserves_pending(self):

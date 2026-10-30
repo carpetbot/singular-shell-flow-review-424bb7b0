@@ -1,0 +1,57 @@
+test_destroy_leaves_app_watcher_alive (test_a3_video_page_browser.VideoPageBrowser.test_destroy_leaves_app_watcher_alive) ... FAIL
+test_durable_plan_render_edited_prompt_and_saved_step (test_a3_video_page_browser.VideoPageBrowser.test_durable_plan_render_edited_prompt_and_saved_step) ... FAIL
+test_page_layout_sample_and_pro (test_a3_video_page_browser.VideoPageBrowser.test_page_layout_sample_and_pro) ... FAIL
+test_prefill_is_inputs_only_and_unconnected_notice (test_a3_video_page_browser.VideoPageBrowser.test_prefill_is_inputs_only_and_unconnected_notice) ... FAIL
+test_same_session_replan_after_add_abort_preserves_bound_evidence (test_a3_video_page_browser.VideoPageBrowser.test_same_session_replan_after_add_abort_preserves_bound_evidence) ... ok
+test_storage_abort_blocks_paid_plan_and_render (test_a3_video_page_browser.VideoPageBrowser.test_storage_abort_blocks_paid_plan_and_render) ... ok
+test_unknown_price_invalid_json_and_http_errors (test_a3_video_page_browser.VideoPageBrowser.test_unknown_price_invalid_json_and_http_errors) ... ok
+test_wrong_retry_cannot_replace_reload_recovery_draft (test_a3_video_page_browser.VideoPageBrowser.test_wrong_retry_cannot_replace_reload_recovery_draft) ... ok
+
+======================================================================
+FAIL: test_destroy_leaves_app_watcher_alive (test_a3_video_page_browser.VideoPageBrowser.test_destroy_leaves_app_watcher_alive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 71, in test_destroy_leaves_app_watcher_alive
+    self.state='processing';self.open();self.assert_page();self.plan();self.quote();self.page.locator('#video-generate').click()
+                                        ^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 33, in assert_page
+    self.assertEqual(self.page.locator('.modal,.modal-backdrop,iframe').count(),0,'Video must be a route-owned page, not the legacy modal')
+AssertionError: 1 != 0 : Video must be a route-owned page, not the legacy modal
+
+======================================================================
+FAIL: test_durable_plan_render_edited_prompt_and_saved_step (test_a3_video_page_browser.VideoPageBrowser.test_durable_plan_render_edited_prompt_and_saved_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 63, in test_durable_plan_render_edited_prompt_and_saved_step
+    self.open();self.assert_page();self.page.route('**/v1/chat/completions',self.check_chat);self.plan();self.quote()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 33, in assert_page
+    self.assertEqual(self.page.locator('.modal,.modal-backdrop,iframe').count(),0,'Video must be a route-owned page, not the legacy modal')
+AssertionError: 1 != 0 : Video must be a route-owned page, not the legacy modal
+
+======================================================================
+FAIL: test_page_layout_sample_and_pro (test_a3_video_page_browser.VideoPageBrowser.test_page_layout_sample_and_pro)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 38, in test_page_layout_sample_and_pro
+    self.open();self.assert_page()
+                ^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 33, in assert_page
+    self.assertEqual(self.page.locator('.modal,.modal-backdrop,iframe').count(),0,'Video must be a route-owned page, not the legacy modal')
+AssertionError: 1 != 0 : Video must be a route-owned page, not the legacy modal
+
+======================================================================
+FAIL: test_prefill_is_inputs_only_and_unconnected_notice (test_a3_video_page_browser.VideoPageBrowser.test_prefill_is_inputs_only_and_unconnected_notice)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 59, in test_prefill_is_inputs_only_and_unconnected_notice
+    self.assert_page();self.assertEqual(self.page.locator('#video-topic').input_value(),'Fictional rerun');self.assertEqual(self.page.locator('#video-prompt').input_value(),'')
+    ^^^^^^^^^^^^^^^^^^
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 33, in assert_page
+    self.assertEqual(self.page.locator('.modal,.modal-backdrop,iframe').count(),0,'Video must be a route-owned page, not the legacy modal')
+AssertionError: 1 != 0 : Video must be a route-owned page, not the legacy modal
+
+----------------------------------------------------------------------
+Ran 8 tests in 26.661s
+
+FAILED (failures=4)

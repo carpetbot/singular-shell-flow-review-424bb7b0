@@ -1,0 +1,9 @@
+test_auto_quote_ignores_stale_responses_and_new_version (test_a3_clarifications_browser.Clarifications.test_auto_quote_ignores_stale_responses_and_new_version) ... ok
+test_empty_work_connect_refresh_and_first_visit_copy (test_a3_clarifications_browser.Clarifications.test_empty_work_connect_refresh_and_first_visit_copy) ... ok
+test_inline_video_connect_does_not_validate_or_generate (test_a3_clarifications_browser.Clarifications.test_inline_video_connect_does_not_validate_or_generate) ... ok
+test_lite_actual_copy_auto_quote_and_pro_caveats (test_a3_clarifications_browser.Clarifications.test_lite_actual_copy_auto_quote_and_pro_caveats) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 12.850s
+
+OK

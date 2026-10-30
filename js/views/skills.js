@@ -9,7 +9,6 @@ import { esc, toast, fmtUsd, openModal } from "../ui.js";
 import { openFlowRunner } from '../flow-ui.js';
 import {routableModels} from '../graph.js';
 import {openGraphRunner} from '../graph-ui.js';
-import {openVideoRunner} from '../video-ui.js';
 const SKILL_INDEX = ["claw__motion-trimmer", "impossibuild__prospect-to-cold-email", "impossibuild__model-jury", "claw__motion-trimmer-video"];
 
 export async function loadSkill(id, fetcher = fetch){
@@ -120,7 +119,7 @@ export async function bind(root){
 }
 
 export function openRunner({ id, manifest }){
-  if(manifest.runtime?.video)return openVideoRunner();
+  if(manifest.runtime?.video){location.hash='#/flow/claw__motion-trimmer-video';return;}
   if(manifest.runtime?.graph)return openGraphRunner({id,manifest},renderField);
   const fields = (manifest.ui?.fields || []).map(normField);
   const req = Object.fromEntries(Object.entries(manifest.inputs || {}).map(([k, v]) => [k, v.required]));

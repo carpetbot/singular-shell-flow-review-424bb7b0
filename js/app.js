@@ -5,6 +5,7 @@ import { syncBanner, renderTopbar, renderNav } from "./chrome.js";
 
 import {startVideoRuntime} from './video-runtime.js';
 import { bindMode } from './presentation.js';
+import * as videoFlow from './views/video-flow.js';
 import * as create from './views/create.js';
 import * as chat from "./views/chat.js";
 import * as skills from "./views/skills.js";
@@ -13,6 +14,7 @@ import * as settings from "./views/settings.js";
 import * as work from "./views/work.js";
 
 export const VIEWS = [
+  { id: "video-flow", ...videoFlow },
   { id: "create", ...create },
   { id: "chat", ...chat },
   { id: "skills", ...skills },
@@ -31,12 +33,12 @@ export function renderView(){
   mountedView = def;
   viewRoot.innerHTML = def.view();
   if(def.bind) def.bind(viewRoot);
-  renderNav(currentView);
+  renderNav(['video-flow','skills'].includes(currentView)?'create':currentView);
 }
 
 function route(){
   const hash = location.hash.replace(/^#\//, "").split('?')[0] || "create";
-  currentView = VIEWS.some(v => v.id === hash) ? hash : "create";
+  currentView = hash==='flow/claw__motion-trimmer-video'?'video-flow':VIEWS.some(v => v.id === hash) ? hash : "create";
   if(document.documentElement.dataset.mode==='lite' && ['chat','models'].includes(currentView)) currentView='create';
   if(!location.hash)history.replaceState(null,'','#/create');
   renderView();

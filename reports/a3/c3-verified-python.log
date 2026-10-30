@@ -1,0 +1,288 @@
+test_auto_quote_ignores_stale_responses_and_new_version (test_a3_clarifications_browser.Clarifications.test_auto_quote_ignores_stale_responses_and_new_version) ... ok
+test_inline_video_connect_does_not_validate_or_generate (test_a3_clarifications_browser.Clarifications.test_inline_video_connect_does_not_validate_or_generate) ... ok
+test_lite_actual_copy_auto_quote_and_pro_caveats (test_a3_clarifications_browser.Clarifications.test_lite_actual_copy_auto_quote_and_pro_caveats) ... ok
+test_catalog_prices_change_and_unknown_is_not_zero (test_a3_create_browser.CreateBrowser.test_catalog_prices_change_and_unknown_is_not_zero) ... ok
+test_default_navigation_refresh_back_and_modes (test_a3_create_browser.CreateBrowser.test_default_navigation_refresh_back_and_modes) ... ok
+test_mobile_reference_no_overflow (test_a3_create_browser.CreateBrowser.test_mobile_reference_no_overflow) ... ok
+test_pickups_scoped_limit_and_account_removal (test_a3_create_browser.CreateBrowser.test_pickups_scoped_limit_and_account_removal) ... ok
+test_account_change_rejects_queued_read_and_foreign_notification (test_a3_followups_browser.Followups.test_account_change_rejects_queued_read_and_foreign_notification) ... ok
+test_cross_tab_work_updates_preserve_selected_media_and_prompt (test_a3_followups_browser.Followups.test_cross_tab_work_updates_preserve_selected_media_and_prompt) ... ok
+test_foreign_notice_does_not_cancel_valid_pending_read (test_a3_followups_browser.Followups.test_foreign_notice_does_not_cancel_valid_pending_read) ... ok
+test_migrated_completion_notice (test_a3_followups_browser.Followups.test_migrated_completion_notice) ... ok
+test_migrated_legacy_completion_import_announces_once (test_a3_followups_browser.Followups.test_migrated_legacy_completion_import_announces_once) ... ok
+test_ready_claim_is_atomic_account_scoped_and_survives_reopen (test_a3_followups_browser.Followups.test_ready_claim_is_atomic_account_scoped_and_survives_reopen) ... ok
+test_route_leave_removes_notification_listener (test_a3_followups_browser.Followups.test_route_leave_removes_notification_listener) ... ok
+test_same_tab_watcher_completion_updates_local_prompt_without_refresh (test_a3_followups_browser.Followups.test_same_tab_watcher_completion_updates_local_prompt_without_refresh) ... ok
+test_work_migration_completion_updates_without_refresh (test_a3_followups_browser.Followups.test_work_migration_completion_updates_without_refresh) ... ok
+test_account_removal_clears_page_without_foreign_draft (test_a3_video_page_browser.VideoPageBrowser.test_account_removal_clears_page_without_foreign_draft) ... ok
+test_completed_run_again_prefill_starts_clean_draft (test_a3_video_page_browser.VideoPageBrowser.test_completed_run_again_prefill_starts_clean_draft) ... ok
+test_destroy_leaves_app_watcher_alive (test_a3_video_page_browser.VideoPageBrowser.test_destroy_leaves_app_watcher_alive) ... ok
+test_durable_plan_render_edited_prompt_and_saved_step (test_a3_video_page_browser.VideoPageBrowser.test_durable_plan_render_edited_prompt_and_saved_step) ... ok
+test_leave_during_planning_saves_result_without_mutating_new_route (test_a3_video_page_browser.VideoPageBrowser.test_leave_during_planning_saves_result_without_mutating_new_route) ... ok
+test_page_layout_sample_and_pro (test_a3_video_page_browser.VideoPageBrowser.test_page_layout_sample_and_pro) ... ok
+test_pending_prefill_never_replaces_recovery (test_a3_video_page_browser.VideoPageBrowser.test_pending_prefill_never_replaces_recovery) ... ok
+test_prefill_is_inputs_only_and_unconnected_notice (test_a3_video_page_browser.VideoPageBrowser.test_prefill_is_inputs_only_and_unconnected_notice) ... ok
+test_progress_visible_at_phone_width (test_a3_video_page_browser.VideoPageBrowser.test_progress_visible_at_phone_width) ... ok
+test_same_session_replan_after_add_abort_preserves_bound_evidence (test_a3_video_page_browser.VideoPageBrowser.test_same_session_replan_after_add_abort_preserves_bound_evidence) ... ok
+test_storage_abort_blocks_paid_plan_and_render (test_a3_video_page_browser.VideoPageBrowser.test_storage_abort_blocks_paid_plan_and_render) ... ok
+test_unknown_price_invalid_json_and_http_errors (test_a3_video_page_browser.VideoPageBrowser.test_unknown_price_invalid_json_and_http_errors) ... ok
+test_wrong_retry_cannot_replace_reload_recovery_draft (test_a3_video_page_browser.VideoPageBrowser.test_wrong_retry_cannot_replace_reload_recovery_draft) ... ok
+test_direct_refresh_back_and_gallery_entry (test_a3_video_routes_browser.VideoRoutes.test_direct_refresh_back_and_gallery_entry) ... ok
+test_inline_cross_tab_remove_and_replace_clears_immediately (test_a3_video_routes_browser.VideoRoutes.test_inline_cross_tab_remove_and_replace_clears_immediately) ... ok
+test_real_page_lite_pro_desktop_phone_screenshots (test_a3_video_routes_browser.VideoRoutes.test_real_page_lite_pro_desktop_phone_screenshots) ... ok
+test_active_cross_tab_planner_is_not_abandoned (test_durable_video_browser.DurableVideoBrowser.test_active_cross_tab_planner_is_not_abandoned) ... ok
+test_durable_saved_before_post_and_plan_before_chat (test_durable_video_browser.DurableVideoBrowser.test_durable_saved_before_post_and_plan_before_chat) ... ok
+test_gateway_timeout_stops_observing_without_resubmission (test_durable_video_browser.DurableVideoBrowser.test_gateway_timeout_stops_observing_without_resubmission) ... ok
+test_immediate_completed_create_announces_ready (test_durable_video_browser.DurableVideoBrowser.test_immediate_completed_create_announces_ready) ... ok
+test_interrupted_planner_account_replacement_is_abandoned (test_durable_video_browser.DurableVideoBrowser.test_interrupted_planner_account_replacement_is_abandoned) ... ok
+test_interrupted_planner_reload_allows_new_render (test_durable_video_browser.DurableVideoBrowser.test_interrupted_planner_reload_allows_new_render) ... ok
+test_key_change_discards_modal_and_stale_ready_notice (test_durable_video_browser.DurableVideoBrowser.test_key_change_discards_modal_and_stale_ready_notice) ... ok
+test_my_work_merges_fresh_gateway_terminal_and_local_prompt (test_durable_video_browser.DurableVideoBrowser.test_my_work_merges_fresh_gateway_terminal_and_local_prompt) ... ok
+test_old_planning_rows_abandoned_but_tokenless_render_still_blocks (test_durable_video_browser.DurableVideoBrowser.test_old_planning_rows_abandoned_but_tokenless_render_still_blocks) ... ok
+test_reload_resumes_without_post_and_single_cross_tab_owner (test_durable_video_browser.DurableVideoBrowser.test_reload_resumes_without_post_and_single_cross_tab_owner) ... ok
+test_reopen_restores_durable_plan_prompt_and_receipts (test_durable_video_browser.DurableVideoBrowser.test_reopen_restores_durable_plan_prompt_and_receipts) ... ok
+test_route_independent_ready_notice_and_open (test_durable_video_browser.DurableVideoBrowser.test_route_independent_ready_notice_and_open) ... ok
+test_runtime_retry_ignores_new_draft_with_same_body_after_add_abort (test_durable_video_browser.DurableVideoBrowser.test_runtime_retry_ignores_new_draft_with_same_body_after_add_abort) ... ok
+test_same_session_replan_after_add_abort_preserves_bound_evidence (test_durable_video_browser.DurableVideoBrowser.test_same_session_replan_after_add_abort_preserves_bound_evidence) ... ok
+test_storage_abort_blocks_paid_plan_and_render (test_durable_video_browser.DurableVideoBrowser.test_storage_abort_blocks_paid_plan_and_render) ... ok
+test_storage_abort_reload_recovers_edited_draft_before_post (test_durable_video_browser.DurableVideoBrowser.test_storage_abort_reload_recovers_edited_draft_before_post) ... ok
+test_storage_abort_retry_preserves_draft_before_post (test_durable_video_browser.DurableVideoBrowser.test_storage_abort_retry_preserves_draft_before_post) ... ok
+test_uncertain_no_id_reload_never_resubmits_and_idb_blocks_without_legacy (test_durable_video_browser.DurableVideoBrowser.test_uncertain_no_id_reload_never_resubmits_and_idb_blocks_without_legacy) ... ok
+test_wrong_retry_cannot_replace_reload_recovery_draft (test_durable_video_browser.DurableVideoBrowser.test_wrong_retry_cannot_replace_reload_recovery_draft) ... ok
+test_01_mode_default_persistence_and_guarded_routes (test_lite_pro.LitePro.test_01_mode_default_persistence_and_guarded_routes) ... ok
+test_02_gallery_and_fictional_sample_preserve_inputs (test_lite_pro.LitePro.test_02_gallery_and_fictional_sample_preserve_inputs) ... ok
+test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls (test_lite_pro.LitePro.test_03_toggle_midrun_retains_form_and_result_with_exactly_four_calls) ... ok
+test_04_mobile_accessible_dialog_and_lite_settings (test_lite_pro.LitePro.test_04_mobile_accessible_dialog_and_lite_settings) ... ok
+test_05_untrusted_status_and_catalog_are_plain_text (test_lite_pro.LitePro.test_05_untrusted_status_and_catalog_are_plain_text) ... ok
+test_06_missing_catalog_models_has_recovery_not_skeleton (test_lite_pro.LitePro.test_06_missing_catalog_models_has_recovery_not_skeleton) ... ok
+test_07_fallback_actual_receipt_and_unknown_usage_failure (test_lite_pro.LitePro.test_07_fallback_actual_receipt_and_unknown_usage_failure) ... ok
+test_08_check_failure_leaves_draft_and_not_checked (test_lite_pro.LitePro.test_08_check_failure_leaves_draft_and_not_checked) ... ok
+test_09_exact_seven_review_screenshots (test_lite_pro.LitePro.test_09_exact_seven_review_screenshots) ... Seven offline review screenshots: /home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/reports/a3/regression-c3-verified-app/reports/review
+ok
+test_01_blinded_browser_and_lite_pro (test_model_jury.ModelJury.test_01_blinded_browser_and_lite_pro) ... ok
+test_02_same_maker_zero_calls (test_model_jury.ModelJury.test_02_same_maker_zero_calls) ... ok
+test_03_one_http500_ranks_two (test_model_jury.ModelJury.test_03_one_http500_ranks_two) ... ok
+test_04_two_http500_stop_before_judge (test_model_jury.ModelJury.test_04_two_http500_stop_before_judge) ... ok
+test_05_careful_exact_extra_call_and_gap_two (test_model_jury.ModelJury.test_05_careful_exact_extra_call_and_gap_two) ... ok
+test_06_mobile_no_horizontal_overflow (test_model_jury.ModelJury.test_06_mobile_no_horizontal_overflow) ... ok
+test_07_search_models_preserves_exact_selection_and_excludes_latest (test_model_jury.ModelJury.test_07_search_models_preserves_exact_selection_and_excludes_latest) ... ok
+test_08_careful_second_pass_must_have_cannot_win (test_model_jury.ModelJury.test_08_careful_second_pass_must_have_cannot_win) ... ok
+test_09_careful_second_pass_quote_error_is_retained_not_disqualified (test_model_jury.ModelJury.test_09_careful_second_pass_quote_error_is_retained_not_disqualified) ... ok
+test_10_lite_gateway_failure_and_same_winner_value_copy (test_model_jury.ModelJury.test_10_lite_gateway_failure_and_same_winner_value_copy) ... ok
+test_disconnected_static_response_is_quiet_but_real_errors_surface (test_offline_browser.OfflineHarness.test_disconnected_static_response_is_quiet_but_real_errors_surface) ... ok
+test_blocks_python_encoded_queries_symlinks_directories_tests (test_proxy.StaticSecurity.test_blocks_python_encoded_queries_symlinks_directories_tests) ... [shell] code 404, message Not Found
+[shell] "GET /proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /proxy.py?download=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /%70roxy%2epy?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /%2570roxy%252epy HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/ HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /tests/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /../proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /js/%2e%2e/proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /proxy.py?download=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /%70roxy%2epy?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /%2570roxy%252epy HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/ HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /tests/leak.js HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /../proxy.py HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "HEAD /js/%2e%2e/proxy.py HTTP/1.1" 404 -
+ok
+test_static_shell_still_serves (test_proxy.StaticSecurity.test_static_shell_still_serves) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /index.html?x=1 HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "HEAD / HTTP/1.1" 200 -
+[shell] "HEAD /index.html?x=1 HTTP/1.1" 200 -
+[shell] "HEAD /js/app.js HTTP/1.1" 200 -
+ok
+test_concurrent_migration_tabs_and_reload_pending_discovery (test_run_store_browser.RunStoreBrowser.test_concurrent_migration_tabs_and_reload_pending_discovery) ... ok
+test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically (test_run_store_browser.RunStoreBrowser.test_create_is_idempotent_and_blocks_unresolved_same_flow_atomically) ... ok
+test_create_update_reload_account_isolation (test_run_store_browser.RunStoreBrowser.test_create_update_reload_account_isolation) ... ok
+test_database_scan_has_no_credentials_and_other_account_cannot_write (test_run_store_browser.RunStoreBrowser.test_database_scan_has_no_credentials_and_other_account_cannot_write) ... ok
+test_invalid_records_fail_without_corrupting_recovery (test_run_store_browser.RunStoreBrowser.test_invalid_records_fail_without_corrupting_recovery) ... ok
+test_legacy_enrichment_is_hash_bound_atomic_and_one_time (test_run_store_browser.RunStoreBrowser.test_legacy_enrichment_is_hash_bound_atomic_and_one_time) ... ok
+test_legacy_migration_preserves_versions_pending_receipts_and_unscoped (test_run_store_browser.RunStoreBrowser.test_legacy_migration_preserves_versions_pending_receipts_and_unscoped) ... ok
+test_migration_merges_existing_durable_identity_without_duplicate (test_run_store_browser.RunStoreBrowser.test_migration_merges_existing_durable_identity_without_duplicate) ... ok
+test_migration_validates_normalized_fields_before_atomic_import (test_run_store_browser.RunStoreBrowser.test_migration_validates_normalized_fields_before_atomic_import) ... ok
+test_missing_key_credentials_failure_and_atomic_rollback (test_run_store_browser.RunStoreBrowser.test_missing_key_credentials_failure_and_atomic_rollback) ... ok
+test_pre_fix_migration_placeholder_can_recover_metadata (test_run_store_browser.RunStoreBrowser.test_pre_fix_migration_placeholder_can_recover_metadata) ... ok
+test_two_tabs_merge_monotonically_and_reimport_progress (test_run_store_browser.RunStoreBrowser.test_two_tabs_merge_monotonically_and_reimport_progress) ... ok
+test_update_token_assignment_is_account_unique_and_transactional (test_run_store_browser.RunStoreBrowser.test_update_token_assignment_is_account_unique_and_transactional) ... ok
+test_flow_and_legacy_panels_with_offline_gateway (test_ui.BrowserSmoke.test_flow_and_legacy_panels_with_offline_gateway) ... Chromium UI: flow preview, four chained steps, copy, escaping, raw outputs, legacy preview/run PASS; external requests blocked: 1
+ok
+test_01_gallery_five_second_default_mode (test_video_browser.VideoBrowser.test_01_gallery_five_second_default_mode) ... ok
+test_02_confirmed_offline_brief_player_download_retry (test_video_browser.VideoBrowser.test_02_confirmed_offline_brief_player_download_retry) ... ok
+test_03_unknown_price_invalid_json_and_http_errors_do_not_generate (test_video_browser.VideoBrowser.test_03_unknown_price_invalid_json_and_http_errors_do_not_generate) ... ok
+test_04_uncertain_reload_same_payload_token (test_video_browser.VideoBrowser.test_04_uncertain_reload_same_payload_token) ... ok
+test_05_queued_processing_failed_stop_then_explicit_resume (test_video_browser.VideoBrowser.test_05_queued_processing_failed_stop_then_explicit_resume) ... ok
+test_06_close_during_submission_app_watcher_continues (test_video_browser.VideoBrowser.test_06_close_during_submission_app_watcher_continues) ... ok
+test_07_mobile_review_no_overflow (test_video_browser.VideoBrowser.test_07_mobile_review_no_overflow) ... ok
+test_08_video_auth_credit_rejection_is_distinct_and_recoverable (test_video_browser.VideoBrowser.test_08_video_auth_credit_rejection_is_distinct_and_recoverable) ... ok
+test_app_watcher_polls_past_three_minutes_and_continues_after_close (test_video_browser.VideoBrowser.test_app_watcher_polls_past_three_minutes_and_continues_after_close) ... ok
+test_clear_finished_selection_preserves_pending (test_video_browser.VideoBrowser.test_clear_finished_selection_preserves_pending) ... ok
+test_history_selection_cannot_bypass_pending_job (test_video_browser.VideoBrowser.test_history_selection_cannot_bypass_pending_job) ... ok
+test_incomplete_download_offers_retry_only_not_regeneration (test_video_browser.VideoBrowser.test_incomplete_download_offers_retry_only_not_regeneration) ... ok
+test_lite_shot_list_pro_editor_and_prompt_stay_synchronized (test_video_browser.VideoBrowser.test_lite_shot_list_pro_editor_and_prompt_stay_synchronized) ... ok
+test_two_browser_tabs_simultaneous_generate_one_job_and_live_storage_refresh (test_video_browser.VideoBrowser.test_two_browser_tabs_simultaneous_generate_one_job_and_live_storage_refresh) ... ok
+test_two_real_tabs_use_shared_locks_and_saved_retry_token (test_video_browser.VideoBrowser.test_two_real_tabs_use_shared_locks_and_saved_retry_token) ... ok
+test_01_token_only_create_and_legacy_body (test_video_proxy.VideoProxy.test_01_token_only_create_and_legacy_body) ... [shell] "POST /v1/videos HTTP/1.1" 202 -
+[shell] "GET /v1/videos/vid_a HTTP/1.1" 200 -
+[shell] "POST /v1/chat/completions HTTP/1.1" 202 -
+ok
+test_02_streams_before_upstream_finishes (test_video_proxy.VideoProxy.test_02_streams_before_upstream_finishes) ... [shell] "GET /v1/videos/vid_stream/content HTTP/1.1" 200 -
+ok
+test_03_bound_and_redirect (test_video_proxy.VideoProxy.test_03_bound_and_redirect) ... [shell] code 413, message Video exceeds 100 MB
+[shell] "GET /v1/videos/vid_huge/content HTTP/1.1" 413 -
+[shell] "GET /v1/videos/vid_redirect/content HTTP/1.1" 502 -
+ok
+test_04_invalid_video_paths_do_not_forward (test_video_proxy.VideoProxy.test_04_invalid_video_paths_do_not_forward) ... [shell] code 404, message Not Found
+[shell] "GET /v1/videos/../content HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a/content?url=https://evil.test HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a%2Fcontent HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a/content/extra HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos/a\content HTTP/1.1" 404 -
+ok
+test_05_unknown_size_stream_is_bounded (test_video_proxy.VideoProxy.test_05_unknown_size_stream_is_bounded) ... [shell] "GET /v1/videos/vid_unknown/content HTTP/1.1" 200 -
+ok
+test_unknown_length_success_and_exact_bound_complete_normally (test_video_proxy.VideoProxy.test_unknown_length_success_and_exact_bound_complete_normally) ... [shell] "GET /v1/videos/vid_unknown/content HTTP/1.1" 200 -
+ok
+test_unknown_overflow_browser_fetch_and_download_reject_without_blob (test_video_proxy.VideoProxy.test_unknown_overflow_browser_fetch_and_download_reject_without_blob) ... [shell] "GET / HTTP/1.1" 200 -
+[shell] "GET /js/app.js HTTP/1.1" 200 -
+[shell] "GET /styles.css HTTP/1.1" 200 -
+[shell] "GET /js/api.js HTTP/1.1" 200 -
+[shell] "GET /js/presentation.js HTTP/1.1" 200 -
+[shell] "GET /js/store.js HTTP/1.1" 200 -
+[shell] "GET /js/views/video-flow.js HTTP/1.1" 200 -
+[shell] "GET /js/video-runtime.js HTTP/1.1" 200 -
+[shell] "GET /js/chrome.js HTTP/1.1" 200 -
+[shell] "GET /js/views/create.js HTTP/1.1" 200 -
+[shell] "GET /js/views/chat.js HTTP/1.1" 200 -
+[shell] "GET /js/views/skills.js HTTP/1.1" 200 -
+[shell] "GET /js/views/models.js HTTP/1.1" 200 -
+[shell] "GET /js/views/work.js HTTP/1.1" 200 -
+[shell] "GET /js/views/settings.js HTTP/1.1" 200 -
+[shell] "GET /js/run-store.js HTTP/1.1" 200 -
+[shell] "GET /js/video.js HTTP/1.1" 200 -
+[shell] "GET /js/key-connect.js HTTP/1.1" 200 -
+[shell] "GET /js/video-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/ui.js HTTP/1.1" 200 -
+[shell] "GET /js/flow.js HTTP/1.1" 200 -
+[shell] "GET /js/flow-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/work-api.js HTTP/1.1" 200 -
+[shell] "GET /js/graph-ui.js HTTP/1.1" 200 -
+[shell] "GET /js/graph.js HTTP/1.1" 200 -
+[shell] "GET /js/poster-cache.js HTTP/1.1" 200 -
+[shell] "GET /v1/videos/vid_unknown_overflow/content HTTP/1.1" 200 -
+[shell] "GET /pricing.json HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer-video/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/singular.flow.json HTTP/1.1" 200 -
+[shell] code 404, message Not Found
+[shell] "GET /skills/claw__motion-trimmer/singular.flow.json HTTP/1.1" 404 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/singular.flow.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/singular.skill.json HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/1-rubric.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/claw__motion-trimmer/prompts/user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/1-extract.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/2-angle.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/2-answer.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.system.md HTTP/1.1" 200 -
+[shell] "GET /v1/videos/vid_unknown_overflow/content HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/3-write.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.system.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__model-jury/prompts/3-judge.reversed.user.md HTTP/1.1" 200 -
+[shell] "GET /skills/impossibuild__prospect-to-cold-email/prompts/4-check.user.md HTTP/1.1" 200 -
+[shell] "GET /v1/videos/vid_short/content HTTP/1.1" 200 -
+ok
+test_video_errors_are_bounded_sanitized_and_closed (test_video_proxy.VideoProxy.test_video_errors_are_bounded_sanitized_and_closed) ... [shell] "POST /v1/videos HTTP/1.1" 500 -
+[shell] "GET /v1/videos/vid_error HTTP/1.1" 401 -
+[shell] "GET /v1/videos/vid_error/content HTTP/1.1" 502 -
+ok
+test_account_change_revokes_media_ignores_stale_list_and_media (test_work_browser.WorkBrowser.test_account_change_revokes_media_ignores_stale_list_and_media) ... ok
+test_cross_tab_account_change_clears_immediately (test_work_browser.WorkBrowser.test_cross_tab_account_change_clears_immediately) ... ok
+test_cross_tab_settings_removal_disconnects (test_work_browser.WorkBrowser.test_cross_tab_settings_removal_disconnects) ... ok
+test_empty_error_retry_and_disconnect (test_work_browser.WorkBrowser.test_empty_error_retry_and_disconnect) ... ok
+test_list_pagination_playback_download_mobile (test_work_browser.WorkBrowser.test_list_pagination_playback_download_mobile) ... ok
+test_malformed_optional_metadata_uses_safe_fallbacks (test_work_browser.WorkBrowser.test_malformed_optional_metadata_uses_safe_fallbacks) ... ok
+test_reenter_after_cross_tab_disconnect_does_not_reuse_old_key (test_work_browser.WorkBrowser.test_reenter_after_cross_tab_disconnect_does_not_reuse_old_key) ... ok
+test_render_failure_reports_error_and_allows_retry (test_work_browser.WorkBrowser.test_render_failure_reports_error_and_allows_retry) ... ok
+test_canvas_security_failure_leaves_video_and_download_usable (test_work_cards_browser.WorkCards.test_canvas_security_failure_leaves_video_and_download_usable) ... ok
+test_failed_decode_keeps_normal_video_without_invented_poster (test_work_cards_browser.WorkCards.test_failed_decode_keeps_normal_video_without_invented_poster) ... ok
+test_poster_only_after_open_persists_and_is_account_scoped (test_work_cards_browser.WorkCards.test_poster_only_after_open_persists_and_is_account_scoped) ... ok
+test_presented_frame_before_loadeddata_still_caches_poster (test_work_cards_browser.WorkCards.test_presented_frame_before_loadeddata_still_caches_poster) ... ok
+test_prompt_titles_plain_statuses_and_safe_truncation (test_work_cards_browser.WorkCards.test_prompt_titles_plain_statuses_and_safe_truncation) ... ok
+test_real_poster_cache_bounds_eviction_and_validation (test_work_cards_browser.WorkCards.test_real_poster_cache_bounds_eviction_and_validation) ... ok
+test_server_fixture_blocks_upstream_even_without_browser_routes (test_work_cards_browser.WorkCards.test_server_fixture_blocks_upstream_even_without_browser_routes) ... ok
+test_list_query_allowlist (test_work_proxy.WorkProxy.test_list_query_allowlist) ... [shell] "GET /v1/videos HTTP/1.1" 200 -
+[shell] "GET /v1/videos?limit=1 HTTP/1.1" 200 -
+[shell] "GET /v1/videos?limit=100&cursor=abc_=- HTTP/1.1" 200 -
+[shell] "GET /v1/videos?cursor=abc&limit=50 HTTP/1.1" 200 -
+ok
+test_list_query_rejections_never_forward (test_work_proxy.WorkProxy.test_list_query_rejections_never_forward) ... [shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=0 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=101 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=-1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=1.0 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=+1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit= HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=1&limit=2 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor= HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor=a&cursor=b HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?cursor=a%2Fb HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?foo=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=50&foo=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "GET /v1/videos?limit=1&&cursor=a HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "POST /v1/videos?x=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "POST /v1/videos?limit=1 HTTP/1.1" 404 -
+[shell] code 404, message Not Found
+[shell] "POST /v1/videos? HTTP/1.1" 404 -
+ok
+
+----------------------------------------------------------------------
+Ran 127 tests in 499.492s
+
+OK

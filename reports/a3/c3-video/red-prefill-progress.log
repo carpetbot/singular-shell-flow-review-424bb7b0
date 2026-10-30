@@ -1,0 +1,29 @@
+test_account_removal_clears_page_without_foreign_draft (test_a3_video_page_browser.VideoPageBrowser.test_account_removal_clears_page_without_foreign_draft) ... ok
+test_completed_run_again_prefill_starts_clean_draft (test_a3_video_page_browser.VideoPageBrowser.test_completed_run_again_prefill_starts_clean_draft) ... FAIL
+test_destroy_leaves_app_watcher_alive (test_a3_video_page_browser.VideoPageBrowser.test_destroy_leaves_app_watcher_alive) ... ok
+test_durable_plan_render_edited_prompt_and_saved_step (test_a3_video_page_browser.VideoPageBrowser.test_durable_plan_render_edited_prompt_and_saved_step) ... ok
+test_page_layout_sample_and_pro (test_a3_video_page_browser.VideoPageBrowser.test_page_layout_sample_and_pro) ... ok
+test_pending_prefill_never_replaces_recovery (test_a3_video_page_browser.VideoPageBrowser.test_pending_prefill_never_replaces_recovery) ... ok
+test_prefill_is_inputs_only_and_unconnected_notice (test_a3_video_page_browser.VideoPageBrowser.test_prefill_is_inputs_only_and_unconnected_notice) ... ok
+test_progress_visible_at_phone_width (test_a3_video_page_browser.VideoPageBrowser.test_progress_visible_at_phone_width) ... ok
+test_same_session_replan_after_add_abort_preserves_bound_evidence (test_a3_video_page_browser.VideoPageBrowser.test_same_session_replan_after_add_abort_preserves_bound_evidence) ... ok
+test_storage_abort_blocks_paid_plan_and_render (test_a3_video_page_browser.VideoPageBrowser.test_storage_abort_blocks_paid_plan_and_render) ... ok
+test_unknown_price_invalid_json_and_http_errors (test_a3_video_page_browser.VideoPageBrowser.test_unknown_price_invalid_json_and_http_errors) ... ok
+test_wrong_retry_cannot_replace_reload_recovery_draft (test_a3_video_page_browser.VideoPageBrowser.test_wrong_retry_cannot_replace_reload_recovery_draft) ... ok
+
+======================================================================
+FAIL: test_completed_run_again_prefill_starts_clean_draft (test_a3_video_page_browser.VideoPageBrowser.test_completed_run_again_prefill_starts_clean_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/orangepi/.hermes/profiles/slack/cache/scratch/shell-ux-v1/a3/tests/test_a3_video_page_browser.py", line 79, in test_completed_run_again_prefill_starts_clean_draft
+    self.assertEqual(self.page.locator('#video-topic').input_value(),'Run again fictional changes');self.assertEqual(self.page.locator('#video-prompt').input_value(),'');self.assertFalse(self.page.locator('#video-plan').is_disabled());self.assertTrue(self.page.locator('#video-generate').is_disabled())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'An offline paper boat' != 'Run again fictional changes'
+- An offline paper boat
++ Run again fictional changes
+
+
+----------------------------------------------------------------------
+Ran 12 tests in 49.278s
+
+FAILED (failures=1)
